@@ -21,7 +21,7 @@ bun install
 bun run dev
 ```
 
-Open [Omnia](https://omnia-web.space-z.ai).
+Open [Omnia](https://willow7737.github.io/omnia-web/#api).
 
 ## Updating the API Endpoint
 
