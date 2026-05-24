@@ -1,0 +1,150 @@
+'use client'
+
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { Copy, Check } from 'lucide-react'
+
+const curlCommand = `curl -s https://devnet.omnia.protocol/v1/status | jq .`
+
+const jsonResponse = `{
+  "status": "alive",
+  "node_id": "0x7a3f...e912",
+  "uptime_seconds": 86400,
+  "finalized_height": 1173421,
+  "peers": 4,
+  "version": "0.1.48"
+}`
+
+export function CurlSection() {
+  const [copied, setCopied] = useState(false)
+  const [flashActive, setFlashActive] = useState(false)
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(curlCommand)
+      setCopied(true)
+      setFlashActive(true)
+      setTimeout(() => {
+        setCopied(false)
+        setFlashActive(false)
+      }, 600)
+    } catch {
+      // Fallback: do nothing
+    }
+  }
+
+  return (
+    <section id="api" className="section-padding px-6">
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-100px' }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className="max-w-3xl mx-auto"
+      >
+        {/* One-liner description */}
+        <p className="text-lg text-[#A39B92] leading-relaxed mb-10 text-center max-w-2xl mx-auto">
+          Omnia replaces sequential blockchains with parallel causal graph consensus using DAG + vector clocks + CRDTs. Settlement happens via ZK-rollup on any data-availability layer.
+        </p>
+
+        {/* Code block */}
+        <div
+          className="rounded-lg border overflow-hidden"
+          style={{
+            background: '#141414',
+            borderColor: 'rgba(212, 165, 116, 0.2)',
+          }}
+        >
+          {/* Header */}
+          <div
+            className="flex items-center justify-between px-4 py-2 border-b"
+            style={{ borderColor: 'rgba(212, 165, 116, 0.15)' }}
+          >
+            <span className="text-xs text-[#A39B92] font-[family-name:var(--font-space-grotesk)]">
+              bash
+            </span>
+            <button
+              onClick={handleCopy}
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-xs transition-colors ${
+                flashActive
+                  ? 'bg-[#D4A574] text-[#0F0F0F]'
+                  : 'text-[#A39B92] hover:text-[#D4A574]'
+              }`}
+              aria-label="Copy command"
+            >
+              {copied ? (
+                <>
+                  <Check size={12} />
+                  Copied
+                </>
+              ) : (
+                <>
+                  <Copy size={12} />
+                  Copy
+                </>
+              )}
+            </button>
+          </div>
+
+          {/* curl command */}
+          <div className="px-5 py-4">
+            <pre className="font-[family-name:var(--font-jetbrains-mono)] text-sm leading-relaxed overflow-x-auto">
+              <code>
+                <span className="text-[#8C9E8E]">$</span>{' '}
+                <span className="text-[#D4A574]">curl</span>{' '}
+                <span className="text-[#A39B92]">-s</span>{' '}
+                <span className="text-[#8C9E8E]">https://devnet.omnia.protocol/v1/status</span>{' '}
+                <span className="text-[#A39B92]">|</span>{' '}
+                <span className="text-[#D4A574]">jq</span>{' '}
+                <span className="text-[#A39B92]">.</span>
+              </code>
+            </pre>
+          </div>
+
+          {/* Divider */}
+          <div style={{ borderColor: 'rgba(212, 165, 116, 0.1)' }} className="border-t" />
+
+          {/* JSON response */}
+          <div className="px-5 py-4">
+            <pre className="font-[family-name:var(--font-jetbrains-mono)] text-[13px] leading-relaxed overflow-x-auto text-[#A39B92]">
+              <code>
+                {'{\n'}
+                {'  '}
+                <span className="text-[#D4A574]">&quot;status&quot;</span>
+                {': '}
+                <span className="text-[#8C9E8E]">&quot;alive&quot;</span>
+                {',\n'}
+                {'  '}
+                <span className="text-[#D4A574]">&quot;node_id&quot;</span>
+                {': '}
+                <span className="text-[#8C9E8E]">&quot;0x7a3f...e912&quot;</span>
+                {',\n'}
+                {'  '}
+                <span className="text-[#D4A574]">&quot;uptime_seconds&quot;</span>
+                {': '}
+                <span className="text-[#F5F0EB]">86400</span>
+                {',\n'}
+                {'  '}
+                <span className="text-[#D4A574]">&quot;finalized_height&quot;</span>
+                {': '}
+                <span className="text-[#F5F0EB]">1173421</span>
+                {',\n'}
+                {'  '}
+                <span className="text-[#D4A574]">&quot;peers&quot;</span>
+                {': '}
+                <span className="text-[#F5F0EB]">4</span>
+                {',\n'}
+                {'  '}
+                <span className="text-[#D4A574]">&quot;version&quot;</span>
+                {': '}
+                <span className="text-[#8C9E8E]">&quot;0.1.48&quot;</span>
+                {'\n'}
+                {'}'}
+              </code>
+            </pre>
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  )
+}
