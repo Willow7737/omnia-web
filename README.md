@@ -21,7 +21,7 @@ bun install
 bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [Omnia](https://omnia-web.space-z.ai).
 
 ## Updating the API Endpoint
 
