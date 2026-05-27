@@ -5,15 +5,29 @@ import { AnimatedNumber } from './animated-number'
 import { FileText, Terminal, ArrowRight, Wifi, WifiOff, Loader2 } from 'lucide-react'
 import { useOmniaDashboard } from '@/hooks/use-omnia-data'
 
+// Benchmark data shown when testnet is offline (from v0.1.60 single-node tests)
+const BENCHMARK_DATA = {
+  eventsFinalized: 7190000,
+  p50Latency: '93.47µs',
+  validators: 1,
+  networkStatus: 'Benchmark',
+  nodeCount: 1,
+} as const
+
 export function HeroSection() {
   const { data, isLoading, error } = useOmniaDashboard()
 
-  const eventsFinalized = data?.eventsFinalized ?? 0
   const isOnline = data?.healthy ?? false
-  const networkStatus = isOnline ? data!.networkStatus : 'Connecting...'
-  const latency = data?.p50Latency ?? '—'
-  const validators = data?.activeValidators ?? 0
-  const nodeCount = data?.nodeCount ?? 0
+  const hasLiveData = isOnline && !!data
+
+  // Show live data when available, fall back to benchmark data
+  const eventsFinalized = hasLiveData ? data.eventsFinalized : BENCHMARK_DATA.eventsFinalized
+  const latency = hasLiveData ? data.p50Latency : BENCHMARK_DATA.p50Latency
+  const validators = hasLiveData ? data.activeValidators : BENCHMARK_DATA.validators
+  const networkStatus = hasLiveData
+    ? data.networkStatus
+    : (error ? 'Offline' : 'Benchmark Data')
+  const nodeCount = hasLiveData ? data.nodeCount : BENCHMARK_DATA.nodeCount
 
   return (
     <section
@@ -35,7 +49,7 @@ export function HeroSection() {
 
         {/* Subheadline */}
         <p className="text-lg sm:text-xl text-[#A39B92] leading-relaxed max-w-2xl mx-auto mb-10">
-          Settlement-agnostic causal graph consensus. Sub-100&micro;s finality. Public domain.
+          Settlement-agnostic causal graph consensus. Sub-100µs finality. Public domain.
         </p>
 
         {/* CTAs */}
@@ -70,7 +84,7 @@ export function HeroSection() {
           <div
             className="border rounded-lg p-5 text-left"
             style={{
-              borderColor: isOnline
+              borderColor: hasLiveData
                 ? 'rgba(140, 158, 142, 0.3)'
                 : 'rgba(212, 165, 116, 0.2)',
               background: 'rgba(26, 26, 26, 0.6)',
@@ -89,11 +103,7 @@ export function HeroSection() {
                     Events Finalized
                   </div>
                   <div className="font-[family-name:var(--font-jetbrains-mono)] text-base text-[#F5F0EB]">
-                    {isOnline ? (
-                      <AnimatedNumber value={eventsFinalized} />
-                    ) : (
-                      <span className="text-[#6B6560]">—</span>
-                    )}
+                    <AnimatedNumber value={eventsFinalized} />
                   </div>
                 </div>
 
@@ -103,7 +113,7 @@ export function HeroSection() {
                     p50 Latency
                   </div>
                   <div className="font-[family-name:var(--font-jetbrains-mono)] text-base text-[#F5F0EB]">
-                    {isOnline ? latency : <span className="text-[#6B6560]">—</span>}
+                    {latency}
                   </div>
                 </div>
 
@@ -113,11 +123,7 @@ export function HeroSection() {
                     Active Validators
                   </div>
                   <div className="font-[family-name:var(--font-jetbrains-mono)] text-base text-[#F5F0EB]">
-                    {isOnline ? (
-                      <AnimatedNumber value={validators} />
-                    ) : (
-                      <span className="text-[#6B6560]">—</span>
-                    )}
+                    <AnimatedNumber value={validators} />
                   </div>
                 </div>
 
@@ -127,7 +133,7 @@ export function HeroSection() {
                     Network Status
                   </div>
                   <div className="flex items-center gap-2">
-                    {isOnline ? (
+                    {hasLiveData ? (
                       <>
                         <span className="relative flex h-2 w-2">
                           <span className="animate-pulse-sage absolute inline-flex h-full w-full rounded-full bg-[#8C9E8E] opacity-75" />
@@ -139,9 +145,9 @@ export function HeroSection() {
                       </>
                     ) : (
                       <>
-                        <WifiOff className="h-3 w-3 text-[#6B6560]" />
-                        <span className="font-[family-name:var(--font-jetbrains-mono)] text-sm text-[#6B6560]">
-                          {error ? 'Connection Error' : networkStatus}
+                        <WifiOff className="h-3 w-3 text-[#A39B92]" />
+                        <span className="font-[family-name:var(--font-jetbrains-mono)] text-sm text-[#A39B92]">
+                          {networkStatus}
                         </span>
                       </>
                     )}
@@ -153,14 +159,18 @@ export function HeroSection() {
             {/* Note */}
             <div className="mt-4 pt-3 border-t text-xs text-[#A39B92] flex items-center justify-between" style={{ borderColor: 'rgba(212, 165, 116, 0.1)' }}>
               <span>
-                {isOnline
+                {hasLiveData
                   ? `${nodeCount} node${nodeCount !== 1 ? 's' : ''} connected — live data`
-                  : 'Waiting for testnet connection...'}
+                  : 'v0.1.60 benchmarks — connect testnet for live data'}
               </span>
-              {isOnline && (
+              {hasLiveData ? (
                 <span className="flex items-center gap-1 text-[#8C9E8E]">
                   <Wifi className="h-3 w-3" />
                   Live
+                </span>
+              ) : (
+                <span className="text-[#A39B92]">
+                  Benchmark
                 </span>
               )}
             </div>

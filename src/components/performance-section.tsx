@@ -12,6 +12,7 @@ interface MetricRow {
   liveKey?: string
 }
 
+// Benchmark data from v0.1.60 single-node tests
 const mainMetrics: MetricRow[] = [
   { metric: 'Sustained TPS (single-node)', value: 7190, unit: 'events/sec', decimals: 0, liveKey: 'tps' },
   { metric: 'Finality Latency p50', value: 93.47, unit: 'µs', decimals: 2, liveKey: 'p50Latency' },
@@ -38,7 +39,6 @@ function MetricTable({ metrics, title, liveMetrics }: { metrics: MetricRow[]; ti
       )}
       <div className="border rounded-md overflow-hidden" style={{ borderColor: 'rgba(212, 165, 116, 0.15)' }}>
         {metrics.map((row, i) => {
-          // Check if we have live data for this metric
           let displayValue = row.value
           let displayUnit = row.unit
           let isLive = false
@@ -47,7 +47,6 @@ function MetricTable({ metrics, title, liveMetrics }: { metrics: MetricRow[]; ti
             const liveVal = liveMetrics[row.liveKey]
             if (liveVal !== undefined && liveVal !== null) {
               if (typeof liveVal === 'string') {
-                // Parse values like "93.47µs"
                 const numMatch = liveVal.match(/^([\d.]+)/)
                 const unitMatch = liveVal.match(/([µm]?s)$/)
                 if (numMatch) displayValue = parseFloat(numMatch[1])
@@ -88,6 +87,8 @@ function MetricTable({ metrics, title, liveMetrics }: { metrics: MetricRow[]; ti
 export function PerformanceSection() {
   const { data: liveMetrics } = useOmniaMetrics()
 
+  const hasLiveData = !!liveMetrics
+
   const liveDataMap: Record<string, string | number | undefined> | null = liveMetrics
     ? {
         tps: liveMetrics.tps,
@@ -110,7 +111,7 @@ export function PerformanceSection() {
           </h2>
           <p className="text-sm text-[#A39B92] mb-10">
             Consensus throughput benchmarks from v0.1.60 single-node tests
-            {liveDataMap && <span className="text-[#8C9E8E]"> · live metrics shown with green dot</span>}
+            {hasLiveData && <span className="text-[#8C9E8E]"> · live metrics shown with <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#8C9E8E] align-middle" /> dot</span>}
           </p>
         </motion.div>
 

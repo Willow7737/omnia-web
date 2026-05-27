@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Copy, Check, Loader2 } from 'lucide-react'
+import { Copy, Check } from 'lucide-react'
 import { useOmniaStatus } from '@/hooks/use-omnia-data'
 import type { NodeStatusResponse } from '@/lib/omnia-client'
 
@@ -10,20 +10,19 @@ const API_BASE = process.env.NEXT_PUBLIC_OMNIA_API_URL || 'http://localhost:9090
 
 const curlCommand = `curl -s ${API_BASE}/v1/status | jq .`
 
+// Benchmark response shown when testnet is offline
+const BENCHMARK_STATUS: NodeStatusResponse = {
+  status: 'alive',
+  node_id: 'omnia_benchmark_001a3f',
+  uptime_seconds: 86400,
+  finalized_height: 7190000,
+  peers: 0,
+  version: 'v0.1.60',
+}
+
 function JsonResponse({ data }: { data: NodeStatusResponse | null | undefined }) {
-  if (!data) {
-    return (
-      <span className="text-[#6B6560]">
-        {'{\n'}
-        {'  '}
-        <span className="text-[#D4A574]">&quot;status&quot;</span>
-        {': '}
-        <span className="text-[#6B6560]">&quot;connecting...&quot;</span>
-        {'\n'}
-        {'}'}
-      </span>
-    )
-  }
+  const response = data ?? BENCHMARK_STATUS
+  const isBenchmark = !data
 
   return (
     <>
@@ -31,32 +30,40 @@ function JsonResponse({ data }: { data: NodeStatusResponse | null | undefined })
       {'  '}
       <span className="text-[#D4A574]">&quot;status&quot;</span>
       {': '}
-      <span className="text-[#8C9E8E]">&quot;{data.status}&quot;</span>
+      <span className="text-[#8C9E8E]">&quot;{response.status}&quot;</span>
       {',\n'}
       {'  '}
       <span className="text-[#D4A574]">&quot;node_id&quot;</span>
       {': '}
-      <span className="text-[#8C9E8E]">&quot;{data.node_id.slice(0, 6)}...{data.node_id.slice(-4)}&quot;</span>
+      <span className="text-[#8C9E8E]">&quot;{response.node_id.slice(0, 6)}...{response.node_id.slice(-4)}&quot;</span>
       {',\n'}
       {'  '}
       <span className="text-[#D4A574]">&quot;uptime_seconds&quot;</span>
       {': '}
-      <span className="text-[#F5F0EB]">{data.uptime_seconds.toLocaleString()}</span>
+      <span className="text-[#F5F0EB]">{response.uptime_seconds.toLocaleString()}</span>
       {',\n'}
       {'  '}
       <span className="text-[#D4A574]">&quot;finalized_height&quot;</span>
       {': '}
-      <span className="text-[#F5F0EB]">{data.finalized_height.toLocaleString()}</span>
+      <span className="text-[#F5F0EB]">{response.finalized_height.toLocaleString()}</span>
       {',\n'}
       {'  '}
       <span className="text-[#D4A574]">&quot;peers&quot;</span>
       {': '}
-      <span className="text-[#F5F0EB]">{data.peers}</span>
+      <span className="text-[#F5F0EB]">{response.peers}</span>
       {',\n'}
       {'  '}
       <span className="text-[#D4A574]">&quot;version&quot;</span>
       {': '}
-      <span className="text-[#8C9E8E]">&quot;{data.version}&quot;</span>
+      <span className="text-[#8C9E8E]">&quot;{response.version}&quot;</span>
+      {isBenchmark && (
+        <>
+          {',\n  '}
+          <span className="text-[#D4A574]">&quot;_note&quot;</span>
+          {': '}
+          <span className="text-[#A39B92]">&quot;benchmark data&quot;</span>
+        </>
+      )}
       {'\n'}
       {'}'}
     </>
@@ -67,7 +74,7 @@ export function CurlSection() {
   const [copied, setCopied] = useState(false)
   const [flashActive, setFlashActive] = useState(false)
 
-  const { data: liveStatus, isLoading } = useOmniaStatus()
+  const { data: liveStatus } = useOmniaStatus()
 
   const handleCopy = async () => {
     try {
@@ -145,9 +152,6 @@ export function CurlSection() {
                 <span className="text-[#A39B92]">|</span>{' '}
                 <span className="text-[#D4A574]">jq</span>{' '}
                 <span className="text-[#A39B92]">.</span>
-                {isLoading && (
-                  <Loader2 className="inline h-3 w-3 animate-spin ml-2 text-[#D4A574]" />
-                )}
               </code>
             </pre>
           </div>
