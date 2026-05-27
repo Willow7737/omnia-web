@@ -13,6 +13,7 @@ import {
   fetchHealth,
   fetchReadyz,
   fetchNodeStatus,
+  fetchPeers,
   fetchMetrics,
   fetchAllNodes,
   parsePrometheusMetrics,
@@ -64,12 +65,22 @@ export function useOmniaDashboard(): {
       const healthyNodes = nodes.filter(n => n.healthy).length
       const parsedMetrics = rawMetrics ? parsePrometheusMetrics(rawMetrics) : null
 
+      const eventsFinalized = readyz?.finalized_height
+        ?? status?.finalized_height
+        ?? parsedMetrics?.eventsFinalized
+        ?? 0
+
+      const peerCount = readyz?.peers
+        ?? status?.peers
+        ?? parsedMetrics?.peerCount
+        ?? 0
+
       return {
-        eventsFinalized: readyz?.finalized_height ?? status?.finalized_height ?? 0,
+        eventsFinalized,
         p50Latency: parsedMetrics?.p50Latency ?? '—',
-        activeValidators: parsedMetrics?.activeValidators ?? healthyNodes,
-        networkStatus: healthyNodes > 0
-          ? (healthyNodes >= 3 ? 'Testnet Live' : 'Degraded')
+        activeValidators: peerCount > 0 ? peerCount : (healthyNodes || 1),
+        networkStatus: health?.status === 'alive'
+          ? (peerCount >= 3 ? 'Testnet Live' : peerCount > 0 ? 'Degraded' : 'Single Node')
           : 'Offline',
         healthy: health?.status === 'alive',
         nodeCount: nodes.length,
@@ -93,7 +104,7 @@ export function useOmniaDashboard(): {
   return { data, isLoading, error, refetch }
 }
 
-// ── Individual Node Data ───────────────────────────────────────────────────
+// ── Individual Data Hooks ──────────────────────────────────────────────────
 
 export function useOmniaHealth() {
   return useQuery({
@@ -117,6 +128,15 @@ export function useOmniaStatus() {
   return useQuery({
     queryKey: ['omnia-status'],
     queryFn: () => fetchNodeStatus(),
+    refetchInterval: POLL_INTERVAL,
+    retry: 1,
+  })
+}
+
+export function useOmniaPeers() {
+  return useQuery({
+    queryKey: ['omnia-peers'],
+    queryFn: () => fetchPeers(),
     refetchInterval: POLL_INTERVAL,
     retry: 1,
   })

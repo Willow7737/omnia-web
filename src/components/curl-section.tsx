@@ -8,16 +8,20 @@ import type { NodeStatusResponse } from '@/lib/omnia-client'
 
 const API_BASE = process.env.NEXT_PUBLIC_OMNIA_API_URL || 'http://localhost:9090'
 
-const curlCommand = `curl -s ${API_BASE}/v1/status | jq .`
+const curlCommand = `curl -s ${API_BASE}/api/v1/node/info | jq .`
 
 // Benchmark response shown when testnet is offline
 const BENCHMARK_STATUS: NodeStatusResponse = {
-  status: 'alive',
-  node_id: 'omnia_benchmark_001a3f',
-  uptime_seconds: 86400,
+  node_id: '01000000',
+  node_id_num: 1,
+  version: '0.1.60',
+  protocol_version: '4.0.0',
   finalized_height: 7190000,
   peers: 0,
-  version: 'v0.1.60',
+  shard_count: 6,
+  listen_addr: '0.0.0.0:4001',
+  data_dir: './data',
+  uptime_seconds: 86400,
 }
 
 function JsonResponse({ data }: { data: NodeStatusResponse | null | undefined }) {
@@ -28,19 +32,14 @@ function JsonResponse({ data }: { data: NodeStatusResponse | null | undefined })
     <>
       {'{\n'}
       {'  '}
-      <span className="text-[#D4A574]">&quot;status&quot;</span>
-      {': '}
-      <span className="text-[#8C9E8E]">&quot;{response.status}&quot;</span>
-      {',\n'}
-      {'  '}
       <span className="text-[#D4A574]">&quot;node_id&quot;</span>
       {': '}
-      <span className="text-[#8C9E8E]">&quot;{response.node_id.slice(0, 6)}...{response.node_id.slice(-4)}&quot;</span>
+      <span className="text-[#8C9E8E]">&quot;{response.node_id}&quot;</span>
       {',\n'}
       {'  '}
-      <span className="text-[#D4A574]">&quot;uptime_seconds&quot;</span>
+      <span className="text-[#D4A574]">&quot;version&quot;</span>
       {': '}
-      <span className="text-[#F5F0EB]">{response.uptime_seconds.toLocaleString()}</span>
+      <span className="text-[#8C9E8E]">&quot;{response.version}&quot;</span>
       {',\n'}
       {'  '}
       <span className="text-[#D4A574]">&quot;finalized_height&quot;</span>
@@ -53,9 +52,19 @@ function JsonResponse({ data }: { data: NodeStatusResponse | null | undefined })
       <span className="text-[#F5F0EB]">{response.peers}</span>
       {',\n'}
       {'  '}
-      <span className="text-[#D4A574]">&quot;version&quot;</span>
+      <span className="text-[#D4A574]">&quot;shard_count&quot;</span>
       {': '}
-      <span className="text-[#8C9E8E]">&quot;{response.version}&quot;</span>
+      <span className="text-[#F5F0EB]">{response.shard_count}</span>
+      {',\n'}
+      {'  '}
+      <span className="text-[#D4A574]">&quot;uptime_seconds&quot;</span>
+      {': '}
+      <span className="text-[#F5F0EB]">{response.uptime_seconds.toLocaleString()}</span>
+      {',\n'}
+      {'  '}
+      <span className="text-[#D4A574]">&quot;protocol_version&quot;</span>
+      {': '}
+      <span className="text-[#8C9E8E]">&quot;{response.protocol_version}&quot;</span>
       {isBenchmark && (
         <>
           {',\n  '}
@@ -148,7 +157,7 @@ export function CurlSection() {
                 <span className="text-[#8C9E8E]">$</span>{' '}
                 <span className="text-[#D4A574]">curl</span>{' '}
                 <span className="text-[#A39B92]">-s</span>{' '}
-                <span className="text-[#8C9E8E]">{API_BASE}/v1/status</span>{' '}
+                <span className="text-[#8C9E8E]">{API_BASE}/api/v1/node/info</span>{' '}
                 <span className="text-[#A39B92]">|</span>{' '}
                 <span className="text-[#D4A574]">jq</span>{' '}
                 <span className="text-[#A39B92]">.</span>

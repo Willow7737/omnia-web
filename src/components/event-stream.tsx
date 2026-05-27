@@ -1,158 +1,148 @@
 'use client'
 
 /**
- * Real-time event stream component
+ * Event stream component
  *
  * Displays a live feed of consensus events from the Omnia Protocol testnet.
- * Uses Server-Sent Events (SSE) for efficient real-time streaming,
- * with polling fallback. Shows sample events when testnet is offline.
+ * Since the current node API doesn't expose an SSE endpoint, this component
+ * polls the /metrics and /api/v1/node/info endpoints to show real-time
+ * consensus state changes (event counts, rounds, peer changes).
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Activity, Clock, Hash } from 'lucide-react'
+import { Activity, Clock, Hash, Cpu, Users, Zap } from 'lucide-react'
+import { useOmniaMetrics, useOmniaStatus, useOmniaHealth } from '@/hooks/use-omnia-data'
 
-export interface ConsensusEvent {
+interface FeedEntry {
   id: string
-  creator: string
-  sequence: number
+  type: 'metric' | 'status' | 'health'
+  label: string
+  value: string
   timestamp: number
-  parents: string[]
-  payload_hash: string
 }
 
-// Sample events shown when testnet is offline
-const SAMPLE_EVENTS: ConsensusEvent[] = [
-  {
-    id: '0xa3f7c2e1b8d94f6a0c5e3d2b1a9f8e7c',
-    creator: '0x4b2a1c9e8d7f6a5b4c3d2e1f0a9b8c7d',
-    sequence: 7190001,
-    timestamp: Date.now() - 5000,
-    parents: ['0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d'],
-    payload_hash: '0xd4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9',
-  },
-  {
-    id: '0xb4g8d3f2c9e0a5b1d6e4f3c2b0a9e8d7',
-    creator: '0x5c3b2d0f9e8a7b6c5d4e3f2a1b0c9d8e',
-    sequence: 7190002,
-    timestamp: Date.now() - 4000,
-    parents: ['0xa3f7c2e1b8d94f6a0c5e3d2b1a9f8e7c'],
-    payload_hash: '0xe5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0',
-  },
-  {
-    id: '0xc5h9e4a3d0f1b6c2e7f5a4d3c1b0f9e8',
-    creator: '0x6d4c3e1a0f9b8c7d6e5f4a3b2c1d0e9f',
-    sequence: 7190003,
-    timestamp: Date.now() - 3000,
-    parents: ['0xb4g8d3f2c9e0a5b1d6e4f3c2b0a9e8d7'],
-    payload_hash: '0xf6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1',
-  },
-  {
-    id: '0xd6i0f5b4e1a2c7d3f8a6b5e4d2c1a0f9',
-    creator: '0x7e5d4f2b1a0c9d8e7f6a5b4c3d2e1f0a',
-    sequence: 7190004,
-    timestamp: Date.now() - 2000,
-    parents: ['0xc5h9e4a3d0f1b6c2e7f5a4d3c1b0f9e8'],
-    payload_hash: '0xa7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2',
-  },
-  {
-    id: '0xe7j1a6c5f2b3d8e4a9c7d6f5e3d2b1a0',
-    creator: '0x8f6e5a3c2b1d0e9f8a7b6c5d4e3f2a1b',
-    sequence: 7190005,
-    timestamp: Date.now() - 1000,
-    parents: ['0xd6i0f5b4e1a2c7d3f8a6b5e4d2c1a0f9'],
-    payload_hash: '0xb8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3',
-  },
-]
-
 export function EventStream() {
-  const [events, setEvents] = useState<ConsensusEvent[]>([])
+  const { data: liveMetrics } = useOmniaMetrics()
+  const { data: liveStatus } = useOmniaStatus()
+  const { data: liveHealth } = useOmniaHealth()
+
+  const [entries, setEntries] = useState<FeedEntry[]>([])
   const [connected, setConnected] = useState(false)
-  const [eventCount, setEventCount] = useState(0)
-  const [triedConnect, setTriedConnect] = useState(false)
-  const hasShownSample = useRef(false)
+  const prevMetricsRef = useRef<Record<string, number>>({})
+  const prevStatusRef = useRef<string>('')
 
-  const handleEvent = useCallback((event: ConsensusEvent) => {
-    setEvents(prev => {
-      const next = [event, ...prev].slice(0, 50)
-      return next
-    })
-    setEventCount(prev => prev + 1)
-  }, [])
-
-  // Show sample events when offline
+  // Track metric changes and generate feed entries
   useEffect(() => {
-    if (triedConnect && !connected && events.length === 0 && !hasShownSample.current) {
-      hasShownSample.current = true
-      SAMPLE_EVENTS.forEach((e, i) => {
-        setTimeout(() => handleEvent(e), i * 150)
+    if (!liveMetrics) return
+    setConnected(true)
+
+    const current: Record<string, number> = {
+      eventsFinalized: liveMetrics.eventsFinalized ?? 0,
+      dagEventsTotal: liveMetrics.dagEventsTotal ?? 0,
+      consensusRound: liveMetrics.consensusRound ?? 0,
+      tps: liveMetrics.tps ?? 0,
+      eventsSubmittedTotal: liveMetrics.eventsSubmittedTotal ?? 0,
+      httpRequestsTotal: liveMetrics.httpRequestsTotal ?? 0,
+      shardOperationsTotal: liveMetrics.shardOperationsTotal ?? 0,
+    }
+
+    const prev = prevMetricsRef.current
+    const newEntries: FeedEntry[] = []
+
+    // Generate entries for changed metrics
+    if (current.consensusRound > (prev.consensusRound ?? 0)) {
+      newEntries.push({
+        id: `round-${current.consensusRound}`,
+        type: 'metric',
+        label: 'Consensus Round',
+        value: `#${current.consensusRound.toLocaleString()}`,
+        timestamp: Date.now(),
       })
     }
-  }, [triedConnect, connected, events.length, handleEvent])
 
+    if (current.eventsFinalized > (prev.eventsFinalized ?? 0)) {
+      const delta = current.eventsFinalized - (prev.eventsFinalized ?? 0)
+      newEntries.push({
+        id: `finalized-${current.eventsFinalized}`,
+        type: 'metric',
+        label: 'Events Finalized',
+        value: `+${delta} (total: ${current.eventsFinalized.toLocaleString()})`,
+        timestamp: Date.now(),
+      })
+    }
+
+    if (current.dagEventsTotal > (prev.dagEventsTotal ?? 0)) {
+      newEntries.push({
+        id: `dag-${current.dagEventsTotal}`,
+        type: 'metric',
+        label: 'DAG Insert',
+        value: `${current.dagEventsTotal.toLocaleString()} events`,
+        timestamp: Date.now(),
+      })
+    }
+
+    if (current.shardOperationsTotal > (prev.shardOperationsTotal ?? 0)) {
+      newEntries.push({
+        id: `shard-${current.shardOperationsTotal}`,
+        type: 'metric',
+        label: 'Shard Operation',
+        value: `${current.shardOperationsTotal.toLocaleString()} total`,
+        timestamp: Date.now(),
+      })
+    }
+
+    if (newEntries.length > 0) {
+      setEntries(prev => [...newEntries.reverse(), ...prev].slice(0, 50))
+    }
+
+    prevMetricsRef.current = current
+  }, [liveMetrics])
+
+  // Track status changes
   useEffect(() => {
-    const apiBase = process.env.NEXT_PUBLIC_OMNIA_API_URL || 'http://localhost:9090'
+    if (!liveStatus) return
+    setConnected(true)
 
-    let eventSource: EventSource | null = null
-    let pollInterval: ReturnType<typeof setInterval> | null = null
+    const statusKey = `${liveStatus.peers}-${liveStatus.finalized_height}`
+    if (prevStatusRef.current && prevStatusRef.current !== statusKey) {
+      const prev = prevStatusRef.current
+      const [prevPeers] = prev.split('-').map(Number)
 
-    const connectSSE = () => {
-      try {
-        eventSource = new EventSource(`${apiBase}/v1/events/stream`)
-
-        eventSource.onopen = () => {
-          setConnected(true)
-          setTriedConnect(true)
-        }
-
-        eventSource.onmessage = (e) => {
-          try {
-            const data = JSON.parse(e.data) as ConsensusEvent
-            handleEvent(data)
-          } catch {
-            // Ignore malformed events
-          }
-        }
-
-        eventSource.onerror = () => {
-          setConnected(false)
-          setTriedConnect(true)
-          eventSource?.close()
-          startPolling()
-        }
-      } catch {
-        setTriedConnect(true)
-        startPolling()
+      if (liveStatus.peers !== prevPeers) {
+        setEntries(prev => [{
+          id: `peers-${Date.now()}`,
+          type: 'status',
+          label: 'Peer Change',
+          value: `${liveStatus.peers} peer${liveStatus.peers !== 1 ? 's' : ''} connected`,
+          timestamp: Date.now(),
+        }, ...prev].slice(0, 50))
       }
     }
 
-    const startPolling = () => {
-      if (pollInterval) return
-      pollInterval = setInterval(async () => {
-        try {
-          const res = await fetch(`${apiBase}/v1/events/recent?limit=5`)
-          if (res.ok) {
-            const data = await res.json()
-            setConnected(true)
-            setTriedConnect(true)
-            if (Array.isArray(data)) {
-              data.forEach((e: ConsensusEvent) => handleEvent(e))
-            }
-          }
-        } catch {
-          setConnected(false)
-          setTriedConnect(true)
-        }
-      }, 5000)
-    }
+    prevStatusRef.current = statusKey
+  }, [liveStatus])
 
-    connectSSE()
-
-    return () => {
-      eventSource?.close()
-      if (pollInterval) clearInterval(pollInterval)
+  // Detect connection
+  useEffect(() => {
+    if (liveHealth?.status === 'alive') {
+      setConnected(true)
+    } else if (liveHealth === null) {
+      // Keep connected state as-is during polling gaps
     }
-  }, [handleEvent])
+  }, [liveHealth])
+
+  const entryIcon = (type: string) => {
+    switch (type) {
+      case 'metric': return <Zap className="h-3 w-3 text-[#D4A574]" />
+      case 'status': return <Users className="h-3 w-3 text-[#8C9E8E]" />
+      case 'health': return <Activity className="h-3 w-3 text-[#8C9E8E]" />
+      default: return <Hash className="h-3 w-3 text-[#A39B92]" />
+    }
+  }
+
+  // Compute total events from metrics
+  const totalEvents = liveMetrics?.eventsFinalized ?? liveMetrics?.dagEventsTotal ?? entries.length
 
   return (
     <section id="events" className="section-padding px-6">
@@ -166,20 +156,20 @@ export function EventStream() {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="font-[family-name:var(--font-space-grotesk)] text-3xl sm:text-4xl font-semibold tracking-[-0.02em] text-[#F5F0EB] mb-2">
-                Live Event Stream
+                Live Activity Feed
               </h2>
               <p className="text-sm text-[#A39B92]">
-                Real-time consensus events from the testnet
+                Real-time consensus state from the testnet
               </p>
             </div>
             <div className="flex items-center gap-3">
               <span className="flex items-center gap-1.5 text-xs text-[#A39B92]">
                 <Activity className="h-3.5 w-3.5" />
-                {eventCount} events
+                {totalEvents.toLocaleString()} events
               </span>
               <span className={`flex items-center gap-1.5 text-xs ${connected ? 'text-[#8C9E8E]' : 'text-[#A39B92]'}`}>
                 <span className={`h-2 w-2 rounded-full ${connected ? 'bg-[#8C9E8E]' : 'bg-[#A39B92]'}`} />
-                {connected ? 'Connected' : !triedConnect ? 'Connecting...' : 'Sample Data'}
+                {connected ? 'Connected' : 'Polling...'}
               </span>
             </div>
           </div>
@@ -190,31 +180,33 @@ export function EventStream() {
           >
             {/* Header */}
             <div
-              className="hidden sm:grid grid-cols-[1fr_80px_120px_100px] gap-2 px-4 py-2 text-xs text-[#A39B92] uppercase tracking-wider font-[family-name:var(--font-space-grotesk)] border-b"
+              className="hidden sm:grid grid-cols-[1fr_100px_120px_80px] gap-2 px-4 py-2 text-xs text-[#A39B92] uppercase tracking-wider font-[family-name:var(--font-space-grotesk)] border-b"
               style={{ borderColor: 'rgba(212, 165, 116, 0.1)' }}
             >
-              <span>Event ID</span>
-              <span>Seq</span>
-              <span>Creator</span>
+              <span>Event</span>
+              <span>Type</span>
+              <span>Value</span>
               <span>Time</span>
             </div>
 
-            {/* Events */}
+            {/* Feed entries */}
             <div className="max-h-80 overflow-y-auto">
               <AnimatePresence>
-                {events.length === 0 ? (
+                {entries.length === 0 ? (
                   <div className="px-4 py-8 text-center text-sm text-[#6B6560]">
-                    Loading events...
+                    {connected
+                      ? 'Waiting for consensus activity...'
+                      : 'Connecting to testnet...'}
                   </div>
                 ) : (
-                  events.map((event, i) => (
+                  entries.map((entry, i) => (
                     <motion.div
-                      key={`${event.id}-${i}`}
+                      key={entry.id}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3 }}
-                      className={`grid grid-cols-1 sm:grid-cols-[1fr_80px_120px_100px] gap-1 sm:gap-2 px-4 py-2.5 text-xs ${
-                        i < events.length - 1 ? 'border-b' : ''
+                      className={`grid grid-cols-1 sm:grid-cols-[1fr_100px_120px_80px] gap-1 sm:gap-2 px-4 py-2.5 text-xs ${
+                        i < entries.length - 1 ? 'border-b' : ''
                       }`}
                       style={{
                         borderColor: 'rgba(212, 165, 116, 0.08)',
@@ -222,18 +214,18 @@ export function EventStream() {
                       }}
                     >
                       <span className="font-[family-name:var(--font-jetbrains-mono)] text-[#F5F0EB] flex items-center gap-1.5 truncate">
-                        <Hash className="h-3 w-3 text-[#A39B92] shrink-0" />
-                        {event.id.slice(0, 16)}...
+                        {entryIcon(entry.type)}
+                        {entry.label}
                       </span>
-                      <span className="font-[family-name:var(--font-jetbrains-mono)] text-[#D4A574]">
-                        #{event.sequence.toLocaleString()}
+                      <span className="font-[family-name:var(--font-jetbrains-mono)] text-[#D4A574] capitalize">
+                        {entry.type}
                       </span>
                       <span className="font-[family-name:var(--font-jetbrains-mono)] text-[#A39B92] truncate">
-                        {event.creator.slice(0, 10)}...
+                        {entry.value}
                       </span>
                       <span className="font-[family-name:var(--font-jetbrains-mono)] text-[#6B6560] flex items-center gap-1">
                         <Clock className="h-3 w-3" />
-                        {formatTime(event.timestamp)}
+                        {formatTime(entry.timestamp)}
                       </span>
                     </motion.div>
                   ))
@@ -242,11 +234,30 @@ export function EventStream() {
             </div>
           </div>
 
-          {/* Note */}
-          {!connected && triedConnect && (
-            <p className="text-xs text-[#A39B92] mt-3">
-              Showing sample events from v0.1.60 benchmarks. Connect to a testnet for live data.
-            </p>
+          {/* Live metrics summary */}
+          {connected && liveMetrics && (
+            <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
+              {[
+                { label: 'Consensus Rounds', value: liveMetrics.consensusRound?.toLocaleString() ?? '0', icon: Cpu },
+                { label: 'DAG Events', value: liveMetrics.dagEventsTotal?.toLocaleString() ?? '0', icon: Hash },
+                { label: 'TPS', value: liveMetrics.tps?.toLocaleString() ?? '0', icon: Zap },
+                { label: 'Shard Ops', value: liveMetrics.shardOperationsTotal?.toLocaleString() ?? '0', icon: Activity },
+              ].map(m => (
+                <div
+                  key={m.label}
+                  className="border rounded-md px-3 py-2"
+                  style={{ borderColor: 'rgba(212, 165, 116, 0.1)', background: 'rgba(26, 26, 26, 0.4)' }}
+                >
+                  <div className="flex items-center gap-1.5 text-xs text-[#A39B92] mb-1">
+                    <m.icon className="h-3 w-3" />
+                    {m.label}
+                  </div>
+                  <div className="font-[family-name:var(--font-jetbrains-mono)] text-sm text-[#F5F0EB]">
+                    {m.value}
+                  </div>
+                </div>
+              ))}
+            </div>
           )}
         </motion.div>
       </div>
