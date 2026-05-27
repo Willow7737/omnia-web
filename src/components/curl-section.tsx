@@ -1,23 +1,114 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Copy, Check } from 'lucide-react'
+import { Copy, Check, Loader2 } from 'lucide-react'
+import { useOmniaStatus } from '@/hooks/use-omnia-data'
+import type { NodeStatusResponse } from '@/lib/omnia-client'
 
-const curlCommand = `curl -s https://devnet.omnia.protocol/v1/status | jq .`
+const isLiveMode = process.env.NEXT_PUBLIC_LIVE_MODE === 'true'
+const API_BASE = process.env.NEXT_PUBLIC_OMNIA_API_URL || 'https://devnet.omnia.protocol'
 
-const jsonResponse = `{
-  "status": "alive",
-  "node_id": "0x7a3f...e912",
-  "uptime_seconds": 86400,
-  "finalized_height": 1173421,
-  "peers": 4,
-  "version": "0.1.48"
-}`
+const curlCommand = `curl -s ${API_BASE}/v1/status | jq .`
+
+function StaticJsonResponse() {
+  return (
+    <>
+      {'{\n'}
+      {'  '}
+      <span className="text-[#D4A574]">&quot;status&quot;</span>
+      {': '}
+      <span className="text-[#8C9E8E]">&quot;alive&quot;</span>
+      {',\n'}
+      {'  '}
+      <span className="text-[#D4A574]">&quot;node_id&quot;</span>
+      {': '}
+      <span className="text-[#8C9E8E]">&quot;0x7a3f...e912&quot;</span>
+      {',\n'}
+      {'  '}
+      <span className="text-[#D4A574]">&quot;uptime_seconds&quot;</span>
+      {': '}
+      <span className="text-[#F5F0EB]">86400</span>
+      {',\n'}
+      {'  '}
+      <span className="text-[#D4A574]">&quot;finalized_height&quot;</span>
+      {': '}
+      <span className="text-[#F5F0EB]">1173421</span>
+      {',\n'}
+      {'  '}
+      <span className="text-[#D4A574]">&quot;peers&quot;</span>
+      {': '}
+      <span className="text-[#F5F0EB]">4</span>
+      {',\n'}
+      {'  '}
+      <span className="text-[#D4A574]">&quot;version&quot;</span>
+      {': '}
+      <span className="text-[#8C9E8E]">&quot;0.1.57&quot;</span>
+      {'\n'}
+      {'}'}
+    </>
+  )
+}
+
+function LiveJsonResponse({ data }: { data: NodeStatusResponse | null | undefined }) {
+  if (!data) {
+    return (
+      <span className="text-[#6B6560]">
+        {'{\n'}
+        {'  '}
+        <span className="text-[#D4A574]">&quot;status&quot;</span>
+        {': '}
+        <span className="text-[#6B6560]">&quot;connecting...&quot;</span>
+        {'\n'}
+        {'}'}
+      </span>
+    )
+  }
+
+  return (
+    <>
+      {'{\n'}
+      {'  '}
+      <span className="text-[#D4A574]">&quot;status&quot;</span>
+      {': '}
+      <span className="text-[#8C9E8E]">&quot;{data.status}&quot;</span>
+      {',\n'}
+      {'  '}
+      <span className="text-[#D4A574]">&quot;node_id&quot;</span>
+      {': '}
+      <span className="text-[#8C9E8E]">&quot;{data.node_id.slice(0, 6)}...{data.node_id.slice(-4)}&quot;</span>
+      {',\n'}
+      {'  '}
+      <span className="text-[#D4A574]">&quot;uptime_seconds&quot;</span>
+      {': '}
+      <span className="text-[#F5F0EB]">{data.uptime_seconds}</span>
+      {',\n'}
+      {'  '}
+      <span className="text-[#D4A574]">&quot;finalized_height&quot;</span>
+      {': '}
+      <span className="text-[#F5F0EB]">{data.finalized_height.toLocaleString()}</span>
+      {',\n'}
+      {'  '}
+      <span className="text-[#D4A574]">&quot;peers&quot;</span>
+      {': '}
+      <span className="text-[#F5F0EB]">{data.peers}</span>
+      {',\n'}
+      {'  '}
+      <span className="text-[#D4A574]">&quot;version&quot;</span>
+      {': '}
+      <span className="text-[#8C9E8E]">&quot;{data.version}&quot;</span>
+      {'\n'}
+      {'}'}
+    </>
+  )
+}
 
 export function CurlSection() {
   const [copied, setCopied] = useState(false)
   const [flashActive, setFlashActive] = useState(false)
+
+  // Live data hook (only used when LIVE_MODE=true)
+  const { data: liveStatus, isLoading } = useOmniaStatus()
 
   const handleCopy = async () => {
     try {
@@ -42,12 +133,10 @@ export function CurlSection() {
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className="max-w-3xl mx-auto"
       >
-        {/* One-liner description */}
         <p className="text-lg text-[#A39B92] leading-relaxed mb-10 text-center max-w-2xl mx-auto">
           Omnia replaces sequential blockchains with parallel causal graph consensus using DAG + vector clocks + CRDTs. Settlement happens via ZK-rollup on any data-availability layer.
         </p>
 
-        {/* Code block */}
         <div
           className="rounded-lg border overflow-hidden"
           style={{
@@ -93,10 +182,13 @@ export function CurlSection() {
                 <span className="text-[#8C9E8E]">$</span>{' '}
                 <span className="text-[#D4A574]">curl</span>{' '}
                 <span className="text-[#A39B92]">-s</span>{' '}
-                <span className="text-[#8C9E8E]">https://devnet.omnia.protocol/v1/status</span>{' '}
+                <span className="text-[#8C9E8E]">{API_BASE}/v1/status</span>{' '}
                 <span className="text-[#A39B92]">|</span>{' '}
                 <span className="text-[#D4A574]">jq</span>{' '}
                 <span className="text-[#A39B92]">.</span>
+                {isLiveMode && isLoading && (
+                  <Loader2 className="inline h-3 w-3 animate-spin ml-2 text-[#D4A574]" />
+                )}
               </code>
             </pre>
           </div>
@@ -108,38 +200,11 @@ export function CurlSection() {
           <div className="px-5 py-4">
             <pre className="font-[family-name:var(--font-jetbrains-mono)] text-[13px] leading-relaxed overflow-x-auto text-[#A39B92]">
               <code>
-                {'{\n'}
-                {'  '}
-                <span className="text-[#D4A574]">&quot;status&quot;</span>
-                {': '}
-                <span className="text-[#8C9E8E]">&quot;alive&quot;</span>
-                {',\n'}
-                {'  '}
-                <span className="text-[#D4A574]">&quot;node_id&quot;</span>
-                {': '}
-                <span className="text-[#8C9E8E]">&quot;0x7a3f...e912&quot;</span>
-                {',\n'}
-                {'  '}
-                <span className="text-[#D4A574]">&quot;uptime_seconds&quot;</span>
-                {': '}
-                <span className="text-[#F5F0EB]">86400</span>
-                {',\n'}
-                {'  '}
-                <span className="text-[#D4A574]">&quot;finalized_height&quot;</span>
-                {': '}
-                <span className="text-[#F5F0EB]">1173421</span>
-                {',\n'}
-                {'  '}
-                <span className="text-[#D4A574]">&quot;peers&quot;</span>
-                {': '}
-                <span className="text-[#F5F0EB]">4</span>
-                {',\n'}
-                {'  '}
-                <span className="text-[#D4A574]">&quot;version&quot;</span>
-                {': '}
-                <span className="text-[#8C9E8E]">&quot;0.1.48&quot;</span>
-                {'\n'}
-                {'}'}
+                {isLiveMode ? (
+                  <LiveJsonResponse data={liveStatus} />
+                ) : (
+                  <StaticJsonResponse />
+                )}
               </code>
             </pre>
           </div>

@@ -1,9 +1,11 @@
 import type { NextConfig } from "next";
 
 const isGitHubPages = process.env.NEXT_BASE_PATH === "/omnia-web";
+const isLiveMode = process.env.NEXT_PUBLIC_LIVE_MODE === "true";
 
 const nextConfig: NextConfig = {
-  output: "export",
+  // Static export for GitHub Pages; SSR for live testnet dashboard
+  ...(isLiveMode ? {} : { output: "export" }),
   images: {
     unoptimized: true,
   },

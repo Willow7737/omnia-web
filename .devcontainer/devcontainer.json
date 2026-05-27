@@ -1,0 +1,40 @@
+{
+  "name": "Omnia Web Dashboard + Testnet",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {
+      "version": "latest",
+      "enableNonRootDocker": true
+    },
+    "ghcr.io/devcontainers-extra/features/bun:1": {
+      "version": "latest"
+    }
+  },
+  "forwardPorts": [3000, 9090, 9091, 9092, 9093, 9094, 9095],
+  "portsAttributes": {
+    "3000": { "label": "Omnia Web Dashboard", "onAutoForward": "openBrowser" },
+    "9090": { "label": "Bootstrap Node", "onAutoForward": "notify" },
+    "9091": { "label": "Node 1", "onAutoForward": "notify" },
+    "9092": { "label": "Node 2", "onAutoForward": "notify" },
+    "9093": { "label": "Node 3", "onAutoForward": "notify" },
+    "9094": { "label": "Node 4", "onAutoForward": "notify" },
+    "9095": { "label": "Prometheus", "onAutoForward": "notify" }
+  },
+  "postCreateCommand": "bun install",
+  "postStartCommand": "bash .devcontainer/start-testnet.sh",
+  "remoteEnv": {
+    "NEXT_PUBLIC_LIVE_MODE": "true",
+    "NEXT_PUBLIC_OMNIA_API_URL": "http://localhost:9090",
+    "NEXT_PUBLIC_OMNIA_NODE_URLS": "http://localhost:9090,http://localhost:9091,http://localhost:9092,http://localhost:9093,http://localhost:9094"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bradlc.vscode-tailwindcss",
+        "ms-azuretools.vscode-docker",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  }
+}
