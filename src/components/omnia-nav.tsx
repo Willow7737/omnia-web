@@ -9,11 +9,25 @@ const navLinks = [
   { href: '#agents', label: 'Agents' },
   { href: '#performance', label: 'Performance' },
   { href: '#transparency', label: 'Transparency' },
+  { href: '#events', label: 'Events' },
   { href: '#contribute', label: 'Contribute' },
 ]
 
 export function OmniaNav() {
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    setMobileOpen(false)
+
+    // Small delay to let the mobile menu close animation start
+    setTimeout(() => {
+      const target = document.querySelector(href)
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }, 100)
+  }
 
   return (
     <nav
@@ -24,6 +38,7 @@ export function OmniaNav() {
         {/* Logo */}
         <a
           href="#"
+          onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }) }}
           className="font-[family-name:var(--font-space-grotesk)] text-xl font-semibold tracking-tight text-[#F5F0EB] hover:text-[#D4A574] transition-colors"
         >
           Omnia
@@ -35,6 +50,7 @@ export function OmniaNav() {
             <a
               key={link.href}
               href={link.href}
+              onClick={(e) => handleNavClick(e, link.href)}
               className="text-sm text-[#A39B92] hover:text-[#D4A574] transition-colors font-[family-name:var(--font-space-grotesk)] tracking-tight"
             >
               {link.label}
@@ -63,13 +79,13 @@ export function OmniaNav() {
             className="md:hidden overflow-hidden backdrop-blur-xl bg-[#0F0F0F]/95 border-b"
             style={{ borderColor: 'rgba(212, 165, 116, 0.15)' }}
           >
-            <div className="px-6 py-4 flex flex-col gap-4">
+            <div className="px-6 py-4 flex flex-col gap-2">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMobileOpen(false)}
-                  className="text-sm text-[#A39B92] hover:text-[#D4A574] transition-colors font-[family-name:var(--font-space-grotesk)] tracking-tight py-2"
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="text-sm text-[#A39B92] hover:text-[#D4A574] transition-colors font-[family-name:var(--font-space-grotesk)] tracking-tight py-3 block active:bg-[rgba(212,165,116,0.05)] rounded-md px-2"
                 >
                   {link.label}
                 </a>

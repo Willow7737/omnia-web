@@ -2,8 +2,8 @@
  * Omnia Protocol API Client
  *
  * Centralized client for communicating with Omnia Protocol testnet nodes.
- * In live mode, fetches directly from node HTTP APIs (Caddy handles CORS proxy).
- * In static mode, all functions return null (components use simulated data).
+ * Always attempts to fetch live data. Returns null on failure so
+ * components can show graceful fallbacks.
  */
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -41,8 +41,6 @@ export interface NodeInfo {
 
 // ── Configuration ──────────────────────────────────────────────────────────
 
-const isLiveMode = typeof window !== 'undefined' && process.env.NEXT_PUBLIC_LIVE_MODE === 'true'
-
 function getApiBase(): string {
   return process.env.NEXT_PUBLIC_OMNIA_API_URL || 'http://localhost:9090'
 }
@@ -58,7 +56,7 @@ function getPollInterval(): number {
   return parseInt(process.env.NEXT_PUBLIC_POLL_INTERVAL_MS || '5000', 10)
 }
 
-export { isLiveMode, getApiBase, getNodeUrls, getPollInterval }
+export { getApiBase, getNodeUrls, getPollInterval }
 
 // ── Fetch Helper ───────────────────────────────────────────────────────────
 
@@ -68,7 +66,7 @@ async function fetchWithTimeout(url: string, timeoutMs = 5000): Promise<Response
   try {
     const res = await fetch(url, {
       signal: controller.signal,
-      headers: { 'Accept': 'application/json' },
+      headers: { Accept: 'application/json' },
     })
     return res
   } finally {
@@ -79,7 +77,6 @@ async function fetchWithTimeout(url: string, timeoutMs = 5000): Promise<Response
 // ── API Functions ──────────────────────────────────────────────────────────
 
 export async function fetchHealth(baseUrl?: string): Promise<HealthResponse | null> {
-  if (!isLiveMode) return null
   const base = baseUrl || getApiBase()
   try {
     const res = await fetchWithTimeout(`${base}/health`)
@@ -91,7 +88,6 @@ export async function fetchHealth(baseUrl?: string): Promise<HealthResponse | nu
 }
 
 export async function fetchReadyz(baseUrl?: string): Promise<ReadyzResponse | null> {
-  if (!isLiveMode) return null
   const base = baseUrl || getApiBase()
   try {
     const res = await fetchWithTimeout(`${base}/readyz`)
@@ -103,7 +99,6 @@ export async function fetchReadyz(baseUrl?: string): Promise<ReadyzResponse | nu
 }
 
 export async function fetchNodeStatus(baseUrl?: string): Promise<NodeStatusResponse | null> {
-  if (!isLiveMode) return null
   const base = baseUrl || getApiBase()
   try {
     const res = await fetchWithTimeout(`${base}/v1/status`)
@@ -115,7 +110,6 @@ export async function fetchNodeStatus(baseUrl?: string): Promise<NodeStatusRespo
 }
 
 export async function fetchMetrics(baseUrl?: string): Promise<string | null> {
-  if (!isLiveMode) return null
   const base = baseUrl || getApiBase()
   try {
     const res = await fetchWithTimeout(`${base}/metrics`)
@@ -127,7 +121,6 @@ export async function fetchMetrics(baseUrl?: string): Promise<string | null> {
 }
 
 export async function fetchAllNodes(): Promise<NodeInfo[]> {
-  if (!isLiveMode) return []
   const urls = getNodeUrls()
   const nodes = await Promise.all(
     urls.map(async (url, index) => {
@@ -154,9 +147,11 @@ export async function fetchAllNodes(): Promise<NodeInfo[]> {
 export interface ParsedMetrics {
   eventsFinalized: number
   p50Latency: string
+  p99Latency: string
   activeValidators: number
   peerCount: number
   uptime: number
+  tps: number
 }
 
 export function parsePrometheusMetrics(text: string): Partial<ParsedMetrics> {
@@ -179,6 +174,9 @@ export function parsePrometheusMetrics(text: string): Partial<ParsedMetrics> {
       case 'omnia_consensus_finality_latency_p50':
         metrics.p50Latency = `${num.toFixed(2)}µs`
         break
+      case 'omnia_consensus_finality_latency_p99':
+        metrics.p99Latency = `${num.toFixed(2)}µs`
+        break
       case 'omnia_network_active_peers':
         metrics.peerCount = num
         break
@@ -187,6 +185,9 @@ export function parsePrometheusMetrics(text: string): Partial<ParsedMetrics> {
         break
       case 'omnia_consensus_active_validators':
         metrics.activeValidators = num
+        break
+      case 'omnia_consensus_tps':
+        metrics.tps = num
         break
     }
   }

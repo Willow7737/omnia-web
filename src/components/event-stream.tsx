@@ -4,14 +4,13 @@
  * Real-time event stream component
  *
  * Displays a live feed of consensus events from the Omnia Protocol testnet.
- * Uses Server-Sent Events (SSE) for efficient real-time streaming.
+ * Uses Server-Sent Events (SSE) for efficient real-time streaming,
+ * with polling fallback.
  */
 
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Activity, Clock, Hash } from 'lucide-react'
-
-const isLiveMode = process.env.NEXT_PUBLIC_LIVE_MODE === 'true'
+import { Activity, Clock, Hash, Loader2 } from 'lucide-react'
 
 export interface ConsensusEvent {
   id: string
@@ -26,21 +25,19 @@ export function EventStream() {
   const [events, setEvents] = useState<ConsensusEvent[]>([])
   const [connected, setConnected] = useState(false)
   const [eventCount, setEventCount] = useState(0)
+  const [triedConnect, setTriedConnect] = useState(false)
 
   const handleEvent = useCallback((event: ConsensusEvent) => {
     setEvents(prev => {
-      const next = [event, ...prev].slice(0, 50) // Keep last 50 events
+      const next = [event, ...prev].slice(0, 50)
       return next
     })
     setEventCount(prev => prev + 1)
   }, [])
 
   useEffect(() => {
-    if (!isLiveMode) return
-
     const apiBase = process.env.NEXT_PUBLIC_OMNIA_API_URL || 'http://localhost:9090'
 
-    // Try SSE connection first
     let eventSource: EventSource | null = null
     let pollInterval: ReturnType<typeof setInterval> | null = null
 
@@ -48,7 +45,10 @@ export function EventStream() {
       try {
         eventSource = new EventSource(`${apiBase}/v1/events/stream`)
 
-        eventSource.onopen = () => setConnected(true)
+        eventSource.onopen = () => {
+          setConnected(true)
+          setTriedConnect(true)
+        }
 
         eventSource.onmessage = (e) => {
           try {
@@ -61,11 +61,12 @@ export function EventStream() {
 
         eventSource.onerror = () => {
           setConnected(false)
+          setTriedConnect(true)
           eventSource?.close()
-          // Fall back to polling
           startPolling()
         }
       } catch {
+        setTriedConnect(true)
         startPolling()
       }
     }
@@ -78,12 +79,14 @@ export function EventStream() {
           if (res.ok) {
             const data = await res.json()
             setConnected(true)
+            setTriedConnect(true)
             if (Array.isArray(data)) {
               data.forEach((e: ConsensusEvent) => handleEvent(e))
             }
           }
         } catch {
           setConnected(false)
+          setTriedConnect(true)
         }
       }, 5000)
     }
@@ -95,8 +98,6 @@ export function EventStream() {
       if (pollInterval) clearInterval(pollInterval)
     }
   }, [handleEvent])
-
-  if (!isLiveMode) return null
 
   return (
     <section id="events" className="section-padding px-6">
@@ -123,7 +124,7 @@ export function EventStream() {
               </span>
               <span className={`flex items-center gap-1.5 text-xs ${connected ? 'text-[#8C9E8E]' : 'text-[#6B6560]'}`}>
                 <span className={`h-2 w-2 rounded-full ${connected ? 'bg-[#8C9E8E]' : 'bg-[#6B6560]'}`} />
-                {connected ? 'Connected' : 'Disconnected'}
+                {connected ? 'Connected' : !triedConnect ? 'Connecting...' : 'Offline'}
               </span>
             </div>
           </div>
@@ -134,7 +135,7 @@ export function EventStream() {
           >
             {/* Header */}
             <div
-              className="grid grid-cols-[1fr_80px_120px_100px] gap-2 px-4 py-2 text-xs text-[#A39B92] uppercase tracking-wider font-[family-name:var(--font-space-grotesk)] border-b"
+              className="hidden sm:grid grid-cols-[1fr_80px_120px_100px] gap-2 px-4 py-2 text-xs text-[#A39B92] uppercase tracking-wider font-[family-name:var(--font-space-grotesk)] border-b"
               style={{ borderColor: 'rgba(212, 165, 116, 0.1)' }}
             >
               <span>Event ID</span>
@@ -147,8 +148,15 @@ export function EventStream() {
             <div className="max-h-80 overflow-y-auto">
               <AnimatePresence>
                 {events.length === 0 ? (
-                  <div className="px-4 py-8 text-center text-sm text-[#6B6560]">
-                    Waiting for events...
+                  <div className="px-4 py-8 text-center text-sm text-[#6B6560] flex items-center justify-center gap-2">
+                    {!triedConnect ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        Connecting to event stream...
+                      </>
+                    ) : (
+                      'No live events — testnet not reachable'
+                    )}
                   </div>
                 ) : (
                   events.map((event, i) => (
@@ -157,7 +165,7 @@ export function EventStream() {
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3 }}
-                      className={`grid grid-cols-[1fr_80px_120px_100px] gap-2 px-4 py-2.5 text-xs ${
+                      className={`grid grid-cols-1 sm:grid-cols-[1fr_80px_120px_100px] gap-1 sm:gap-2 px-4 py-2.5 text-xs ${
                         i < events.length - 1 ? 'border-b' : ''
                       }`}
                       style={{

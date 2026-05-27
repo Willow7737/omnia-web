@@ -10,8 +10,6 @@ import { ContributeSection } from '@/components/contribute-section'
 import { Footer } from '@/components/footer'
 import { OmniaProviders } from '@/components/providers'
 
-const isLiveMode = process.env.NEXT_PUBLIC_LIVE_MODE === 'true'
-
 export default function Home() {
   return (
     <OmniaProviders>
@@ -24,7 +22,7 @@ export default function Home() {
           <AgentSection />
           <PerformanceSection />
           <TransparencySection />
-          {isLiveMode && <EventStream />}
+          <EventStream />
           <ContributeSection />
         </main>
         <Footer />

@@ -2,18 +2,20 @@
 
 import { motion } from 'framer-motion'
 import { AnimatedNumber } from './animated-number'
+import { useOmniaMetrics } from '@/hooks/use-omnia-data'
 
 interface MetricRow {
   metric: string
   value: number
   unit: string
   decimals?: number
+  liveKey?: string
 }
 
 const mainMetrics: MetricRow[] = [
-  { metric: 'Sustained TPS (single-node)', value: 7190, unit: 'events/sec', decimals: 0 },
-  { metric: 'Finality Latency p50', value: 93.47, unit: 'µs', decimals: 2 },
-  { metric: 'Finality Latency p99', value: 177.06, unit: 'µs', decimals: 2 },
+  { metric: 'Sustained TPS (single-node)', value: 7190, unit: 'events/sec', decimals: 0, liveKey: 'tps' },
+  { metric: 'Finality Latency p50', value: 93.47, unit: 'µs', decimals: 2, liveKey: 'p50Latency' },
+  { metric: 'Finality Latency p99', value: 177.06, unit: 'µs', decimals: 2, liveKey: 'p99Latency' },
   { metric: 'ZK Proof Verify', value: 2.67, unit: 'ms', decimals: 2 },
   { metric: 'DAG Insert p50', value: 18.09, unit: 'µs', decimals: 2 },
   { metric: 'Gossip Propagation p50', value: 38.93, unit: 'µs', decimals: 2 },
@@ -26,7 +28,7 @@ const zkMetrics: MetricRow[] = [
   { metric: 'Merkle tree build (64 leaves)', value: 348.0, unit: 'µs', decimals: 2 },
 ]
 
-function MetricTable({ metrics, title }: { metrics: MetricRow[]; title?: string }) {
+function MetricTable({ metrics, title, liveMetrics }: { metrics: MetricRow[]; title?: string; liveMetrics: Record<string, string | number | undefined> | null }) {
   return (
     <div>
       {title && (
@@ -35,30 +37,65 @@ function MetricTable({ metrics, title }: { metrics: MetricRow[]; title?: string 
         </h3>
       )}
       <div className="border rounded-md overflow-hidden" style={{ borderColor: 'rgba(212, 165, 116, 0.15)' }}>
-        {metrics.map((row, i) => (
-          <div
-            key={row.metric}
-            className={`flex items-center justify-between px-5 py-3 ${
-              i < metrics.length - 1 ? 'border-b' : ''
-            }`}
-            style={{
-              borderColor: 'rgba(212, 165, 116, 0.1)',
-              background: i % 2 === 0 ? 'rgba(26, 26, 26, 0.3)' : 'transparent',
-            }}
-          >
-            <span className="text-sm text-[#A39B92] leading-relaxed">{row.metric}</span>
-            <span className="font-[family-name:var(--font-jetbrains-mono)] text-sm text-[#F5F0EB] shrink-0 ml-6">
-              <AnimatedNumber value={row.value} decimals={row.decimals ?? 0} duration={2500} />{' '}
-              <span className="text-[#A39B92]">{row.unit}</span>
-            </span>
-          </div>
-        ))}
+        {metrics.map((row, i) => {
+          // Check if we have live data for this metric
+          let displayValue = row.value
+          let displayUnit = row.unit
+          let isLive = false
+
+          if (liveMetrics && row.liveKey) {
+            const liveVal = liveMetrics[row.liveKey]
+            if (liveVal !== undefined && liveVal !== null) {
+              if (typeof liveVal === 'string') {
+                // Parse values like "93.47µs"
+                const numMatch = liveVal.match(/^([\d.]+)/)
+                const unitMatch = liveVal.match(/([µm]?s)$/)
+                if (numMatch) displayValue = parseFloat(numMatch[1])
+                if (unitMatch) displayUnit = unitMatch[1]
+                isLive = true
+              } else if (typeof liveVal === 'number') {
+                displayValue = liveVal
+                isLive = true
+              }
+            }
+          }
+
+          return (
+            <div
+              key={row.metric}
+              className={`flex items-center justify-between px-5 py-3 ${
+                i < metrics.length - 1 ? 'border-b' : ''
+              }`}
+              style={{
+                borderColor: 'rgba(212, 165, 116, 0.1)',
+                background: i % 2 === 0 ? 'rgba(26, 26, 26, 0.3)' : 'transparent',
+              }}
+            >
+              <span className="text-sm text-[#A39B92] leading-relaxed">{row.metric}</span>
+              <span className="font-[family-name:var(--font-jetbrains-mono)] text-sm text-[#F5F0EB] shrink-0 ml-6">
+                <AnimatedNumber value={displayValue} decimals={row.decimals ?? 0} duration={isLive ? 1000 : 2500} />{' '}
+                <span className="text-[#A39B92]">{displayUnit}</span>
+                {isLive && <span className="ml-2 inline-block w-1.5 h-1.5 rounded-full bg-[#8C9E8E]" />}
+              </span>
+            </div>
+          )
+        })}
       </div>
     </div>
   )
 }
 
 export function PerformanceSection() {
+  const { data: liveMetrics } = useOmniaMetrics()
+
+  const liveDataMap: Record<string, string | number | undefined> | null = liveMetrics
+    ? {
+        tps: liveMetrics.tps,
+        p50Latency: liveMetrics.p50Latency,
+        p99Latency: liveMetrics.p99Latency,
+      }
+    : null
+
   return (
     <section id="performance" className="section-padding px-6">
       <div className="max-w-3xl mx-auto">
@@ -72,7 +109,8 @@ export function PerformanceSection() {
             Performance Baseline
           </h2>
           <p className="text-sm text-[#A39B92] mb-10">
-            Consensus throughput benchmarks from v0.1.48 single-node tests
+            Consensus throughput benchmarks from v0.1.60 single-node tests
+            {liveDataMap && <span className="text-[#8C9E8E]"> · live metrics shown with green dot</span>}
           </p>
         </motion.div>
 
@@ -83,8 +121,8 @@ export function PerformanceSection() {
           transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
           className="space-y-8"
         >
-          <MetricTable metrics={mainMetrics} />
-          <MetricTable metrics={zkMetrics} title="ZK Performance" />
+          <MetricTable metrics={mainMetrics} liveMetrics={liveDataMap} />
+          <MetricTable metrics={zkMetrics} title="ZK Performance" liveMetrics={liveDataMap} />
         </motion.div>
       </div>
     </section>

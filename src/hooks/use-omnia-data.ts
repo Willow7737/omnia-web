@@ -2,14 +2,14 @@
  * React Query hooks for Omnia Protocol live data
  *
  * Provides real-time data fetching from the testnet with automatic
- * polling, caching, and error handling. Only active in LIVE_MODE.
+ * polling, caching, and error handling. Always attempts live fetch;
+ * components handle fallback when data is unavailable.
  */
 
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
 import {
-  isLiveMode,
   fetchHealth,
   fetchReadyz,
   fetchNodeStatus,
@@ -37,6 +37,11 @@ export interface DashboardData {
   nodes: NodeInfo[]
   status: NodeStatusResponse | null
   health: HealthResponse | null
+  metrics: {
+    p50Latency: string
+    p99Latency: string
+    tps: number
+  } | null
 }
 
 export function useOmniaDashboard(): {
@@ -48,19 +53,21 @@ export function useOmniaDashboard(): {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ['omnia-dashboard'],
     queryFn: async (): Promise<DashboardData> => {
-      const [health, readyz, status, nodes] = await Promise.all([
+      const [health, readyz, status, nodes, rawMetrics] = await Promise.all([
         fetchHealth(),
         fetchReadyz(),
         fetchNodeStatus(),
         fetchAllNodes(),
+        fetchMetrics(),
       ])
 
       const healthyNodes = nodes.filter(n => n.healthy).length
+      const parsedMetrics = rawMetrics ? parsePrometheusMetrics(rawMetrics) : null
 
       return {
         eventsFinalized: readyz?.finalized_height ?? status?.finalized_height ?? 0,
-        p50Latency: '—',
-        activeValidators: healthyNodes,
+        p50Latency: parsedMetrics?.p50Latency ?? '—',
+        activeValidators: parsedMetrics?.activeValidators ?? healthyNodes,
         networkStatus: healthyNodes > 0
           ? (healthyNodes >= 3 ? 'Testnet Live' : 'Degraded')
           : 'Offline',
@@ -69,11 +76,17 @@ export function useOmniaDashboard(): {
         nodes,
         status,
         health,
+        metrics: parsedMetrics
+          ? {
+              p50Latency: parsedMetrics.p50Latency ?? '—',
+              p99Latency: parsedMetrics.p99Latency ?? '—',
+              tps: parsedMetrics.tps ?? 0,
+            }
+          : null,
       }
     },
-    enabled: isLiveMode,
     refetchInterval: POLL_INTERVAL,
-    retry: 2,
+    retry: 1,
     staleTime: POLL_INTERVAL / 2,
   })
 
@@ -86,9 +99,8 @@ export function useOmniaHealth() {
   return useQuery({
     queryKey: ['omnia-health'],
     queryFn: () => fetchHealth(),
-    enabled: isLiveMode,
     refetchInterval: POLL_INTERVAL,
-    retry: 2,
+    retry: 1,
   })
 }
 
@@ -96,9 +108,8 @@ export function useOmniaReadyz() {
   return useQuery({
     queryKey: ['omnia-readyz'],
     queryFn: () => fetchReadyz(),
-    enabled: isLiveMode,
     refetchInterval: POLL_INTERVAL,
-    retry: 2,
+    retry: 1,
   })
 }
 
@@ -106,9 +117,8 @@ export function useOmniaStatus() {
   return useQuery({
     queryKey: ['omnia-status'],
     queryFn: () => fetchNodeStatus(),
-    enabled: isLiveMode,
     refetchInterval: POLL_INTERVAL,
-    retry: 2,
+    retry: 1,
   })
 }
 
@@ -120,9 +130,8 @@ export function useOmniaMetrics() {
       if (!raw) return null
       return parsePrometheusMetrics(raw)
     },
-    enabled: isLiveMode,
     refetchInterval: POLL_INTERVAL,
-    retry: 2,
+    retry: 1,
   })
 }
 
@@ -130,8 +139,7 @@ export function useOmniaNodes() {
   return useQuery({
     queryKey: ['omnia-nodes'],
     queryFn: () => fetchAllNodes(),
-    enabled: isLiveMode,
     refetchInterval: POLL_INTERVAL,
-    retry: 2,
+    retry: 1,
   })
 }
