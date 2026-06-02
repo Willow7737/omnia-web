@@ -2,8 +2,10 @@
  * Omnia Protocol API Client
  *
  * Centralized client for communicating with Omnia Protocol testnet nodes.
- * Always attempts to fetch live data. Returns null on failure so
- * components can show graceful fallbacks.
+ * Uses the server-side API proxy to avoid Docker networking and CORS issues.
+ *
+ * Architecture:
+ *   Browser → /api/proxy/{path}?node=N → Next.js Server → Docker Network → omnia-node
  *
  * Endpoint mapping to the actual omnia-node API:
  * - GET /health              → liveness probe
@@ -66,24 +68,34 @@ export interface NodeInfo {
 
 // ── Configuration ──────────────────────────────────────────────────────────
 
-function getApiBase(): string {
-  return process.env.NEXT_PUBLIC_OMNIA_API_URL || 'http://localhost:9090'
-}
+const DEFAULT_NODE_COUNT = 5
 
-function getNodeUrls(): string[] {
-  return (process.env.NEXT_PUBLIC_OMNIA_NODE_URLS || 'http://localhost:9090')
-    .split(',')
-    .map((u: string) => u.trim())
-    .filter(Boolean)
+function getNodeCount(): number {
+  // Try to use a build-time hint if available
+  if (typeof window !== 'undefined') {
+    return DEFAULT_NODE_COUNT
+  }
+  return DEFAULT_NODE_COUNT
 }
 
 function getPollInterval(): number {
   return parseInt(process.env.NEXT_PUBLIC_POLL_INTERVAL_MS || '5000', 10)
 }
 
-export { getApiBase, getNodeUrls, getPollInterval }
+export { getPollInterval }
 
-// ── Fetch Helper ───────────────────────────────────────────────────────────
+// ── Proxy-aware Fetch Helper ───────────────────────────────────────────────
+
+/**
+ * Build a proxy URL for the given node path.
+ * Uses the Next.js API proxy to route through Docker networking.
+ *
+ * @param path - API path (e.g. "healthz", "api/v1/node/info", "metrics")
+ * @param nodeIndex - Node index (0=bootstrap, 1-4=nodes)
+ */
+function proxyUrl(path: string, nodeIndex = 0): string {
+  return `/api/proxy/${path}?node=${nodeIndex}`
+}
 
 async function fetchWithTimeout(url: string, timeoutMs = 5000): Promise<Response> {
   const controller = new AbortController()
@@ -101,10 +113,9 @@ async function fetchWithTimeout(url: string, timeoutMs = 5000): Promise<Response
 
 // ── API Functions ──────────────────────────────────────────────────────────
 
-export async function fetchHealth(baseUrl?: string): Promise<HealthResponse | null> {
-  const base = baseUrl || getApiBase()
+export async function fetchHealth(nodeIndex = 0): Promise<HealthResponse | null> {
   try {
-    const res = await fetchWithTimeout(`${base}/health`)
+    const res = await fetchWithTimeout(proxyUrl('healthz', nodeIndex))
     if (!res.ok) return null
     return await res.json()
   } catch {
@@ -112,10 +123,9 @@ export async function fetchHealth(baseUrl?: string): Promise<HealthResponse | nu
   }
 }
 
-export async function fetchReadyz(baseUrl?: string): Promise<ReadyzResponse | null> {
-  const base = baseUrl || getApiBase()
+export async function fetchReadyz(nodeIndex = 0): Promise<ReadyzResponse | null> {
   try {
-    const res = await fetchWithTimeout(`${base}/readyz`)
+    const res = await fetchWithTimeout(proxyUrl('readyz', nodeIndex))
     if (!res.ok) return null
     return await res.json()
   } catch {
@@ -123,10 +133,9 @@ export async function fetchReadyz(baseUrl?: string): Promise<ReadyzResponse | nu
   }
 }
 
-export async function fetchNodeStatus(baseUrl?: string): Promise<NodeStatusResponse | null> {
-  const base = baseUrl || getApiBase()
+export async function fetchNodeStatus(nodeIndex = 0): Promise<NodeStatusResponse | null> {
   try {
-    const res = await fetchWithTimeout(`${base}/api/v1/node/info`)
+    const res = await fetchWithTimeout(proxyUrl('api/v1/node/info', nodeIndex))
     if (!res.ok) return null
     return await res.json()
   } catch {
@@ -134,10 +143,9 @@ export async function fetchNodeStatus(baseUrl?: string): Promise<NodeStatusRespo
   }
 }
 
-export async function fetchPeers(baseUrl?: string): Promise<PeersResponse | null> {
-  const base = baseUrl || getApiBase()
+export async function fetchPeers(nodeIndex = 0): Promise<PeersResponse | null> {
   try {
-    const res = await fetchWithTimeout(`${base}/api/v1/node/peers`)
+    const res = await fetchWithTimeout(proxyUrl('api/v1/node/peers', nodeIndex))
     if (!res.ok) return null
     return await res.json()
   } catch {
@@ -145,10 +153,9 @@ export async function fetchPeers(baseUrl?: string): Promise<PeersResponse | null
   }
 }
 
-export async function fetchMetrics(baseUrl?: string): Promise<string | null> {
-  const base = baseUrl || getApiBase()
+export async function fetchMetrics(nodeIndex = 0): Promise<string | null> {
   try {
-    const res = await fetchWithTimeout(`${base}/metrics`)
+    const res = await fetchWithTimeout(proxyUrl('metrics', nodeIndex))
     if (!res.ok) return null
     return await res.text()
   } catch {
@@ -157,17 +164,17 @@ export async function fetchMetrics(baseUrl?: string): Promise<string | null> {
 }
 
 export async function fetchAllNodes(): Promise<NodeInfo[]> {
-  const urls = getNodeUrls()
+  const nodeCount = getNodeCount()
   const nodes = await Promise.all(
-    urls.map(async (url, index) => {
+    Array.from({ length: nodeCount }, async (_, index) => {
       const [health, status] = await Promise.all([
-        fetchHealth(url),
-        fetchNodeStatus(url),
+        fetchHealth(index),
+        fetchNodeStatus(index),
       ])
       return {
         id: `node-${index}`,
         name: index === 0 ? 'Bootstrap' : `Node ${index}`,
-        url,
+        url: `/api/proxy/?node=${index}`,
         health,
         status,
         healthy: health?.status === 'alive',

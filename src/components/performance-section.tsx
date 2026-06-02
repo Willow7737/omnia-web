@@ -18,8 +18,8 @@ const mainMetrics: MetricRow[] = [
   { metric: 'Finality Latency p50', value: 93.47, unit: 'µs', decimals: 2, liveKey: 'p50Latency' },
   { metric: 'Finality Latency p95', value: 154.76, unit: 'µs', decimals: 2 },
   { metric: 'Finality Latency p99', value: 177.06, unit: 'µs', decimals: 2, liveKey: 'p99Latency' },
-  { metric: 'DAG Insert p50', value: 18.09, unit: 'µs', decimals: 2 },
-  { metric: 'Gossip Propagation p50', value: 38.93, unit: 'µs', decimals: 2 },
+  { metric: 'DAG Insert p50', value: 18.09, unit: 'µs', decimals: 2, liveKey: 'dagInsertP50' },
+  { metric: 'Gossip Propagation p50', value: 38.93, unit: 'µs', decimals: 2, liveKey: 'gossipPropagationP50' },
   { metric: 'VRF Compute', value: 18.73, unit: 'µs', decimals: 2 },
   { metric: 'VRF Verify', value: 38.61, unit: 'µs', decimals: 2 },
 ]
@@ -97,6 +97,8 @@ export function PerformanceSection() {
         tps: liveMetrics.tps,
         p50Latency: liveMetrics.p50Latency,
         p99Latency: liveMetrics.p99Latency,
+        gossipPropagationP50: liveMetrics.gossipPropagationP50,
+        dagInsertP50: liveMetrics.dagInsertP50,
       }
     : null
 
