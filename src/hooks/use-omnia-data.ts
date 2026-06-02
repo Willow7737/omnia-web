@@ -42,6 +42,8 @@ export interface DashboardData {
     p50Latency: string
     p99Latency: string
     tps: number
+    gossipPropagationP50: string
+    dagInsertP50: string
   } | null
 }
 
@@ -92,6 +94,8 @@ export function useOmniaDashboard(): {
               p50Latency: parsedMetrics.p50Latency ?? '—',
               p99Latency: parsedMetrics.p99Latency ?? '—',
               tps: parsedMetrics.tps ?? 0,
+              gossipPropagationP50: parsedMetrics.gossipPropagationP50 ?? '—',
+              dagInsertP50: parsedMetrics.dagInsertP50 ?? '—',
             }
           : null,
       }

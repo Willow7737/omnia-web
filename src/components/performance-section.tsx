@@ -12,21 +12,24 @@ interface MetricRow {
   liveKey?: string
 }
 
-// Benchmark data from v0.1.60 single-node tests
+// Benchmark data from v0.1.67 single-node tests (originally measured v0.1.48)
 const mainMetrics: MetricRow[] = [
   { metric: 'Sustained TPS (single-node)', value: 7190, unit: 'events/sec', decimals: 0, liveKey: 'tps' },
   { metric: 'Finality Latency p50', value: 93.47, unit: 'µs', decimals: 2, liveKey: 'p50Latency' },
+  { metric: 'Finality Latency p95', value: 154.76, unit: 'µs', decimals: 2 },
   { metric: 'Finality Latency p99', value: 177.06, unit: 'µs', decimals: 2, liveKey: 'p99Latency' },
-  { metric: 'ZK Proof Verify', value: 2.67, unit: 'ms', decimals: 2 },
   { metric: 'DAG Insert p50', value: 18.09, unit: 'µs', decimals: 2 },
   { metric: 'Gossip Propagation p50', value: 38.93, unit: 'µs', decimals: 2 },
   { metric: 'VRF Compute', value: 18.73, unit: 'µs', decimals: 2 },
+  { metric: 'VRF Verify', value: 38.61, unit: 'µs', decimals: 2 },
 ]
 
 const zkMetrics: MetricRow[] = [
-  { metric: 'Groth16 proof gen (basic)', value: 1.73, unit: 'ms', decimals: 2 },
+  { metric: 'Groth16 proof gen (basic, 1 tx)', value: 1.73, unit: 'ms', decimals: 2 },
   { metric: 'Groth16 proof gen (expanded, 4 events)', value: 317.01, unit: 'ms', decimals: 2 },
+  { metric: 'Groth16 proof verify', value: 2.67, unit: 'ms', decimals: 2 },
   { metric: 'Merkle tree build (64 leaves)', value: 348.0, unit: 'µs', decimals: 2 },
+  { metric: 'Merkle tree build (256 leaves)', value: 5.31, unit: 'ms', decimals: 2 },
 ]
 
 function MetricTable({ metrics, title, liveMetrics }: { metrics: MetricRow[]; title?: string; liveMetrics: Record<string, string | number | undefined> | null }) {
@@ -110,7 +113,7 @@ export function PerformanceSection() {
             Performance Baseline
           </h2>
           <p className="text-sm text-[#A39B92] mb-10">
-            Consensus throughput benchmarks from v0.1.60 single-node tests
+            Consensus throughput benchmarks from v0.1.67 single-node tests (measured v0.1.48)
             {hasLiveData && <span className="text-[#8C9E8E]"> · live metrics shown with <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#8C9E8E] align-middle" /> dot</span>}
           </p>
         </motion.div>

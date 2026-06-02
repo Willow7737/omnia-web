@@ -194,36 +194,47 @@ export interface ParsedMetrics {
   httpRequestsTotal: number
   memoryRssBytes: number
   shardOperationsTotal: number
+  gossipPropagationP50: string
+  dagInsertP50: string
 }
 
 export function parsePrometheusMetrics(text: string): Partial<ParsedMetrics> {
   const metrics: Partial<ParsedMetrics> = {}
 
+  // Collect histogram bucket counts for percentile computation
+  const histogramBuckets: Record<string, Record<string, number>> = {}
+  const histogramSums: Record<string, number> = {}
+  const histogramCounts: Record<string, number> = {}
+
   const lines = text.split('\n')
   for (const line of lines) {
     if (line.startsWith('#') || !line.trim()) continue
 
-    const match = line.match(/^(\w+)(?:\{[^}]*\})?\s+([\d.e+-]+|nan|inf)/)
+    const match = line.match(/^(\w+)(?:\{([^}]*)\})?\s+([\d.e+-]+|nan|inf)/)
     if (!match) continue
 
-    const [, name, value] = match
+    const [, name, labels, value] = match
     const num = parseFloat(value)
+
+    // Collect histogram buckets for percentile computation
+    if (name.endsWith('_bucket')) {
+      const baseName = name.replace(/_bucket$/, '')
+      if (!histogramBuckets[baseName]) histogramBuckets[baseName] = {}
+      const leMatch = labels?.match(/le="([^"]+)"/)
+      if (leMatch) {
+        histogramBuckets[baseName][leMatch[1]] = num
+      }
+    } else if (name.endsWith('_sum')) {
+      const baseName = name.replace(/_sum$/, '')
+      histogramSums[baseName] = num
+    } else if (name.endsWith('_count')) {
+      const baseName = name.replace(/_count$/, '')
+      histogramCounts[baseName] = num
+    }
 
     switch (name) {
       case 'omnia_node_events_finalized_total':
         metrics.eventsFinalized = num
-        break
-      case 'omnia_consensus_finality_latency_seconds_sum':
-        // Convert seconds to microseconds for display
-        if (num > 0) {
-          const count = metrics._finalityCount || 0
-          if (count > 0) {
-            metrics.p50Latency = `${((num / count) * 1_000_000).toFixed(2)}µs`
-          }
-        }
-        break
-      case 'omnia_consensus_finality_latency_seconds_count':
-        metrics._finalityCount = num
         break
       case 'omnia_consensus_tps':
         metrics.tps = num
@@ -252,12 +263,79 @@ export function parsePrometheusMetrics(text: string): Partial<ParsedMetrics> {
     }
   }
 
+  // Compute percentiles from histogram buckets
+  // For finality latency
+  const finalityBuckets = histogramBuckets['omnia_consensus_finality_latency_seconds']
+  if (finalityBuckets && histogramCounts['omnia_consensus_finality_latency_seconds']) {
+    const totalCount = histogramCounts['omnia_consensus_finality_latency_seconds']
+    if (totalCount > 0) {
+      const p50 = computePercentile(finalityBuckets, totalCount, 0.50)
+      const p99 = computePercentile(finalityBuckets, totalCount, 0.99)
+      if (p50 !== null) metrics.p50Latency = `${(p50 * 1_000_000).toFixed(2)}µs`
+      if (p99 !== null) metrics.p99Latency = `${(p99 * 1_000_000).toFixed(2)}µs`
+    }
+  }
+
+  // For gossip propagation latency
+  const gossipBuckets = histogramBuckets['omnia_gossip_propagation_latency_seconds']
+  if (gossipBuckets && histogramCounts['omnia_gossip_propagation_latency_seconds']) {
+    const totalCount = histogramCounts['omnia_gossip_propagation_latency_seconds']
+    if (totalCount > 0) {
+      const p50 = computePercentile(gossipBuckets, totalCount, 0.50)
+      if (p50 !== null) metrics.gossipPropagationP50 = `${(p50 * 1_000_000).toFixed(2)}µs`
+    }
+  }
+
+  // For DAG insertion latency
+  const dagBuckets = histogramBuckets['omnia_dag_insertion_latency_seconds']
+  if (dagBuckets && histogramCounts['omnia_dag_insertion_latency_seconds']) {
+    const totalCount = histogramCounts['omnia_dag_insertion_latency_seconds']
+    if (totalCount > 0) {
+      const p50 = computePercentile(dagBuckets, totalCount, 0.50)
+      if (p50 !== null) metrics.dagInsertP50 = `${(p50 * 1_000_000).toFixed(2)}µs`
+    }
+  }
+
   return metrics
 }
 
-// Internal type for parser
-declare module './omnia-client' {
-  interface ParsedMetrics {
-    _finalityCount?: number
+/**
+ * Compute a percentile value from Prometheus histogram buckets using linear interpolation.
+ *
+ * Prometheus histograms expose cumulative bucket counts with `le` (less-than-or-equal) labels.
+ * This function finds the two buckets that bracket the requested percentile and
+ * linearly interpolates between them.
+ */
+function computePercentile(
+  buckets: Record<string, number>,
+  totalCount: number,
+  percentile: number,
+): number | null {
+  // Sort bucket boundaries numerically
+  const sortedLe = Object.keys(buckets)
+    .filter(le => le !== '+Inf')
+    .map(le => parseFloat(le))
+    .sort((a, b) => a - b)
+
+  if (sortedLe.length === 0) return null
+
+  const targetCount = totalCount * percentile
+
+  let prevCount = 0
+  let prevLe = 0
+
+  for (const le of sortedLe) {
+    const count = buckets[le.toString()] ?? 0
+    if (count >= targetCount) {
+      // Linear interpolation between the previous bucket and this one
+      if (count === prevCount) return le
+      const fraction = (targetCount - prevCount) / (count - prevCount)
+      return prevLe + fraction * (le - prevLe)
+    }
+    prevCount = count
+    prevLe = le
   }
+
+  // Percentile is above all bucket boundaries — return the largest boundary
+  return sortedLe[sortedLe.length - 1]
 }

@@ -14,13 +14,13 @@ const curlCommand = `curl -s ${API_BASE}/api/v1/node/info | jq .`
 const BENCHMARK_STATUS: NodeStatusResponse = {
   node_id: '01000000',
   node_id_num: 1,
-  version: '0.1.60',
+  version: '0.1.67',
   protocol_version: '4.0.0',
   finalized_height: 7190000,
   peers: 0,
   shard_count: 6,
-  listen_addr: '0.0.0.0:4001',
-  data_dir: './data',
+  listen_addr: '/ip4/0.0.0.0/udp/4001/quic-v1',
+  data_dir: '/app/data',
   uptime_seconds: 86400,
 }
 

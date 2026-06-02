@@ -128,7 +128,7 @@ export function ArchitectureSection() {
             Architecture Stack
           </h2>
           <p className="text-sm text-[#A39B92] mb-10">
-            Hover each layer for details. All six layers are implemented in the v0.1.60 codebase.
+            Hover each layer for details. All six layers are implemented in the v0.1.67 codebase.
           </p>
         </motion.div>
 

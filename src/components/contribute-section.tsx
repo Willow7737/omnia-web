@@ -27,15 +27,15 @@ export function ContributeSection() {
           </h2>
 
           <p className="text-[#A39B92] leading-relaxed mb-8 max-w-xl mx-auto">
-            Omnia is CC0. No entity owns it. Funded by protocol grants and community support. 221 Rust source files. 75,570 lines. 1,276 tests — all passing.
+            Omnia is CC0. No entity owns it. Funded by protocol grants and community support. 224 Rust source files. 81,082 lines. 1,288 tests — all passing.
           </p>
 
           {/* Stats row */}
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mb-10">
             {[
-              { value: '221', label: 'files' },
-              { value: '75,570', label: 'lines' },
-              { value: '1,276', label: 'tests' },
+              { value: '224', label: 'files' },
+              { value: '81,082', label: 'lines' },
+              { value: '1,288', label: 'tests' },
               { value: 'CC0', label: 'License' },
             ].map((stat) => (
               <div key={stat.label} className="flex items-baseline gap-1.5">

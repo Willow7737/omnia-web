@@ -5,7 +5,7 @@ import { AnimatedNumber } from './animated-number'
 import { FileText, Terminal, ArrowRight, Wifi, WifiOff, Loader2 } from 'lucide-react'
 import { useOmniaDashboard } from '@/hooks/use-omnia-data'
 
-// Benchmark data shown when testnet is offline (from v0.1.60 single-node tests)
+// Benchmark data shown when testnet is offline (from v0.1.67 single-node tests)
 const BENCHMARK_DATA = {
   eventsFinalized: 7190000,
   p50Latency: '93.47µs',
@@ -161,7 +161,7 @@ export function HeroSection() {
               <span>
                 {hasLiveData
                   ? `${nodeCount} node${nodeCount !== 1 ? 's' : ''} connected — live data`
-                  : 'v0.1.60 benchmarks — connect testnet for live data'}
+                  : 'v0.1.67 benchmarks — connect testnet for live data'}
               </span>
               {hasLiveData ? (
                 <span className="flex items-center gap-1 text-[#8C9E8E]">
