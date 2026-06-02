@@ -20,7 +20,12 @@
 
 import { NextRequest, NextResponse } from 'next/server'
 
+// Cache node URLs for the lifetime of the server process
+let _cachedNodeUrls: string[] | null = null
+
 function getInternalNodeUrls(): string[] {
+  if (_cachedNodeUrls && _cachedNodeUrls.length > 0) return _cachedNodeUrls
+
   const urls = (process.env.OMNIA_NODE_INTERNAL_URLS || '')
     .split(',')
     .map(u => u.trim())
@@ -37,8 +42,12 @@ function getInternalNodeUrls(): string[] {
     urls.push('http://omnia-bootstrap:8080')
   }
 
+  _cachedNodeUrls = urls
   return urls
 }
+
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
 export async function GET(
   request: NextRequest,
@@ -57,24 +66,19 @@ export async function GET(
 
   try {
     const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 5000)
+    const timeout = setTimeout(() => controller.abort(), 8000)
 
     const res = await fetch(targetUrl, {
       signal: controller.signal,
       headers: {
-        Accept: 'application/json',
-        // Forward any auth header if provided
-        ...(request.headers.get('Authorization')
-          ? { Authorization: request.headers.get('Authorization')! }
-          : {}),
+        Accept: requestedPath === 'metrics' ? 'text/plain' : 'application/json',
       },
+      cache: 'no-store',
     })
 
     clearTimeout(timeout)
 
-    // For /metrics endpoint, return as text; for everything else, JSON
     const isText = requestedPath === 'metrics'
-
     const body = await res.text()
 
     return new NextResponse(body, {
@@ -87,7 +91,9 @@ export async function GET(
       },
     })
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Proxy fetch failed'
+    const message = err instanceof Error && err.name === 'AbortError'
+      ? 'Request to node timed out'
+      : err instanceof Error ? err.message : 'Proxy fetch failed'
     return NextResponse.json(
       { error: message, proxy: true, target: targetUrl },
       { status: 502 },
@@ -111,7 +117,7 @@ export async function POST(
   try {
     const body = await request.text()
     const controller = new AbortController()
-    const timeout = setTimeout(() => controller.abort(), 5000)
+    const timeout = setTimeout(() => controller.abort(), 8000)
 
     const res = await fetch(targetUrl, {
       method: 'POST',
@@ -123,6 +129,7 @@ export async function POST(
           : {}),
       },
       body,
+      cache: 'no-store',
     })
 
     clearTimeout(timeout)
