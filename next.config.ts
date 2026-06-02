@@ -5,7 +5,7 @@ const isLiveMode = process.env.NEXT_PUBLIC_LIVE_MODE === "true";
 
 const nextConfig: NextConfig = {
   // Static export for GitHub Pages; SSR for live testnet dashboard
-  ...(isLiveMode ? {} : { output: "export" }),
+  ...(isLiveMode ? { output: "standalone" } : { output: "export" }),
   images: {
     unoptimized: true,
   },

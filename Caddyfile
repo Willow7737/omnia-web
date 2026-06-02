@@ -13,6 +13,8 @@
         }
 
         # API proxy to Omnia Protocol testnet nodes
+        # Proxies /api/omnia/* → localhost:9090/* (bootstrap node)
+        # Adds CORS headers for cross-origin browser requests
         handle /api/omnia/* {
                 uri strip_prefix /api/omnia
                 reverse_proxy localhost:9090 {
@@ -20,6 +22,10 @@
                         header_up X-Forwarded-For {remote_host}
                         header_up X-Forwarded-Proto {scheme}
                         header_up X-Real-IP {remote_host}
+                        header_down Access-Control-Allow-Origin "*"
+                        header_down Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+                        header_down Access-Control-Allow-Headers "Authorization, Content-Type, Accept"
+                        header_down Access-Control-Max-Age "3600"
                 }
         }
 
