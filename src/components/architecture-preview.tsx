@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 
 interface LayerData {
   id: string
@@ -17,48 +18,42 @@ const layers: LayerData[] = [
     name: 'Economics',
     label: 'L5',
     badge: 'Implemented',
-    description:
-      'Universal Basic Compute with soulbound quotas, quadratic voting with exponential reputation decay, and time-locked governance.',
+    description: 'UBC, quadratic voting, exponential reputation decay, and time-locked governance.',
   },
   {
     id: 'l4',
     name: 'Identity',
     label: 'L4',
     badge: 'Implemented',
-    description:
-      'did:omnia: identity method, Shamir\'s Secret Sharing recovery, BLAKE3 biometric anchors, and AI agent capability attestation.',
+    description: 'did:omnia: method, Shamir\'s Secret Sharing, BLAKE3 biometric anchors.',
   },
   {
     id: 'l3',
     name: 'Binding',
     label: 'L3',
     badge: 'Implemented',
-    description:
-      'Append-only CRDT provenance log, hybrid PQC signatures (Ed25519 + CRYSTALS-Dilithium), and RF fingerprinting stubs.',
+    description: 'Append-only CRDT provenance, hybrid PQC signatures, RF fingerprinting stubs.',
   },
   {
     id: 'l2',
     name: 'Domain Shards',
     label: 'L2',
     badge: 'Implemented',
-    description:
-      'Six specialized state machines — Financial, Identity, Physical, Computational, Biological, Economics — with cross-shard causality proofs.',
+    description: '6 specialized state machines — Financial, Identity, Physical, Computational, Biological, Economics.',
   },
   {
     id: 'l1',
     name: 'Causal Graph Substrate',
     label: 'L1',
     badge: 'Implemented',
-    description:
-      'Causal DAG with vector clock ordering, Hashgraph-like two-parent events, AlephBFT-inspired BFT finality, and CRDT state convergence.',
+    description: 'Causal DAG + vector clocks + Hashgraph two-parent events + AlephBFT BFT finality.',
   },
   {
     id: 'l0',
     name: 'ZK-Rollup Settlement',
     label: 'L0',
     badge: 'Implemented',
-    description:
-      'Settlement-agnostic rollup using arkworks R1CS + Groth16 on BN254, with Ethereum and Celestia adapters live.',
+    description: 'arkworks R1CS + Groth16 on BN254. Ethereum and Celestia adapters live.',
   },
 ]
 
@@ -69,14 +64,14 @@ function LayerCard({ layer, index }: { layer: LayerData; index: number }) {
     <motion.div
       initial={{ opacity: 0, x: -20 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ once: true, margin: '-30px' }}
       transition={{ duration: 0.4, delay: index * 0.08, ease: 'easeOut' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className="cursor-default"
     >
       <div
-        className="flex items-center justify-between px-5 py-4 border rounded-md transition-colors duration-200 hover:border-[rgba(212,165,116,0.3)]"
+        className="flex items-center justify-between px-5 py-4 border rounded-md transition-all duration-200 hover:border-[rgba(212,165,116,0.3)]"
         style={{
           background: hovered ? 'rgba(26, 26, 26, 0.8)' : 'rgba(26, 26, 26, 0.4)',
           borderColor: 'rgba(212, 165, 116, 0.15)',
@@ -114,7 +109,7 @@ function LayerCard({ layer, index }: { layer: LayerData; index: number }) {
   )
 }
 
-export function ArchitectureSection() {
+export function ArchitecturePreview() {
   return (
     <section id="architecture" className="section-padding px-6">
       <div className="max-w-3xl mx-auto">
@@ -132,11 +127,26 @@ export function ArchitectureSection() {
           </p>
         </motion.div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 mb-8">
           {layers.map((layer, i) => (
             <LayerCard key={layer.id} layer={layer} index={i} />
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+        >
+          <a
+            href="/architecture"
+            className="inline-flex items-center gap-2 text-sm font-[family-name:var(--font-space-grotesk)] text-[#D4A574] hover:text-[#c49564] transition-colors group"
+          >
+            Explore Full Architecture
+            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+          </a>
+        </motion.div>
       </div>
     </section>
   )

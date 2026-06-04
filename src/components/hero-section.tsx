@@ -26,7 +26,7 @@ export function HeroSection() {
   const validators = hasLiveData ? data.activeValidators : BENCHMARK_DATA.validators
   const networkStatus = hasLiveData
     ? data.networkStatus
-    : (error ? 'Offline' : 'Benchmark Data')
+    : (error ? 'Offline' : 'Benchmark')
   const nodeCount = hasLiveData ? data.nodeCount : BENCHMARK_DATA.nodeCount
 
   return (
@@ -34,16 +34,17 @@ export function HeroSection() {
       id="hero"
       className="section-padding relative min-h-screen flex flex-col items-center justify-center px-6"
     >
+      {/* Subtle gradient background */}
+      <div className="absolute inset-0 page-hero-gradient pointer-events-none" />
+
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="text-center max-w-3xl mx-auto"
+        className="text-center max-w-3xl mx-auto relative z-10"
       >
         {/* Headline */}
-        <h1
-          className="font-[family-name:var(--font-space-grotesk)] text-5xl sm:text-6xl md:text-7xl font-bold tracking-[-0.02em] text-[#F5F0EB] mb-6"
-        >
+        <h1 className="font-[family-name:var(--font-space-grotesk)] text-5xl sm:text-6xl md:text-7xl font-bold tracking-[-0.02em] text-[#F5F0EB] mb-6">
           Omnia Protocol
         </h1>
 
@@ -55,21 +56,19 @@ export function HeroSection() {
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
           <a
-            href="https://github.com/Willow7737/omnia-protocol"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/docs"
             className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4A574] text-[#0F0F0F] font-[family-name:var(--font-space-grotesk)] font-medium text-sm tracking-tight rounded-md hover:bg-[#c49564] transition-colors"
           >
             <FileText size={16} />
             Read the Docs
           </a>
           <a
-            href="#api"
+            href="/architecture"
             className="inline-flex items-center gap-2 px-6 py-3 border rounded-md font-[family-name:var(--font-space-grotesk)] font-medium text-sm tracking-tight text-[#A39B92] hover:text-[#D4A574] hover:border-[#D4A574] transition-colors"
             style={{ borderColor: 'rgba(212, 165, 116, 0.3)' }}
           >
             <Terminal size={16} />
-            Run the Devnet
+            View Architecture
             <ArrowRight size={14} />
           </a>
         </div>

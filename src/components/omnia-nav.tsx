@@ -5,18 +5,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 
 const navLinks = [
+  { href: '#features', label: 'Features' },
   { href: '#architecture', label: 'Architecture' },
-  { href: '#agents', label: 'Agents' },
   { href: '#performance', label: 'Performance' },
+  { href: '#agents', label: 'Agents' },
   { href: '#transparency', label: 'Transparency' },
-  { href: '#events', label: 'Events' },
-  { href: '#contribute', label: 'Contribute' },
 ]
 
 export function OmniaNav() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
-  // Close mobile menu on resize to desktop
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
@@ -27,7 +25,6 @@ export function OmniaNav() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = 'hidden'
@@ -42,7 +39,7 @@ export function OmniaNav() {
   const scrollToSection = useCallback((href: string) => {
     const target = document.querySelector(href)
     if (target) {
-      const navHeight = 64 // h-16 = 4rem = 64px
+      const navHeight = 64
       const top = target.getBoundingClientRect().top + window.scrollY - navHeight
       window.scrollTo({ top, behavior: 'smooth' })
     }
@@ -51,7 +48,6 @@ export function OmniaNav() {
   const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
     setMobileOpen(false)
-    // Delay scroll to let the mobile menu close animation finish
     setTimeout(() => scrollToSection(href), 250)
   }, [scrollToSection])
 
@@ -89,6 +85,14 @@ export function OmniaNav() {
               {link.label}
             </a>
           ))}
+          <a
+            href="https://github.com/Willow7737/omnia-protocol"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-[#A39B92] hover:text-[#D4A574] transition-colors font-[family-name:var(--font-space-grotesk)] tracking-tight"
+          >
+            GitHub
+          </a>
         </div>
 
         {/* Mobile hamburger */}
@@ -106,7 +110,6 @@ export function OmniaNav() {
       <AnimatePresence>
         {mobileOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -115,7 +118,6 @@ export function OmniaNav() {
               className="md:hidden fixed inset-0 top-16 bg-black/40 z-40"
               onClick={() => setMobileOpen(false)}
             />
-            {/* Menu panel */}
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
@@ -136,6 +138,14 @@ export function OmniaNav() {
                     {link.label}
                   </a>
                 ))}
+                <a
+                  href="https://github.com/Willow7737/omnia-protocol"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-base text-[#A39B92] hover:text-[#D4A574] active:text-[#D4A574] active:bg-[rgba(212,165,116,0.08)] transition-colors font-[family-name:var(--font-space-grotesk)] tracking-tight py-3.5 block rounded-md px-3 touch-manipulation"
+                >
+                  GitHub
+                </a>
               </div>
             </motion.div>
           </>

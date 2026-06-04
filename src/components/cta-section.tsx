@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { MessageCircle } from 'lucide-react'
+import { MessageCircle, Heart } from 'lucide-react'
 
 function GitHubIcon({ size = 16 }: { size?: number }) {
   return (
@@ -12,7 +12,7 @@ function GitHubIcon({ size = 16 }: { size?: number }) {
   )
 }
 
-export function ContributeSection() {
+export function CTASection() {
   return (
     <section id="contribute" className="section-padding px-6">
       <div className="max-w-3xl mx-auto text-center">
@@ -27,7 +27,7 @@ export function ContributeSection() {
           </h2>
 
           <p className="text-[#A39B92] leading-relaxed mb-8 max-w-xl mx-auto">
-            Omnia is CC0. No entity owns it. Funded by protocol grants and community support. 224 Rust source files. 81,082 lines. 1,288 tests — all passing.
+            Omnia is CC0. No entity owns it. Funded by protocol grants and community support. Every line of code is public, every test is reproducible.
           </p>
 
           {/* Stats row */}
@@ -35,7 +35,7 @@ export function ContributeSection() {
             {[
               { value: '224', label: 'files' },
               { value: '81,082', label: 'lines' },
-              { value: '1,288', label: 'tests' },
+              { value: '1,382', label: 'tests' },
               { value: 'CC0', label: 'License' },
             ].map((stat) => (
               <div key={stat.label} className="flex items-baseline gap-1.5">
@@ -50,7 +50,7 @@ export function ContributeSection() {
           </div>
 
           {/* Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
             <a
               href="https://github.com/Willow7737/omnia-protocol"
               target="_blank"
@@ -71,6 +71,15 @@ export function ContributeSection() {
               Join Discord
             </a>
           </div>
+
+          {/* Support link */}
+          <a
+            href="/donate"
+            className="inline-flex items-center gap-1.5 text-sm font-[family-name:var(--font-space-grotesk)] text-[#A39B92] hover:text-[#D4A574] transition-colors"
+          >
+            <Heart size={14} />
+            Support the Protocol
+          </a>
         </motion.div>
       </div>
     </section>

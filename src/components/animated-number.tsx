@@ -24,7 +24,6 @@ export function AnimatedNumber({
   const startValueRef = useRef(0)
   const rafRef = useRef<number>(0)
 
-  // Keep valueRef in sync
   useEffect(() => {
     const previousValue = valueRef.current
     startValueRef.current = previousValue

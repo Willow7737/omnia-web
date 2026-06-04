@@ -1,8 +1,5 @@
 /**
  * Debug endpoint — returns proxy configuration and connectivity test results.
- *
- * This helps diagnose why live data might not be flowing.
- * Only available in the live dashboard (Docker) context.
  */
 
 import { NextResponse } from 'next/server'
@@ -21,7 +18,6 @@ export async function GET() {
   const pollInterval = process.env.NEXT_PUBLIC_POLL_INTERVAL_MS || ''
   const liveMode = process.env.NEXT_PUBLIC_LIVE_MODE || ''
 
-  // Test connectivity to each node
   const connectivityTests = await Promise.all(
     nodeUrls.map(async (url, i) => {
       try {
@@ -46,7 +42,6 @@ export async function GET() {
     })
   )
 
-  // If no internal URLs configured, try the fallback
   if (nodeUrls.length === 0 && singleUrl) {
     try {
       const controller = new AbortController()

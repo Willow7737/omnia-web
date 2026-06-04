@@ -2,25 +2,11 @@
  * API Proxy Route
  *
  * Proxies requests from the browser to the Omnia Protocol nodes running
- * in Docker. This solves two critical problems:
- *
- * 1. **Docker networking**: The browser can't reach container DNS names
- *    like `omnia-bootstrap:8080`. The server can.
- * 2. **CORS**: The browser makes same-origin requests to this proxy,
- *    avoiding cross-origin issues entirely.
- *
- * Environment variables (read at RUNTIME, not build time):
- * - `OMNIA_NODE_INTERNAL_URLS` — comma-separated internal Docker URLs
- *   e.g. `http://omnia-bootstrap:8080,http://omnia-node-1:8080,...`
- * - `OMNIA_API_URL` — primary node internal URL (default: first in list)
- *
- * Query parameters:
- * - `node` — index into the node list (0=bootstrap, 1=node-1, etc.)
+ * in Docker. This solves Docker networking and CORS issues.
  */
 
 import { NextRequest, NextResponse } from 'next/server'
 
-// Cache node URLs for the lifetime of the server process
 let _cachedNodeUrls: string[] | null = null
 
 function getInternalNodeUrls(): string[] {
@@ -31,13 +17,11 @@ function getInternalNodeUrls(): string[] {
     .map(u => u.trim())
     .filter(Boolean)
 
-  // Fallback: try a single API URL
   if (urls.length === 0) {
     const single = process.env.OMNIA_API_URL || ''
     if (single) urls.push(single)
   }
 
-  // Last resort: default Docker DNS name for bootstrap
   if (urls.length === 0) {
     urls.push('http://omnia-bootstrap:8080')
   }
@@ -56,12 +40,10 @@ export async function GET(
   const { path } = await params
   const requestedPath = path.join('/')
 
-  // Determine which node to query
   const nodeIndex = parseInt(request.nextUrl.searchParams.get('node') || '0', 10)
   const nodeUrls = getInternalNodeUrls()
   const baseUrl = nodeUrls[Math.min(nodeIndex, nodeUrls.length - 1)]
 
-  // Build the target URL
   const targetUrl = `${baseUrl}/${requestedPath}`
 
   try {

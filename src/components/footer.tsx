@@ -41,9 +41,7 @@ export function Footer() {
             <span className="font-[family-name:var(--font-space-grotesk)]">Discord</span>
           </a>
           <a
-            href="https://github.com/Willow7737/omnia-protocol"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/docs"
             className="text-[#A39B92] hover:text-[#D4A574] transition-colors flex items-center gap-1.5 text-sm"
           >
             <FileText size={14} />

@@ -21,18 +21,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Omnia Protocol — Settlement-Agnostic Causal Graph Consensus",
+  title: {
+    default: "Omnia Protocol — Settlement-Agnostic Causal Graph Consensus",
+    template: "%s | Omnia Protocol",
+  },
   description:
     "Sub-100µs finality. DAG + vector clocks + CRDTs. ZK-rollup settlement on any DA layer. Public domain.",
   keywords: [
-    "Omnia",
-    "protocol",
-    "DAG",
-    "consensus",
-    "ZK-rollup",
-    "CRDTs",
-    "blockchain",
-    "causal graph",
+    "Omnia", "protocol", "DAG", "consensus", "ZK-rollup", "CRDTs",
+    "blockchain", "causal graph", "decentralized", "cryptography",
   ],
   authors: [{ name: "Omnia Protocol Contributors" }],
   openGraph: {
@@ -40,6 +37,7 @@ export const metadata: Metadata = {
     description:
       "Settlement-agnostic causal graph consensus. Sub-100µs finality. Public domain.",
     type: "website",
+    siteName: "Omnia Protocol",
   },
   twitter: {
     card: "summary_large_image",
