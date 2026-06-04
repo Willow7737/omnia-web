@@ -15,15 +15,6 @@ The official website for the [Omnia Protocol](https://github.com/Willow7737/omni
 - **Icons**: Lucide React
 - **Fonts**: Space Grotesk, JetBrains Mono, Inter
 
-## Local Development
-
-```bash
-bun install
-bun run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
 ## Live Mode
 
 By default, the site runs in **static mode** — it shows benchmark data from v0.1.60 single-node tests. To connect to a live testnet:
