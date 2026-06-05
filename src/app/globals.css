@@ -43,83 +43,86 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* Omnia custom colors */
-  --color-omnia-base: #0F0F0F;
-  --color-omnia-surface: #1A1A1A;
-  --color-omnia-accent: #D4A574;
-  --color-omnia-sage: #8C9E8E;
-  --color-omnia-text: #F5F0EB;
-  --color-omnia-text-secondary: #A39B92;
-  --color-omnia-border: rgba(212, 165, 116, 0.15);
+  /* Omnia custom colors — Apple-inspired monochrome */
+  --color-omnia-base: #000000;
+  --color-omnia-surface: #111111;
+  --color-omnia-elevated: #1D1D1F;
+  --color-omnia-accent: #2997FF;
+  --color-omnia-blue: #2997FF;
+  --color-omnia-sage: #30D158;
+  --color-omnia-text: #F5F5F7;
+  --color-omnia-text-secondary: #86868B;
+  --color-omnia-border: rgba(255, 255, 255, 0.08);
+  --color-omnia-border-subtle: rgba(255, 255, 255, 0.04);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: #0F0F0F;
-  --foreground: #F5F0EB;
-  --card: #1A1A1A;
-  --card-foreground: #F5F0EB;
-  --popover: #1A1A1A;
-  --popover-foreground: #F5F0EB;
-  --primary: #D4A574;
-  --primary-foreground: #0F0F0F;
-  --secondary: #1A1A1A;
-  --secondary-foreground: #F5F0EB;
-  --muted: #1A1A1A;
-  --muted-foreground: #A39B92;
-  --accent: #1A1A1A;
-  --accent-foreground: #F5F0EB;
-  --destructive: #ef4444;
-  --border: rgba(212, 165, 116, 0.15);
-  --input: rgba(212, 165, 116, 0.15);
-  --ring: #D4A574;
-  --chart-1: #D4A574;
-  --chart-2: #8C9E8E;
-  --chart-3: #A39B92;
-  --chart-4: #F5F0EB;
-  --chart-5: #0F0F0F;
-  --sidebar: #1A1A1A;
-  --sidebar-foreground: #F5F0EB;
-  --sidebar-primary: #D4A574;
-  --sidebar-primary-foreground: #0F0F0F;
-  --sidebar-accent: #1A1A1A;
-  --sidebar-accent-foreground: #F5F0EB;
-  --sidebar-border: rgba(212, 165, 116, 0.15);
-  --sidebar-ring: #D4A574;
+  --radius: 0.75rem;
+  --background: #000000;
+  --foreground: #F5F5F7;
+  --card: #111111;
+  --card-foreground: #F5F5F7;
+  --popover: #111111;
+  --popover-foreground: #F5F5F7;
+  --primary: #F5F5F7;
+  --primary-foreground: #000000;
+  --secondary: #1D1D1F;
+  --secondary-foreground: #F5F5F7;
+  --muted: #1D1D1F;
+  --muted-foreground: #86868B;
+  --accent: #1D1D1F;
+  --accent-foreground: #F5F5F7;
+  --destructive: #FF453A;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #2997FF;
+  --chart-1: #2997FF;
+  --chart-2: #30D158;
+  --chart-3: #FF9F0A;
+  --chart-4: #F5F5F7;
+  --chart-5: #000000;
+  --sidebar: #111111;
+  --sidebar-foreground: #F5F5F7;
+  --sidebar-primary: #F5F5F7;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #1D1D1F;
+  --sidebar-accent-foreground: #F5F5F7;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #2997FF;
 }
 
 .dark {
-  --background: #0F0F0F;
-  --foreground: #F5F0EB;
-  --card: #1A1A1A;
-  --card-foreground: #F5F0EB;
-  --popover: #1A1A1A;
-  --popover-foreground: #F5F0EB;
-  --primary: #D4A574;
-  --primary-foreground: #0F0F0F;
-  --secondary: #1A1A1A;
-  --secondary-foreground: #F5F0EB;
-  --muted: #1A1A1A;
-  --muted-foreground: #A39B92;
-  --accent: #1A1A1A;
-  --accent-foreground: #F5F0EB;
-  --destructive: #ef4444;
-  --border: rgba(212, 165, 116, 0.15);
-  --input: rgba(212, 165, 116, 0.15);
-  --ring: #D4A574;
-  --chart-1: #D4A574;
-  --chart-2: #8C9E8E;
-  --chart-3: #A39B92;
-  --chart-4: #F5F0EB;
-  --chart-5: #0F0F0F;
-  --sidebar: #1A1A1A;
-  --sidebar-foreground: #F5F0EB;
-  --sidebar-primary: #D4A574;
-  --sidebar-primary-foreground: #0F0F0F;
-  --sidebar-accent: #1A1A1A;
-  --sidebar-accent-foreground: #F5F0EB;
-  --sidebar-border: rgba(212, 165, 116, 0.15);
-  --sidebar-ring: #D4A574;
+  --background: #000000;
+  --foreground: #F5F5F7;
+  --card: #111111;
+  --card-foreground: #F5F5F7;
+  --popover: #111111;
+  --popover-foreground: #F5F5F7;
+  --primary: #F5F5F7;
+  --primary-foreground: #000000;
+  --secondary: #1D1D1F;
+  --secondary-foreground: #F5F5F7;
+  --muted: #1D1D1F;
+  --muted-foreground: #86868B;
+  --accent: #1D1D1F;
+  --accent-foreground: #F5F5F7;
+  --destructive: #FF453A;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: #2997FF;
+  --chart-1: #2997FF;
+  --chart-2: #30D158;
+  --chart-3: #FF9F0A;
+  --chart-4: #F5F5F7;
+  --chart-5: #000000;
+  --sidebar: #111111;
+  --sidebar-foreground: #F5F5F7;
+  --sidebar-primary: #F5F5F7;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent: #1D1D1F;
+  --sidebar-accent-foreground: #F5F5F7;
+  --sidebar-border: rgba(255, 255, 255, 0.08);
+  --sidebar-ring: #2997FF;
 }
 
 @layer base {
@@ -135,23 +138,23 @@
   }
 }
 
-/* Custom scrollbar styling */
+/* Apple-inspired scrollbar — thin, dark, minimal */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0F0F0F;
+  background: #000000;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(212, 165, 116, 0.3);
-  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(212, 165, 116, 0.5);
+  background: rgba(255, 255, 255, 0.2);
 }
 
-/* Pulsing dot animation */
-@keyframes pulse-sage {
+/* Pulsing dot animation — green for live status */
+@keyframes pulse-dot {
   0%, 100% {
     opacity: 1;
     transform: scale(1);
@@ -162,33 +165,68 @@
   }
 }
 
-.animate-pulse-sage {
-  animation: pulse-sage 2s ease-in-out infinite;
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
 }
 
 /* Copy flash animation */
-@keyframes flash-accent {
+@keyframes flash-white {
   0% {
-    background-color: #D4A574;
-    color: #0F0F0F;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #F5F5F7;
   }
   100% {
     background-color: transparent;
-    color: #A39B92;
+    color: #86868B;
   }
 }
 
-.animate-flash-accent {
-  animation: flash-accent 0.6s ease-out;
+.animate-flash-white {
+  animation: flash-white 0.6s ease-out;
 }
 
-/* Section padding utility */
+/* Section padding — generous like Apple */
 .section-padding {
-  padding-top: min(120px, 15vh);
-  padding-bottom: min(120px, 15vh);
+  padding-top: min(140px, 18vh);
+  padding-bottom: min(140px, 18vh);
 }
 
-/* Page hero gradient */
+/* Page hero gradient — subtle, barely there */
 .page-hero-gradient {
-  background: linear-gradient(180deg, rgba(212, 165, 116, 0.06) 0%, transparent 60%);
+  background: linear-gradient(180deg, rgba(41, 151, 255, 0.03) 0%, transparent 50%);
+}
+
+/* Smooth fade-in animation class */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Subtle shimmer for hover effects */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.hover-shimmer {
+  background-size: 200% auto;
+  transition: all 0.3s ease;
+}
+
+.hover-shimmer:hover {
+  animation: shimmer 1.5s ease-in-out;
 }

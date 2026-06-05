@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { PageHeader } from '@/components/page-header'
+import { Footer } from '@/components/footer'
 import {
   CheckCircle,
   FileCode2,
@@ -42,7 +43,7 @@ const sections = [
     content: (
       <p>
         Omnia Protocol is open-source software released under the{' '}
-        <span className="text-[#D4A574] font-medium">CC0 Public Domain</span> dedication. No entity
+        <span className="text-omnia-accent font-medium">CC0 Public Domain</span> dedication. No entity
         owns the protocol. It is provided &quot;as is&quot; without warranty of any kind, express or
         implied.
       </p>
@@ -56,7 +57,7 @@ const sections = [
       <p>
         Nothing on this website constitutes financial, investment, legal, or tax advice. The Omnia
         Protocol is a{' '}
-        <span className="text-[#D4A574] font-medium">technology infrastructure project</span>. Any
+        <span className="text-omnia-accent font-medium">technology infrastructure project</span>. Any
         references to economic mechanisms (UBC, governance, etc.) describe protocol functionality,
         not investment opportunities.
       </p>
@@ -68,7 +69,7 @@ const sections = [
     title: 'No Guarantee of Returns',
     content: (
       <p>
-        There is <span className="text-[#F5F0EB] font-medium">no token sale, no ICO, and no promise of returns</span>.
+        There is <span className="text-omnia-text font-medium">no token sale, no ICO, and no promise of returns</span>.
         The Universal Basic Compute allocation is a protocol mechanism, not a financial instrument.
         Do not participate in the protocol expecting financial returns.
       </p>
@@ -82,7 +83,7 @@ const sections = [
       <p>
         The Omnia Protocol software is under active development. Despite extensive testing (1,382+
         tests), software may contain bugs, vulnerabilities, or unintended behaviors. You use the
-        software <span className="text-[#D4A574] font-medium">at your own risk</span>.
+        software <span className="text-omnia-accent font-medium">at your own risk</span>.
       </p>
     ),
   },
@@ -100,7 +101,7 @@ const sections = [
           Report vulnerabilities to:{' '}
           <a
             href="mailto:security@omnia-protocol.org"
-            className="text-[#D4A574] hover:underline"
+            className="text-omnia-accent hover:underline"
           >
             security@omnia-protocol.org
           </a>
@@ -116,12 +117,12 @@ const sections = [
       <div className="space-y-3">
         <p>
           All Omnia Protocol source code is released under{' '}
-          <span className="text-[#D4A574] font-medium">CC0 Public Domain</span>. Website content is
+          <span className="text-omnia-accent font-medium">CC0 Public Domain</span>. Website content is
           provided for informational purposes.
         </p>
         <p>
           The Omnia name and branding may have trademark considerations — contact{' '}
-          <a href="mailto:conduct@omnia.protocol" className="text-[#D4A574] hover:underline">
+          <a href="mailto:conduct@omnia.protocol" className="text-omnia-accent hover:underline">
             conduct@omnia.protocol
           </a>{' '}
           for clarification.
@@ -136,7 +137,7 @@ const sections = [
     content: (
       <p>
         All community participants must adhere to our{' '}
-        <a href="/conduct" className="text-[#D4A574] hover:underline">
+        <a href="/conduct" className="text-omnia-accent hover:underline">
           Code of Conduct
         </a>
         . Violations may result in removal from community spaces.
@@ -173,7 +174,7 @@ const sections = [
     content: (
       <p>
         For questions about these terms:{' '}
-        <a href="mailto:conduct@omnia.protocol" className="text-[#D4A574] hover:underline">
+        <a href="mailto:conduct@omnia.protocol" className="text-omnia-accent hover:underline">
           conduct@omnia.protocol
         </a>
       </p>
@@ -183,7 +184,7 @@ const sections = [
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-[#0F0F0F]">
+    <div className="min-h-screen bg-omnia-base flex flex-col">
       <PageHeader
         title="Terms of Use"
         description="The rules and disclaimers governing your use of the Omnia Protocol website and software."
@@ -193,13 +194,13 @@ export default function TermsPage() {
         ]}
       />
 
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section className="max-w-[980px] mx-auto px-6 py-16 sm:py-24">
         {/* Last updated */}
         <motion.div
           {...fadeInUp}
-          className="mb-12 flex items-center gap-3 text-sm text-[#A39B92]"
+          className="mb-12 flex items-center gap-3 text-[14px] text-omnia-text-secondary"
         >
-          <div className="w-2 h-2 rounded-full bg-[#8C9E8E] animate-pulse-sage" />
+          <div className="w-2 h-2 rounded-full bg-omnia-sage animate-pulse-sage" />
           <span className="font-[family-name:var(--font-space-grotesk)]">
             Last Updated: June 2026
           </span>
@@ -217,22 +218,21 @@ export default function TermsPage() {
                 className="scroll-mt-20"
               >
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[#D4A574]/10 flex items-center justify-center mt-0.5">
-                    <Icon className="w-5 h-5 text-[#D4A574]" />
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[#2997FF]/10 flex items-center justify-center mt-0.5">
+                    <Icon className="w-5 h-5 text-omnia-accent" />
                   </div>
                   <div>
                     <span
-                      className="text-xs font-mono text-[#8C9E8E] tracking-wider uppercase mb-1 block"
-                      style={{ fontFamily: 'var(--font-jetbrains-mono)' }}
+                      className="text-[12px] text-omnia-sage tracking-wider uppercase mb-1 block font-[family-name:var(--font-jetbrains-mono)]"
                     >
                       Section {section.number}
                     </span>
-                    <h2 className="text-xl sm:text-2xl font-bold text-[#F5F0EB] font-[family-name:var(--font-space-grotesk)]">
+                    <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">
                       {section.title}
                     </h2>
                   </div>
                 </div>
-                <div className="ml-14 text-[#A39B92] leading-relaxed text-base">
+                <div className="ml-14 text-omnia-text-secondary leading-[1.6] text-[15px] font-[family-name:var(--font-geist-sans)]">
                   {section.content}
                 </div>
               </motion.section>
@@ -241,8 +241,7 @@ export default function TermsPage() {
         </div>
       </section>
 
-      {/* Footer spacer */}
-      <div className="h-16" />
+      <Footer />
     </div>
   )
 }

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { PageHeader } from '@/components/page-header'
+import { Footer } from '@/components/footer'
 import {
   Shield,
   Bug,
@@ -150,15 +151,15 @@ const securityPractices = [
 ]
 
 const auditStatus = [
-  { label: 'High-priority findings remediated', value: '7', color: 'text-emerald-400', bgColor: 'bg-emerald-400/10', icon: CheckCircle2 },
+  { label: 'High-priority findings remediated', value: '7', color: 'text-[#30D158]', bgColor: 'bg-[#30D158]/10', icon: CheckCircle2 },
   { label: 'Medium-priority finding remediated', value: '1', color: 'text-omnia-sage', bgColor: 'bg-omnia-sage/10', icon: CheckCircle2 },
   { label: 'Medium-priority findings tracked', value: '14', color: 'text-amber-400', bgColor: 'bg-amber-400/10', icon: Clock },
-  { label: 'External security audit', value: 'In Prep', color: 'text-omnia-accent', bgColor: 'bg-omnia-accent/10', icon: Shield },
+  { label: 'External security audit', value: 'In Prep', color: 'text-omnia-accent', bgColor: 'bg-[#2997FF]/10', icon: Shield },
 ]
 
 export default function SecurityPage() {
   return (
-    <div className="min-h-screen bg-omnia-base">
+    <div className="min-h-screen bg-omnia-base flex flex-col">
       <PageHeader
         title="Security"
         description="Security is not a feature — it is the foundation. Every line of code, every cryptographic primitive, every consensus rule must be verifiable and auditable."
@@ -166,15 +167,15 @@ export default function SecurityPage() {
       />
 
       {/* Bug Bounty Program */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section className="max-w-[980px] mx-auto px-6 py-16 sm:py-24">
         <motion.div {...fadeInUp}>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
               <Bug className="w-5 h-5 text-omnia-accent" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-omnia-text">Bug Bounty Program</h2>
+            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Bug Bounty Program</h2>
           </div>
-          <p className="text-omnia-text-secondary leading-relaxed text-base sm:text-lg max-w-4xl mb-12">
+          <p className="text-omnia-text-secondary leading-[1.6] text-[15px] sm:text-[17px] max-w-4xl mb-12 font-[family-name:var(--font-geist-sans)]">
             The Omnia Protocol bug bounty program rewards security researchers who discover and responsibly disclose vulnerabilities. 
             We believe that public scrutiny makes systems stronger, not weaker.
           </p>
@@ -182,23 +183,23 @@ export default function SecurityPage() {
 
         {/* Scope */}
         <motion.div {...fadeInUp} className="mb-16">
-          <h3 className="text-xl font-semibold text-omnia-text mb-6">Scope</h3>
-          <motion.div {...staggerContainer} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          <h3 className="text-[28px] sm:text-[32px] font-semibold text-omnia-text mb-6 tracking-tight font-[family-name:var(--font-space-grotesk)]">Scope</h3>
+          <motion.div {...staggerContainer} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-8">
             {scopeItems.map((item, i) => {
               const Icon = item.icon
               return (
                 <motion.div
                   key={i}
                   {...staggerItem}
-                  className="bg-omnia-surface border border-omnia-border rounded-xl p-5 hover:border-omnia-accent/30 transition-colors"
+                  className="rounded-2xl bg-white/[0.02] border border-white/[0.06] p-5 hover:border-white/[0.12] transition-colors"
                 >
                   <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
                       <Icon className="w-4 h-4 text-omnia-accent" />
                     </div>
                     <div>
-                      <p className="text-omnia-text text-sm font-medium">{item.label}</p>
-                      <p className="text-omnia-text-secondary text-xs mt-1 font-mono">{item.detail}</p>
+                      <p className="text-omnia-text text-[15px] font-medium font-[family-name:var(--font-geist-sans)]">{item.label}</p>
+                      <p className="text-omnia-text-secondary text-[12px] mt-1 font-[family-name:var(--font-jetbrains-mono)]">{item.detail}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -206,13 +207,13 @@ export default function SecurityPage() {
             })}
           </motion.div>
 
-          <h3 className="text-xl font-semibold text-omnia-text mb-4">Out of Scope</h3>
-          <div className="bg-omnia-surface border border-omnia-border rounded-xl p-5 sm:p-6">
+          <h3 className="text-[28px] sm:text-[32px] font-semibold text-omnia-text mb-4 tracking-tight font-[family-name:var(--font-space-grotesk)]">Out of Scope</h3>
+          <div className="rounded-2xl bg-white/[0.02] border border-white/[0.06] p-5 sm:p-6">
             <ul className="space-y-3">
               {outOfScopeItems.map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <XCircle className="w-4 h-4 text-omnia-text-secondary/60 flex-shrink-0 mt-0.5" />
-                  <span className="text-omnia-text-secondary text-sm">{item}</span>
+                  <span className="text-omnia-text-secondary text-[14px] font-[family-name:var(--font-geist-sans)]">{item}</span>
                 </li>
               ))}
             </ul>
@@ -221,8 +222,8 @@ export default function SecurityPage() {
 
         {/* Reward Tiers */}
         <motion.div {...fadeInUp} className="mb-16">
-          <h3 className="text-xl font-semibold text-omnia-text mb-6">Reward Tiers</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          <h3 className="text-[28px] sm:text-[32px] font-semibold text-omnia-text mb-6 tracking-tight font-[family-name:var(--font-space-grotesk)]">Reward Tiers</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {rewardTiers.map((tier, i) => {
               const Icon = tier.icon
               return (
@@ -232,7 +233,7 @@ export default function SecurityPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className={`bg-omnia-surface border ${tier.borderColor} rounded-xl p-5 sm:p-6 hover:border-omnia-accent/30 transition-colors`}
+                  className={`rounded-2xl bg-white/[0.02] border ${tier.borderColor} p-5 sm:p-6 hover:border-white/[0.12] transition-colors`}
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
@@ -240,14 +241,14 @@ export default function SecurityPage() {
                         <Icon className={`w-5 h-5 ${tier.color}`} />
                       </div>
                       <div>
-                        <h4 className={`font-semibold ${tier.color} text-base`}>{tier.severity}</h4>
+                        <h4 className={`font-semibold ${tier.color} text-[17px] font-[family-name:var(--font-space-grotesk)]`}>{tier.severity}</h4>
                       </div>
                     </div>
-                    <span className={`font-mono font-bold text-lg ${tier.color}`}>
+                    <span className={`font-[family-name:var(--font-jetbrains-mono)] font-bold text-[17px] ${tier.color}`}>
                       {tier.reward}
                     </span>
                   </div>
-                  <p className="text-omnia-text-secondary text-sm leading-relaxed">
+                  <p className="text-omnia-text-secondary text-[14px] leading-[1.6] font-[family-name:var(--font-geist-sans)]">
                     {tier.examples}
                   </p>
                 </motion.div>
@@ -258,26 +259,26 @@ export default function SecurityPage() {
 
         {/* Reporting */}
         <motion.div {...fadeInUp} className="mb-16">
-          <h3 className="text-xl font-semibold text-omnia-text mb-6">Reporting a Vulnerability</h3>
-          <div className="bg-omnia-surface border border-omnia-border rounded-xl p-5 sm:p-6">
+          <h3 className="text-[28px] sm:text-[32px] font-semibold text-omnia-text mb-6 tracking-tight font-[family-name:var(--font-space-grotesk)]">Reporting a Vulnerability</h3>
+          <div className="rounded-2xl bg-white/[0.02] border border-white/[0.06] p-5 sm:p-6">
             <div className="space-y-5">
               <div className="flex items-start gap-3">
                 <Mail className="w-5 h-5 text-omnia-accent flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-omnia-text text-sm font-medium">Email</p>
-                  <p className="text-omnia-text-secondary text-sm font-mono">security@omnia-protocol.org</p>
+                  <p className="text-omnia-text text-[15px] font-medium font-[family-name:var(--font-geist-sans)]">Email</p>
+                  <p className="text-omnia-text-secondary text-[14px] font-[family-name:var(--font-jetbrains-mono)]">security@omnia-protocol.org</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Lock className="w-5 h-5 text-omnia-accent flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-omnia-text text-sm font-medium">PGP Encryption</p>
-                  <p className="text-omnia-text-secondary text-sm">Please encrypt your report using our PGP key</p>
+                  <p className="text-omnia-text text-[15px] font-medium font-[family-name:var(--font-geist-sans)]">PGP Encryption</p>
+                  <p className="text-omnia-text-secondary text-[14px] font-[family-name:var(--font-geist-sans)]">Please encrypt your report using our PGP key</p>
                 </div>
               </div>
-              <div className="h-px bg-omnia-border" />
+              <div className="h-px bg-white/[0.06]" />
               <div>
-                <p className="text-omnia-text text-sm font-medium mb-3">Your report should include:</p>
+                <p className="text-omnia-text text-[15px] font-medium mb-3 font-[family-name:var(--font-geist-sans)]">Your report should include:</p>
                 <ul className="space-y-2">
                   {[
                     'Affected components and versions',
@@ -285,7 +286,7 @@ export default function SecurityPage() {
                     'Impact assessment',
                     'Proof-of-concept (if available)',
                   ].map((item, i) => (
-                    <li key={i} className="flex items-center gap-2 text-omnia-text-secondary text-sm">
+                    <li key={i} className="flex items-center gap-2 text-omnia-text-secondary text-[14px] font-[family-name:var(--font-geist-sans)]">
                       <ArrowRight className="w-3.5 h-3.5 text-omnia-accent flex-shrink-0" />
                       {item}
                     </li>
@@ -298,8 +299,8 @@ export default function SecurityPage() {
 
         {/* Response Timeline */}
         <motion.div {...fadeInUp} className="mb-16">
-          <h3 className="text-xl font-semibold text-omnia-text mb-6">Response Timeline</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mb-8">
+          <h3 className="text-[28px] sm:text-[32px] font-semibold text-omnia-text mb-6 tracking-tight font-[family-name:var(--font-space-grotesk)]">Response Timeline</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
             {responseTimeline.map((item, i) => {
               const Icon = item.icon
               return (
@@ -309,27 +310,27 @@ export default function SecurityPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="bg-omnia-surface border border-omnia-border rounded-xl p-5 text-center hover:border-omnia-accent/30 transition-colors"
+                  className="rounded-2xl bg-white/[0.02] border border-white/[0.06] p-5 text-center hover:border-white/[0.12] transition-colors"
                 >
                   <div className="flex justify-center mb-3">
-                    <div className="w-10 h-10 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
                       <Icon className="w-5 h-5 text-omnia-accent" />
                     </div>
                   </div>
-                  <p className="text-omnia-text font-medium text-sm mb-1">{item.phase}</p>
-                  <p className="text-omnia-accent font-mono text-sm">{item.time}</p>
+                  <p className="text-omnia-text font-medium text-[15px] mb-1 font-[family-name:var(--font-geist-sans)]">{item.phase}</p>
+                  <p className="text-omnia-accent font-[family-name:var(--font-jetbrains-mono)] text-[14px]">{item.time}</p>
                 </motion.div>
               )
             })}
           </div>
 
-          <h4 className="text-base font-semibold text-omnia-text mb-4">Patch Release Timeline</h4>
-          <div className="bg-omnia-surface border border-omnia-border rounded-xl overflow-hidden">
-            <div className="grid grid-cols-4 gap-px bg-omnia-border">
+          <h4 className="text-[17px] font-semibold text-omnia-text mb-4 tracking-tight font-[family-name:var(--font-space-grotesk)]">Patch Release Timeline</h4>
+          <div className="rounded-2xl bg-white/[0.02] border border-white/[0.06] overflow-hidden">
+            <div className="grid grid-cols-4 gap-px bg-white/[0.06]">
               {patchReleaseTimeline.map((item, i) => (
-                <div key={i} className="bg-omnia-surface p-4 text-center">
-                  <p className={`font-semibold text-sm ${item.color}`}>{item.severity}</p>
-                  <p className="text-omnia-text text-lg font-bold font-mono mt-1">{item.time}</p>
+                <div key={i} className="bg-omnia-base p-4 text-center">
+                  <p className={`font-semibold text-[14px] ${item.color}`}>{item.severity}</p>
+                  <p className="text-omnia-text text-[17px] font-bold font-[family-name:var(--font-jetbrains-mono)] mt-1">{item.time}</p>
                 </div>
               ))}
             </div>
@@ -338,29 +339,29 @@ export default function SecurityPage() {
 
         {/* Responsible Disclosure & Payment */}
         <motion.div {...fadeInUp}>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-            <div className="bg-omnia-surface border border-omnia-border rounded-xl p-5 sm:p-6 hover:border-omnia-accent/30 transition-colors">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="rounded-2xl bg-white/[0.02] border border-white/[0.06] p-5 sm:p-6 hover:border-white/[0.12] transition-colors">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
                   <Clock className="w-5 h-5 text-omnia-accent" />
                 </div>
-                <h4 className="text-omnia-text font-semibold">Responsible Disclosure</h4>
+                <h4 className="text-omnia-text font-semibold text-[17px] font-[family-name:var(--font-space-grotesk)]">Responsible Disclosure</h4>
               </div>
-              <p className="text-omnia-text-secondary text-sm leading-relaxed">
+              <p className="text-omnia-text-secondary text-[14px] leading-[1.6] font-[family-name:var(--font-geist-sans)]">
                 We follow a <span className="text-omnia-accent font-medium">90-day embargo policy</span>. 
                 Vulnerabilities will not be publicly disclosed until a fix is available, or 90 days have 
                 elapsed since the initial report — whichever comes first. Extensions may be granted upon request.
               </p>
             </div>
 
-            <div className="bg-omnia-surface border border-omnia-border rounded-xl p-5 sm:p-6 hover:border-omnia-accent/30 transition-colors">
+            <div className="rounded-2xl bg-white/[0.02] border border-white/[0.06] p-5 sm:p-6 hover:border-white/[0.12] transition-colors">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
                   <DollarSign className="w-5 h-5 text-omnia-accent" />
                 </div>
-                <h4 className="text-omnia-text font-semibold">Payment</h4>
+                <h4 className="text-omnia-text font-semibold text-[17px] font-[family-name:var(--font-space-grotesk)]">Payment</h4>
               </div>
-              <p className="text-omnia-text-secondary text-sm leading-relaxed">
+              <p className="text-omnia-text-secondary text-[14px] leading-[1.6] font-[family-name:var(--font-geist-sans)]">
                 Bounties are paid in <span className="text-omnia-accent font-medium">USDC or USDT on Ethereum mainnet</span>. 
                 Payment is processed after the fix has been verified and deployed. Researchers may choose 
                 to donate their bounty back to the protocol.
@@ -371,20 +372,20 @@ export default function SecurityPage() {
       </section>
 
       {/* Separator */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-px bg-omnia-border" />
+      <div className="max-w-[980px] mx-auto px-6">
+        <div className="h-px bg-white/[0.06]" />
       </div>
 
       {/* Security Practices */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section className="max-w-[980px] mx-auto px-6 py-16 sm:py-24">
         <motion.div {...fadeInUp}>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
               <ShieldCheck className="w-5 h-5 text-omnia-accent" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-omnia-text">Security Practices</h2>
+            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Security Practices</h2>
           </div>
-          <p className="text-omnia-text-secondary leading-relaxed text-base sm:text-lg max-w-4xl mb-12">
+          <p className="text-omnia-text-secondary leading-[1.6] text-[15px] sm:text-[17px] max-w-4xl mb-12 font-[family-name:var(--font-geist-sans)]">
             Security is not an afterthought. It is embedded into every stage of development — from dependency 
             selection to deployment. Here is what we do, concretely.
           </p>
@@ -392,7 +393,7 @@ export default function SecurityPage() {
 
         <motion.div
           {...staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
         >
           {securityPractices.map((practice, i) => {
             const Icon = practice.icon
@@ -400,13 +401,13 @@ export default function SecurityPage() {
               <motion.div
                 key={i}
                 {...staggerItem}
-                className="group bg-omnia-surface border border-omnia-border rounded-xl p-5 sm:p-6 hover:border-omnia-accent/30 transition-colors"
+                className="group rounded-2xl bg-white/[0.02] border border-white/[0.06] p-5 sm:p-6 hover:border-white/[0.12] transition-colors"
               >
-                <div className="w-10 h-10 rounded-lg bg-omnia-accent/10 flex items-center justify-center mb-4">
+                <div className="w-10 h-10 rounded-lg bg-[#2997FF]/10 flex items-center justify-center mb-4">
                   <Icon className="w-5 h-5 text-omnia-accent" />
                 </div>
-                <h3 className="text-omnia-text font-semibold text-sm sm:text-base mb-2">{practice.title}</h3>
-                <p className="text-omnia-text-secondary text-sm leading-relaxed">{practice.description}</p>
+                <h3 className="text-omnia-text font-semibold text-[15px] sm:text-[17px] mb-2 font-[family-name:var(--font-space-grotesk)]">{practice.title}</h3>
+                <p className="text-omnia-text-secondary text-[14px] leading-[1.6] font-[family-name:var(--font-geist-sans)]">{practice.description}</p>
               </motion.div>
             )
           })}
@@ -414,20 +415,20 @@ export default function SecurityPage() {
       </section>
 
       {/* Separator */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-px bg-omnia-border" />
+      <div className="max-w-[980px] mx-auto px-6">
+        <div className="h-px bg-white/[0.06]" />
       </div>
 
       {/* Audit Status */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section className="max-w-[980px] mx-auto px-6 py-16 sm:py-24">
         <motion.div {...fadeInUp}>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
               <ClipboardList className="w-5 h-5 text-omnia-accent" />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-omnia-text">Audit Status</h2>
+            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Audit Status</h2>
           </div>
-          <p className="text-omnia-text-secondary leading-relaxed text-base sm:text-lg max-w-4xl mb-12">
+          <p className="text-omnia-text-secondary leading-[1.6] text-[15px] sm:text-[17px] max-w-4xl mb-12 font-[family-name:var(--font-geist-sans)]">
             Transparency means showing the work. Here is the current state of our security audit findings — 
             remediated and tracked.
           </p>
@@ -435,7 +436,7 @@ export default function SecurityPage() {
 
         <motion.div
           {...staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"
         >
           {auditStatus.map((item, i) => {
             const Icon = item.icon
@@ -443,27 +444,27 @@ export default function SecurityPage() {
               <motion.div
                 key={i}
                 {...staggerItem}
-                className="bg-omnia-surface border border-omnia-border rounded-xl p-5 sm:p-6 text-center hover:border-omnia-accent/30 transition-colors"
+                className="rounded-2xl bg-white/[0.02] border border-white/[0.06] p-5 sm:p-6 text-center hover:border-white/[0.12] transition-colors"
               >
                 <div className="flex justify-center mb-4">
-                  <div className={`w-12 h-12 rounded-xl ${item.bgColor} flex items-center justify-center`}>
+                  <div className={`w-12 h-12 rounded-2xl ${item.bgColor} flex items-center justify-center`}>
                     <Icon className={`w-6 h-6 ${item.color}`} />
                   </div>
                 </div>
-                <div className={`text-3xl sm:text-4xl font-bold font-mono ${item.color} mb-2`}>
+                <div className={`text-[28px] sm:text-[32px] font-bold font-[family-name:var(--font-jetbrains-mono)] ${item.color} mb-2`}>
                   {item.value}
                 </div>
-                <p className="text-omnia-text-secondary text-sm">{item.label}</p>
+                <p className="text-omnia-text-secondary text-[14px] font-[family-name:var(--font-geist-sans)]">{item.label}</p>
               </motion.div>
             )
           })}
         </motion.div>
 
         <motion.div {...fadeInUp} className="mt-8">
-          <div className="bg-omnia-surface border border-omnia-border rounded-xl p-5 sm:p-6">
+          <div className="rounded-2xl bg-white/[0.02] border border-white/[0.06] p-5 sm:p-6">
             <div className="flex items-start gap-3">
               <Shield className="w-5 h-5 text-omnia-accent flex-shrink-0 mt-0.5" />
-              <p className="text-omnia-text-secondary text-sm leading-relaxed">
+              <p className="text-omnia-text-secondary text-[14px] leading-[1.6] font-[family-name:var(--font-geist-sans)]">
                 An <span className="text-omnia-accent font-medium">external security audit</span> is currently in preparation. 
                 Results and findings will be published in full upon completion. We do not hide audit results.
               </p>
@@ -472,8 +473,7 @@ export default function SecurityPage() {
         </motion.div>
       </section>
 
-      {/* Footer spacer */}
-      <div className="h-16" />
+      <Footer />
     </div>
   )
 }

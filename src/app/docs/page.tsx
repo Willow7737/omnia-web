@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { PageHeader } from '@/components/page-header'
+import { Footer } from '@/components/footer'
 import {
   Terminal,
   Server,
@@ -42,11 +43,11 @@ function CopyButton({ text }: { text: string }) {
   return (
     <button
       onClick={handleCopy}
-      className="absolute top-3 right-3 p-1.5 rounded-md bg-omnia-base/80 border border-omnia-border hover:border-omnia-accent/40 transition-colors"
+      className="absolute top-3 right-3 p-1.5 rounded-md bg-black/80 border border-white/[0.06] hover:border-white/[0.12] transition-colors"
       aria-label="Copy code"
     >
       {copied ? (
-        <Check className="w-3.5 h-3.5 text-emerald-400" />
+        <Check className="w-3.5 h-3.5 text-[#30D158]" />
       ) : (
         <Copy className="w-3.5 h-3.5 text-omnia-text-secondary" />
       )}
@@ -58,12 +59,12 @@ function CopyButton({ text }: { text: string }) {
 function CodeBlock({ code, lang }: { code: string; lang?: string }) {
   return (
     <div className="relative group">
-      <div className="absolute top-2.5 left-4 text-[10px] uppercase tracking-wider text-omnia-text-secondary/50 font-mono">
+      <div className="absolute top-2.5 left-4 text-[10px] uppercase tracking-wider text-omnia-text-secondary/50 font-[family-name:var(--font-jetbrains-mono)]">
         {lang || 'bash'}
       </div>
       <CopyButton text={code} />
-      <pre className="bg-omnia-base border border-omnia-border rounded-xl p-4 pt-8 overflow-x-auto text-sm sm:text-base">
-        <code className="font-mono text-omnia-text-secondary leading-relaxed whitespace-pre">
+      <pre className="bg-black border border-white/[0.06] rounded-2xl p-4 pt-8 overflow-x-auto text-[14px] sm:text-[15px]">
+        <code className="font-[family-name:var(--font-jetbrains-mono)] text-omnia-text-secondary leading-[1.6] whitespace-pre">
           {code}
         </code>
       </pre>
@@ -74,7 +75,7 @@ function CodeBlock({ code, lang }: { code: string; lang?: string }) {
 /* ── Inline code ──────────────────────────────────────── */
 function InlineCode({ children }: { children: React.ReactNode }) {
   return (
-    <code className="font-mono text-sm text-omnia-accent bg-omnia-accent/10 px-1.5 py-0.5 rounded">
+    <code className="font-[family-name:var(--font-jetbrains-mono)] text-[14px] text-omnia-accent bg-[#2997FF]/10 px-1.5 py-0.5 rounded">
       {children}
     </code>
   )
@@ -97,14 +98,14 @@ function DocTable({
   col3Label?: string
 }) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-omnia-border">
-      <table className="w-full text-sm">
+    <div className="overflow-x-auto rounded-2xl border border-white/[0.06]">
+      <table className="w-full text-[14px]">
         <thead>
-          <tr className="bg-omnia-base/80 border-b border-omnia-border">
-            <th className="text-left px-4 py-3 text-omnia-text font-medium">{headers[0]}</th>
-            <th className="text-left px-4 py-3 text-omnia-text font-medium">{headers[1]}</th>
+          <tr className="bg-black/80 border-b border-white/[0.06]">
+            <th className="text-left px-4 py-3 text-omnia-text font-medium font-[family-name:var(--font-geist-sans)]">{headers[0]}</th>
+            <th className="text-left px-4 py-3 text-omnia-text font-medium font-[family-name:var(--font-geist-sans)]">{headers[1]}</th>
             {col3Label && (
-              <th className="text-left px-4 py-3 text-omnia-text font-medium hidden sm:table-cell">
+              <th className="text-left px-4 py-3 text-omnia-text font-medium font-[family-name:var(--font-geist-sans)] hidden sm:table-cell">
                 {col3Label}
               </th>
             )}
@@ -114,14 +115,14 @@ function DocTable({
           {rows.map((row, i) => (
             <tr
               key={i}
-              className="border-b border-omnia-border/50 last:border-0 hover:bg-omnia-accent/5 transition-colors"
+              className="border-b border-white/[0.04] last:border-0 hover:bg-white/[0.04] transition-colors"
             >
-              <td className="px-4 py-3 text-omnia-accent font-mono text-xs sm:text-sm align-top">
+              <td className="px-4 py-3 text-omnia-accent font-[family-name:var(--font-jetbrains-mono)] text-[12px] sm:text-[14px] align-top">
                 {row.col1}
               </td>
-              <td className="px-4 py-3 text-omnia-text-secondary align-top">{row.col2}</td>
+              <td className="px-4 py-3 text-omnia-text-secondary align-top font-[family-name:var(--font-geist-sans)]">{row.col2}</td>
               {col3Label && row.col3 && (
-                <td className="px-4 py-3 text-omnia-text-secondary text-xs sm:text-sm align-top hidden sm:table-cell">
+                <td className="px-4 py-3 text-omnia-text-secondary text-[12px] sm:text-[14px] align-top hidden sm:table-cell font-[family-name:var(--font-geist-sans)]">
                   {row.col3}
                 </td>
               )}
@@ -194,7 +195,7 @@ const docLinks = [
     title: 'Security Audit',
     description: 'Audit reports and security model',
     href: 'https://github.com/Willow7737/omnia-protocol',
-    color: 'text-emerald-400',
+    color: 'text-[#30D158]',
   },
 ]
 
@@ -202,22 +203,21 @@ const docLinks = [
 
 export default function DocsPage() {
   return (
-    <div className="min-h-screen bg-omnia-base">
+    <div className="min-h-screen bg-omnia-base flex flex-col">
       <PageHeader
         title="Documentation"
         description="Everything you need to get started with the Omnia Protocol — from cloning the repo to running a full node."
-        backHref="/"
-        backLabel="Home"
+        breadcrumbs={[{ label: 'Documentation' }]}
       />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-16 sm:space-y-20">
+      <div className="max-w-[980px] mx-auto px-6 py-12 sm:py-16 space-y-16 sm:space-y-20">
         {/* Quick Start */}
         <motion.section {...fadeInUp}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
               <Terminal className="w-5 h-5 text-omnia-accent" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-omnia-text">Quick Start</h2>
+            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Quick Start</h2>
           </div>
           <CodeBlock
             lang="bash"
@@ -231,10 +231,10 @@ cargo bench --no-run`}
         {/* Running a Node */}
         <motion.section {...fadeInUp}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
               <Server className="w-5 h-5 text-omnia-accent" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-omnia-text">Running a Node</h2>
+            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Running a Node</h2>
           </div>
           <div className="space-y-4">
             <CodeBlock
@@ -257,10 +257,10 @@ cargo build --release -p omnia-node --features ethereum-live`}
         {/* Docker Deployment */}
         <motion.section {...fadeInUp}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
               <Container className="w-5 h-5 text-omnia-accent" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-omnia-text">Docker Deployment</h2>
+            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Docker Deployment</h2>
           </div>
           <CodeBlock
             lang="bash"
@@ -273,15 +273,15 @@ docker compose -f docker/docker-compose.testnet.yml up -d`}
         </motion.section>
 
         {/* Separator */}
-        <div className="h-px bg-omnia-border" />
+        <div className="h-px bg-white/[0.06]" />
 
         {/* API Endpoints Reference */}
         <motion.section {...fadeInUp}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
               <Plug className="w-5 h-5 text-omnia-accent" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-omnia-text">
+            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">
               API Endpoints Reference
             </h2>
           </div>
@@ -291,13 +291,13 @@ docker compose -f docker/docker-compose.testnet.yml up -d`}
         {/* Feature Flags */}
         <motion.section {...fadeInUp}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
               <Flag className="w-5 h-5 text-omnia-accent" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-omnia-text">Feature Flags</h2>
+            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Feature Flags</h2>
           </div>
           <DocTable headers={['Flag', 'Description']} rows={featureFlags} />
-          <p className="mt-3 text-omnia-text-secondary text-sm">
+          <p className="mt-3 text-omnia-text-secondary text-[14px] font-[family-name:var(--font-geist-sans)]">
             Enable features with <InlineCode>--features &lt;flag&gt;</InlineCode> when building with
             Cargo.
           </p>
@@ -306,10 +306,10 @@ docker compose -f docker/docker-compose.testnet.yml up -d`}
         {/* Environment Variables */}
         <motion.section {...fadeInUp}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
               <Settings2 className="w-5 h-5 text-omnia-accent" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-omnia-text">Environment Variables</h2>
+            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Environment Variables</h2>
           </div>
           <DocTable
             headers={['Variable', 'Description']}
@@ -321,26 +321,26 @@ docker compose -f docker/docker-compose.testnet.yml up -d`}
         {/* Development Commands */}
         <motion.section {...fadeInUp}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
               <Wrench className="w-5 h-5 text-omnia-accent" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-omnia-text">Development Commands</h2>
+            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Development Commands</h2>
           </div>
           <DocTable headers={['Command', 'Description']} rows={devCommands} />
         </motion.section>
 
         {/* Separator */}
-        <div className="h-px bg-omnia-border" />
+        <div className="h-px bg-white/[0.06]" />
 
         {/* Documentation Links */}
         <motion.section {...fadeInUp}>
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
               <BookOpen className="w-5 h-5 text-omnia-accent" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-omnia-text">Documentation Links</h2>
+            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Documentation Links</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {docLinks.map((link, i) => {
               const Icon = link.icon
               return (
@@ -353,19 +353,19 @@ docker compose -f docker/docker-compose.testnet.yml up -d`}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.08 }}
-                  className="group flex items-start gap-4 p-5 sm:p-6 rounded-xl bg-omnia-surface border border-omnia-border hover:border-omnia-accent/30 transition-colors"
+                  className="group flex items-start gap-4 p-5 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors"
                 >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
                     <Icon className={`w-5 h-5 ${link.color}`} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <h3 className="font-semibold text-omnia-text text-sm sm:text-base">
+                      <h3 className="font-semibold text-omnia-text text-[15px] sm:text-[17px] font-[family-name:var(--font-space-grotesk)]">
                         {link.title}
                       </h3>
                       <ExternalLink className="w-3.5 h-3.5 text-omnia-text-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
-                    <p className="text-omnia-text-secondary text-sm mt-1">{link.description}</p>
+                    <p className="text-omnia-text-secondary text-[14px] mt-1 font-[family-name:var(--font-geist-sans)]">{link.description}</p>
                   </div>
                   <ArrowRight className="w-4 h-4 text-omnia-text-secondary group-hover:text-omnia-accent transition-colors flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100" />
                 </motion.a>
@@ -375,8 +375,7 @@ docker compose -f docker/docker-compose.testnet.yml up -d`}
         </motion.section>
       </div>
 
-      {/* Footer spacer */}
-      <div className="h-16" />
+      <Footer />
     </div>
   )
 }

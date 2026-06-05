@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { MessageCircle, Heart } from 'lucide-react'
+import { Heart } from 'lucide-react'
 
 function GitHubIcon({ size = 16 }: { size?: number }) {
   return (
@@ -15,23 +15,23 @@ function GitHubIcon({ size = 16 }: { size?: number }) {
 export function CTASection() {
   return (
     <section id="contribute" className="section-padding px-6">
-      <div className="max-w-3xl mx-auto text-center">
+      <div className="max-w-[680px] mx-auto text-center">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-3xl sm:text-4xl font-semibold tracking-[-0.02em] text-[#F5F0EB] mb-4">
-            Public Domain Infrastructure
+          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] text-[#F5F5F7] mb-4">
+            Public domain.
           </h2>
 
-          <p className="text-[#A39B92] leading-relaxed mb-8 max-w-xl mx-auto">
-            Omnia is CC0. No entity owns it. Funded by protocol grants and community support. Every line of code is public, every test is reproducible.
+          <p className="text-[17px] text-[#86868B] leading-[1.5] mb-8 max-w-[480px] mx-auto font-[family-name:var(--font-geist-sans)]">
+            CC0. No entity owns it. Every line of code is public, every test is reproducible.
           </p>
 
           {/* Stats row */}
-          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mb-10">
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 mb-10">
             {[
               { value: '224', label: 'files' },
               { value: '81,082', label: 'lines' },
@@ -39,10 +39,10 @@ export function CTASection() {
               { value: 'CC0', label: 'License' },
             ].map((stat) => (
               <div key={stat.label} className="flex items-baseline gap-1.5">
-                <span className="font-[family-name:var(--font-jetbrains-mono)] text-lg text-[#D4A574]">
+                <span className="font-[family-name:var(--font-jetbrains-mono)] text-[17px] text-[#F5F5F7]">
                   {stat.value}
                 </span>
-                <span className="text-xs text-[#A39B92] font-[family-name:var(--font-space-grotesk)]">
+                <span className="text-[12px] text-[#86868B] font-[family-name:var(--font-space-grotesk)]">
                   {stat.label}
                 </span>
               </div>
@@ -50,24 +50,22 @@ export function CTASection() {
           </div>
 
           {/* Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
             <a
               href="https://github.com/Willow7737/omnia-protocol"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4A574] text-[#0F0F0F] font-[family-name:var(--font-space-grotesk)] font-medium text-sm tracking-tight rounded-md hover:bg-[#c49564] transition-colors"
+              className="inline-flex items-center gap-2 px-7 py-3 bg-[#2997FF] text-white font-[family-name:var(--font-space-grotesk)] font-medium text-[14px] tracking-tight rounded-full hover:bg-[#2384d6] transition-colors"
             >
-              <GitHubIcon size={16} />
+              <GitHubIcon size={15} />
               View on GitHub
             </a>
             <a
               href="https://discord.gg/qYkpAeSYR"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 border rounded-md font-[family-name:var(--font-space-grotesk)] font-medium text-sm tracking-tight text-[#A39B92] hover:text-[#D4A574] hover:border-[#D4A574] transition-colors"
-              style={{ borderColor: 'rgba(212, 165, 116, 0.3)' }}
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-[family-name:var(--font-space-grotesk)] font-medium text-[14px] tracking-tight border border-white/[0.12] text-[#F5F5F7] hover:bg-white/[0.04] transition-colors"
             >
-              <MessageCircle size={16} />
               Join Discord
             </a>
           </div>
@@ -75,9 +73,9 @@ export function CTASection() {
           {/* Support link */}
           <a
             href="/donate"
-            className="inline-flex items-center gap-1.5 text-sm font-[family-name:var(--font-space-grotesk)] text-[#A39B92] hover:text-[#D4A574] transition-colors"
+            className="inline-flex items-center gap-1.5 text-[14px] font-[family-name:var(--font-space-grotesk)] text-[#86868B] hover:text-[#2997FF] transition-colors"
           >
-            <Heart size={14} />
+            <Heart size={13} />
             Support the Protocol
           </a>
         </motion.div>

@@ -1,8 +1,8 @@
 'use client'
 
-import { MessageCircle, FileText } from 'lucide-react'
+import Link from 'next/link'
 
-function GitHubIcon({ size = 14 }: { size?: number }) {
+function GitHubIcon({ size = 13 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65S8.93 17.38 9 18v4" />
@@ -11,42 +11,92 @@ function GitHubIcon({ size = 14 }: { size?: number }) {
   )
 }
 
+const footerLinks = [
+  {
+    title: 'Protocol',
+    links: [
+      { label: 'About', href: '/about' },
+      { label: 'Architecture', href: '/architecture' },
+      { label: 'Roadmap', href: '/roadmap' },
+      { label: 'Use Cases', href: '/use-cases' },
+    ],
+  },
+  {
+    title: 'Develop',
+    links: [
+      { label: 'Documentation', href: '/docs' },
+      { label: 'Security', href: '/security' },
+      { label: 'FAQ', href: '/faq' },
+    ],
+  },
+  {
+    title: 'Community',
+    links: [
+      { label: 'Community', href: '/community' },
+      { label: 'Code of Conduct', href: '/conduct' },
+      { label: 'Support', href: '/donate' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
+      { label: 'Privacy', href: '/privacy' },
+      { label: 'Terms', href: '/terms' },
+    ],
+  },
+]
+
 export function Footer() {
   return (
-    <footer
-      className="border-t mt-auto"
-      style={{ borderColor: 'rgba(212, 165, 116, 0.15)' }}
-    >
-      <div className="max-w-6xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-sm text-[#A39B92] font-[family-name:var(--font-space-grotesk)]">
-          Omnia Protocol — CC0 Public Domain · Built with care, not hype
-        </p>
-        <div className="flex items-center gap-6">
-          <a
-            href="https://github.com/Willow7737/omnia-protocol"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#A39B92] hover:text-[#D4A574] transition-colors flex items-center gap-1.5 text-sm"
-          >
-            <GitHubIcon size={14} />
-            <span className="font-[family-name:var(--font-space-grotesk)]">GitHub</span>
-          </a>
-          <a
-            href="https://discord.gg/qYkpAeSYR"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[#A39B92] hover:text-[#D4A574] transition-colors flex items-center gap-1.5 text-sm"
-          >
-            <MessageCircle size={14} />
-            <span className="font-[family-name:var(--font-space-grotesk)]">Discord</span>
-          </a>
-          <a
-            href="/docs"
-            className="text-[#A39B92] hover:text-[#D4A574] transition-colors flex items-center gap-1.5 text-sm"
-          >
-            <FileText size={14} />
-            <span className="font-[family-name:var(--font-space-grotesk)]">Docs</span>
-          </a>
+    <footer className="border-t border-white/[0.06] mt-auto">
+      <div className="max-w-[980px] mx-auto px-6 py-12">
+        {/* Link grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-10">
+          {footerLinks.map((section) => (
+            <div key={section.title}>
+              <h4 className="text-[11px] uppercase tracking-wider text-[#86868B] font-[family-name:var(--font-space-grotesk)] mb-3">
+                {section.title}
+              </h4>
+              <ul className="space-y-2">
+                {section.links.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-[13px] text-[#86868B] hover:text-[#F5F5F7] transition-colors font-[family-name:var(--font-geist-sans)]"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom bar */}
+        <div className="border-t border-white/[0.06] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-[12px] text-[#48484A] font-[family-name:var(--font-geist-sans)]">
+            Omnia Protocol — CC0 Public Domain
+          </p>
+          <div className="flex items-center gap-5">
+            <a
+              href="https://github.com/Willow7737/omnia-protocol"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#86868B] hover:text-[#F5F5F7] transition-colors flex items-center gap-1.5 text-[12px]"
+            >
+              <GitHubIcon size={13} />
+              <span className="font-[family-name:var(--font-geist-sans)]">GitHub</span>
+            </a>
+            <a
+              href="https://discord.gg/qYkpAeSYR"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#86868B] hover:text-[#F5F5F7] transition-colors text-[12px] font-[family-name:var(--font-geist-sans)]"
+            >
+              Discord
+            </a>
+          </div>
         </div>
       </div>
     </footer>

@@ -12,7 +12,6 @@ interface MetricRow {
   liveKey?: string
 }
 
-// Benchmark data from v0.1.67 single-node tests (originally measured v0.1.48)
 const mainMetrics: MetricRow[] = [
   { metric: 'Sustained TPS', value: 7190, unit: 'events/sec', decimals: 0, liveKey: 'tps' },
   { metric: 'Finality Latency p50', value: 93.47, unit: 'µs', decimals: 2, liveKey: 'p50Latency' },
@@ -33,11 +32,11 @@ function MetricTable({ metrics, title, liveMetrics }: { metrics: MetricRow[]; ti
   return (
     <div>
       {title && (
-        <h3 className="font-[family-name:var(--font-space-grotesk)] text-sm font-medium text-[#A39B92] mb-4 tracking-tight">
+        <h3 className="text-[13px] font-medium text-[#86868B] mb-3 tracking-tight font-[family-name:var(--font-space-grotesk)] uppercase">
           {title}
         </h3>
       )}
-      <div className="border rounded-md overflow-hidden" style={{ borderColor: 'rgba(212, 165, 116, 0.15)' }}>
+      <div className="rounded-2xl overflow-hidden border border-white/[0.06]">
         {metrics.map((row, i) => {
           let displayValue = row.value
           let displayUnit = row.unit
@@ -62,19 +61,15 @@ function MetricTable({ metrics, title, liveMetrics }: { metrics: MetricRow[]; ti
           return (
             <div
               key={row.metric}
-              className={`flex items-center justify-between px-5 py-3 ${
-                i < metrics.length - 1 ? 'border-b' : ''
+              className={`flex items-center justify-between px-5 py-3.5 ${
+                i < metrics.length - 1 ? 'border-b border-white/[0.04]' : ''
               }`}
-              style={{
-                borderColor: 'rgba(212, 165, 116, 0.1)',
-                background: i % 2 === 0 ? 'rgba(26, 26, 26, 0.3)' : 'transparent',
-              }}
             >
-              <span className="text-sm text-[#A39B92] leading-relaxed">{row.metric}</span>
-              <span className="font-[family-name:var(--font-jetbrains-mono)] text-sm text-[#F5F0EB] shrink-0 ml-6">
+              <span className="text-[14px] text-[#86868B] leading-relaxed font-[family-name:var(--font-geist-sans)]">{row.metric}</span>
+              <span className="font-[family-name:var(--font-jetbrains-mono)] text-[14px] text-[#F5F5F7] shrink-0 ml-6">
                 <AnimatedNumber value={displayValue} decimals={row.decimals ?? 0} duration={isLive ? 1000 : 2500} />{' '}
-                <span className="text-[#A39B92]">{displayUnit}</span>
-                {isLive && <span className="ml-2 inline-block w-1.5 h-1.5 rounded-full bg-[#8C9E8E]" />}
+                <span className="text-[#86868B] text-[12px]">{displayUnit}</span>
+                {isLive && <span className="ml-2 inline-block w-1.5 h-1.5 rounded-full bg-[#30D158]" />}
               </span>
             </div>
           )
@@ -101,28 +96,28 @@ export function PerformanceSection() {
 
   return (
     <section id="performance" className="section-padding px-6">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-[680px] mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-3xl sm:text-4xl font-semibold tracking-[-0.02em] text-[#F5F0EB] mb-2">
-            Performance Baseline
+          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] text-[#F5F5F7] mb-3">
+            The numbers.
           </h2>
-          <p className="text-sm text-[#A39B92] mb-10">
-            Consensus throughput benchmarks from v0.1.67 single-node tests (measured v0.1.48)
-            {hasLiveData && <span className="text-[#8C9E8E]"> · live metrics shown with <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#8C9E8E] align-middle" /> dot</span>}
+          <p className="text-[15px] text-[#86868B] mb-10 font-[family-name:var(--font-geist-sans)]">
+            Benchmarks from v0.1.67 single-node tests.
+            {hasLiveData && <span className="text-[#30D158]"> Live metrics shown with <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#30D158] align-middle" /> dot</span>}
           </p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-          className="space-y-8"
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="space-y-6"
         >
           <MetricTable metrics={mainMetrics} liveMetrics={liveDataMap} />
           <MetricTable metrics={zkMetrics} title="ZK Performance" liveMetrics={liveDataMap} />

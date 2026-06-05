@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server'
 
+export const dynamic = 'force-static'
+
 export async function GET() {
   // Return benchmark fallback data for the dashboard
   // When testnet is live, this would proxy to actual node endpoints

@@ -2,10 +2,9 @@
 
 import { motion } from 'framer-motion'
 import { AnimatedNumber } from './animated-number'
-import { FileText, Terminal, ArrowRight, Wifi, WifiOff, Loader2 } from 'lucide-react'
+import { ArrowRight, Wifi, WifiOff, Loader2 } from 'lucide-react'
 import { useOmniaDashboard } from '@/hooks/use-omnia-data'
 
-// Benchmark data shown when testnet is offline (from v0.1.67 single-node tests)
 const BENCHMARK_DATA = {
   eventsFinalized: 7190000,
   p50Latency: '93.47µs',
@@ -20,7 +19,6 @@ export function HeroSection() {
   const isOnline = data?.healthy ?? false
   const hasLiveData = isOnline && !!data
 
-  // Show live data when available, fall back to benchmark data
   const eventsFinalized = hasLiveData ? data.eventsFinalized : BENCHMARK_DATA.eventsFinalized
   const latency = hasLiveData ? data.p50Latency : BENCHMARK_DATA.p50Latency
   const validators = hasLiveData ? data.activeValidators : BENCHMARK_DATA.validators
@@ -32,120 +30,131 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="section-padding relative min-h-screen flex flex-col items-center justify-center px-6"
+      className="relative min-h-screen flex flex-col items-center justify-center px-6"
     >
-      {/* Subtle gradient background */}
-      <div className="absolute inset-0 page-hero-gradient pointer-events-none" />
+      <div className="text-center max-w-[680px] mx-auto relative z-10">
+        {/* Overline */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="mb-4"
+        >
+          <span className="text-[#86868B] text-sm font-[family-name:var(--font-space-grotesk)] tracking-tight">
+            Settlement-agnostic consensus infrastructure
+          </span>
+        </motion.div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="text-center max-w-3xl mx-auto relative z-10"
-      >
-        {/* Headline */}
-        <h1 className="font-[family-name:var(--font-space-grotesk)] text-5xl sm:text-6xl md:text-7xl font-bold tracking-[-0.02em] text-[#F5F0EB] mb-6">
-          Omnia Protocol
-        </h1>
+        {/* Headline — large, bold, confident */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="font-[family-name:var(--font-space-grotesk)] text-[56px] sm:text-[72px] md:text-[80px] font-bold tracking-[-0.03em] leading-[1.05] text-[#F5F5F7] mb-5"
+        >
+          Omnia
+        </motion.h1>
 
         {/* Subheadline */}
-        <p className="text-lg sm:text-xl text-[#A39B92] leading-relaxed max-w-2xl mx-auto mb-10">
-          Settlement-agnostic causal graph consensus. Sub-100µs finality. Public domain.
-        </p>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="text-[19px] sm:text-[21px] text-[#86868B] leading-[1.4] max-w-[520px] mx-auto mb-8 font-[family-name:var(--font-geist-sans)]"
+        >
+          Causal graph consensus.{' '}
+          <span className="text-[#F5F5F7]">Sub-100µs finality.</span>{' '}
+          Public domain.
+        </motion.p>
 
-        {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-          <a
-            href="/docs"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-[#D4A574] text-[#0F0F0F] font-[family-name:var(--font-space-grotesk)] font-medium text-sm tracking-tight rounded-md hover:bg-[#c49564] transition-colors"
-          >
-            <FileText size={16} />
-            Read the Docs
-          </a>
-          <a
-            href="/architecture"
-            className="inline-flex items-center gap-2 px-6 py-3 border rounded-md font-[family-name:var(--font-space-grotesk)] font-medium text-sm tracking-tight text-[#A39B92] hover:text-[#D4A574] hover:border-[#D4A574] transition-colors"
-            style={{ borderColor: 'rgba(212, 165, 116, 0.3)' }}
-          >
-            <Terminal size={16} />
-            View Architecture
-            <ArrowRight size={14} />
-          </a>
-        </div>
-
-        {/* Live Status Widget */}
+        {/* CTAs — Apple-style pill buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
-          className="inline-block w-full max-w-xl"
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-14"
         >
-          <div
-            className="border rounded-lg p-5 text-left"
-            style={{
-              borderColor: hasLiveData
-                ? 'rgba(140, 158, 142, 0.3)'
-                : 'rgba(212, 165, 116, 0.2)',
-              background: 'rgba(26, 26, 26, 0.6)',
-            }}
+          <a
+            href="/docs"
+            className="inline-flex items-center gap-2 px-7 py-3 bg-[#2997FF] text-white font-[family-name:var(--font-space-grotesk)] font-medium text-[14px] tracking-tight rounded-full hover:bg-[#2384d6] transition-colors"
           >
+            Read the Docs
+            <ArrowRight size={14} />
+          </a>
+          <a
+            href="/architecture"
+            className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-[family-name:var(--font-space-grotesk)] font-medium text-[14px] tracking-tight text-[#2997FF] hover:text-[#5eb8ff] transition-colors"
+          >
+            View Architecture
+            <ArrowRight size={14} />
+          </a>
+        </motion.div>
+
+        {/* Live Status Widget — minimal, clean */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="inline-block w-full max-w-[480px]"
+        >
+          <div className="border border-white/[0.08] rounded-2xl p-5 text-left bg-white/[0.02]">
             {isLoading && !data ? (
-              <div className="flex items-center justify-center py-6 gap-3">
-                <Loader2 className="h-5 w-5 animate-spin text-[#D4A574]" />
-                <span className="text-sm text-[#A39B92]">Connecting to testnet...</span>
+              <div className="flex items-center justify-center py-8 gap-3">
+                <Loader2 className="h-4 w-4 animate-spin text-[#86868B]" />
+                <span className="text-sm text-[#86868B]">Connecting to testnet...</span>
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+              <div className="grid grid-cols-2 gap-x-8 gap-y-4">
                 {/* Events Finalized */}
                 <div>
-                  <div className="text-xs text-[#A39B92] uppercase tracking-wider mb-1 font-[family-name:var(--font-space-grotesk)]">
+                  <div className="text-[11px] text-[#86868B] uppercase tracking-wider mb-1.5 font-[family-name:var(--font-space-grotesk)]">
                     Events Finalized
                   </div>
-                  <div className="font-[family-name:var(--font-jetbrains-mono)] text-base text-[#F5F0EB]">
+                  <div className="font-[family-name:var(--font-jetbrains-mono)] text-[15px] text-[#F5F5F7]">
                     <AnimatedNumber value={eventsFinalized} />
                   </div>
                 </div>
 
                 {/* p50 Latency */}
                 <div>
-                  <div className="text-xs text-[#A39B92] uppercase tracking-wider mb-1 font-[family-name:var(--font-space-grotesk)]">
+                  <div className="text-[11px] text-[#86868B] uppercase tracking-wider mb-1.5 font-[family-name:var(--font-space-grotesk)]">
                     p50 Latency
                   </div>
-                  <div className="font-[family-name:var(--font-jetbrains-mono)] text-base text-[#F5F0EB]">
+                  <div className="font-[family-name:var(--font-jetbrains-mono)] text-[15px] text-[#F5F5F7]">
                     {latency}
                   </div>
                 </div>
 
                 {/* Active Validators */}
                 <div>
-                  <div className="text-xs text-[#A39B92] uppercase tracking-wider mb-1 font-[family-name:var(--font-space-grotesk)]">
+                  <div className="text-[11px] text-[#86868B] uppercase tracking-wider mb-1.5 font-[family-name:var(--font-space-grotesk)]">
                     Active Validators
                   </div>
-                  <div className="font-[family-name:var(--font-jetbrains-mono)] text-base text-[#F5F0EB]">
+                  <div className="font-[family-name:var(--font-jetbrains-mono)] text-[15px] text-[#F5F5F7]">
                     <AnimatedNumber value={validators} />
                   </div>
                 </div>
 
                 {/* Network Status */}
                 <div>
-                  <div className="text-xs text-[#A39B92] uppercase tracking-wider mb-1 font-[family-name:var(--font-space-grotesk)]">
+                  <div className="text-[11px] text-[#86868B] uppercase tracking-wider mb-1.5 font-[family-name:var(--font-space-grotesk)]">
                     Network Status
                   </div>
                   <div className="flex items-center gap-2">
                     {hasLiveData ? (
                       <>
                         <span className="relative flex h-2 w-2">
-                          <span className="animate-pulse-sage absolute inline-flex h-full w-full rounded-full bg-[#8C9E8E] opacity-75" />
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#8C9E8E]" />
+                          <span className="animate-pulse-dot absolute inline-flex h-full w-full rounded-full bg-[#30D158] opacity-75" />
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#30D158]" />
                         </span>
-                        <span className="font-[family-name:var(--font-jetbrains-mono)] text-sm text-[#8C9E8E]">
+                        <span className="font-[family-name:var(--font-jetbrains-mono)] text-[13px] text-[#30D158]">
                           {networkStatus}
                         </span>
                       </>
                     ) : (
                       <>
-                        <WifiOff className="h-3 w-3 text-[#A39B92]" />
-                        <span className="font-[family-name:var(--font-jetbrains-mono)] text-sm text-[#A39B92]">
+                        <WifiOff className="h-3 w-3 text-[#86868B]" />
+                        <span className="font-[family-name:var(--font-jetbrains-mono)] text-[13px] text-[#86868B]">
                           {networkStatus}
                         </span>
                       </>
@@ -155,27 +164,25 @@ export function HeroSection() {
               </div>
             )}
 
-            {/* Note */}
-            <div className="mt-4 pt-3 border-t text-xs text-[#A39B92] flex items-center justify-between" style={{ borderColor: 'rgba(212, 165, 116, 0.1)' }}>
+            {/* Footer note */}
+            <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] text-[#86868B] flex items-center justify-between">
               <span>
                 {hasLiveData
-                  ? `${nodeCount} node${nodeCount !== 1 ? 's' : ''} connected — live data`
-                  : 'v0.1.67 benchmarks — connect testnet for live data'}
+                  ? `${nodeCount} node${nodeCount !== 1 ? 's' : ''} connected`
+                  : 'v0.1.67 benchmarks'}
               </span>
               {hasLiveData ? (
-                <span className="flex items-center gap-1 text-[#8C9E8E]">
+                <span className="flex items-center gap-1 text-[#30D158]">
                   <Wifi className="h-3 w-3" />
                   Live
                 </span>
               ) : (
-                <span className="text-[#A39B92]">
-                  Benchmark
-                </span>
+                <span>Benchmark</span>
               )}
             </div>
           </div>
         </motion.div>
-      </motion.div>
+      </div>
     </section>
   )
 }

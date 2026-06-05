@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { PageHeader } from '@/components/page-header'
+import { Footer } from '@/components/footer'
 import {
   Banknote,
   PackageSearch,
@@ -106,25 +107,25 @@ function UseCaseCard({ useCase, index }: { useCase: UseCase; index: number }) {
     <motion.div
       {...staggerItem}
       transition={{ ...staggerItem.transition, delay: index * 0.08 }}
-      className="group bg-omnia-surface border border-omnia-border rounded-xl p-5 sm:p-6 hover:border-omnia-accent/30 transition-all duration-300 hover:shadow-lg hover:shadow-omnia-accent/5"
+      className="group rounded-2xl bg-white/[0.02] border border-white/[0.06] p-5 sm:p-6 hover:border-white/[0.12] transition-all duration-300 hover:shadow-lg hover:shadow-omnia-accent/5"
     >
       <div className="flex items-start gap-4 mb-5">
-        <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-omnia-accent/10 border border-omnia-accent/20 flex items-center justify-center group-hover:bg-omnia-accent/15 group-hover:border-omnia-accent/30 transition-colors">
+        <div className="flex-shrink-0 w-11 h-11 rounded-2xl bg-[#2997FF]/10 border border-[#2997FF]/20 flex items-center justify-center group-hover:bg-[#2997FF]/15 group-hover:border-[#2997FF]/30 transition-colors">
           <Icon className="w-5 h-5 text-omnia-accent" />
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-omnia-text group-hover:text-omnia-accent transition-colors">
+          <h3 className="text-[17px] font-semibold text-omnia-text group-hover:text-omnia-accent transition-colors tracking-tight font-[family-name:var(--font-space-grotesk)]">
             {useCase.title}
           </h3>
-          <p className="text-omnia-text-secondary text-sm mt-1">{useCase.description}</p>
+          <p className="text-omnia-text-secondary text-[14px] mt-1 font-[family-name:var(--font-geist-sans)]">{useCase.description}</p>
         </div>
       </div>
 
       <ul className="space-y-2.5">
         {useCase.items.map((item, i) => (
-          <li key={i} className="flex items-start gap-2.5 text-sm">
+          <li key={i} className="flex items-start gap-2.5 text-[14px] font-[family-name:var(--font-geist-sans)]">
             <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-accent/60 mt-1.5 group-hover:bg-omnia-accent transition-colors" />
-            <span className="text-omnia-text-secondary leading-relaxed">{item}</span>
+            <span className="text-omnia-text-secondary leading-[1.6]">{item}</span>
           </li>
         ))}
       </ul>
@@ -134,7 +135,7 @@ function UseCaseCard({ useCase, index }: { useCase: UseCase; index: number }) {
 
 export default function UseCasesPage() {
   return (
-    <div className="min-h-screen bg-omnia-base">
+    <div className="min-h-screen bg-omnia-base flex flex-col">
       <PageHeader
         title="Use Cases"
         description="Real-world problems that Omnia's architecture is built to solve. From financial infrastructure to physical-digital fusion — every use case is grounded in the protocol's actual capabilities."
@@ -142,10 +143,10 @@ export default function UseCasesPage() {
       />
 
       {/* Use cases grid */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+      <section className="max-w-[980px] mx-auto px-6 pb-24">
         <motion.div
           {...staggerContainer}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-3"
         >
           {useCases.map((useCase, index) => (
             <UseCaseCard key={useCase.title} useCase={useCase} index={index} />
@@ -154,18 +155,18 @@ export default function UseCasesPage() {
       </section>
 
       {/* Bottom CTA */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+      <div className="max-w-[980px] mx-auto px-6 pb-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="bg-omnia-surface border border-omnia-border rounded-xl p-6 sm:p-8 text-center"
+          className="rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6 sm:p-8 text-center"
         >
-          <h3 className="text-xl sm:text-2xl font-bold text-omnia-text mb-3">
+          <h3 className="text-[28px] sm:text-[32px] font-bold text-omnia-text mb-3 tracking-tight font-[family-name:var(--font-space-grotesk)]">
             Building something that fits?
           </h3>
-          <p className="text-omnia-text-secondary text-sm sm:text-base max-w-2xl mx-auto mb-6">
+          <p className="text-omnia-text-secondary text-[14px] sm:text-[15px] max-w-2xl mx-auto mb-6 leading-[1.6] font-[family-name:var(--font-geist-sans)]">
             Omnia is CC0 public domain — no permissions needed. The protocol is designed to be a 
             fundamental infrastructure layer that any application can build on, without gatekeepers 
             or license fees.
@@ -175,19 +176,21 @@ export default function UseCasesPage() {
               href="https://github.com/Willow7737/omnia-protocol"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-omnia-accent text-omnia-base font-medium text-sm hover:bg-omnia-accent/90 transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-omnia-accent text-omnia-base font-medium text-[14px] hover:bg-omnia-accent/90 transition-colors font-[family-name:var(--font-geist-sans)]"
             >
               View on GitHub
             </a>
             <a
               href="/architecture"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-omnia-surface border border-omnia-border text-omnia-text text-sm hover:border-omnia-accent/40 transition-colors"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06] text-omnia-text text-[14px] hover:border-white/[0.12] transition-colors font-[family-name:var(--font-geist-sans)]"
             >
               Explore Architecture
             </a>
           </div>
         </motion.div>
       </div>
+
+      <Footer />
     </div>
   )
 }

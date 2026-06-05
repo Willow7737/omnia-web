@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { PageHeader } from '@/components/page-header'
+import { Footer } from '@/components/footer'
 import {
   CheckCircle2,
   Circle,
@@ -192,7 +193,7 @@ const statusConfig = {
     circleColor: 'bg-omnia-accent',
     borderColor: 'border-omnia-accent/40',
     textColor: 'text-omnia-accent',
-    badgeBg: 'bg-omnia-accent/10',
+    badgeBg: 'bg-[#2997FF]/10',
     badgeBorder: 'border-omnia-accent/30',
     badgeText: 'text-omnia-accent',
     lineColor: 'bg-omnia-accent/30',
@@ -258,7 +259,7 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
           onClick={() => setIsOpen(!isOpen)}
           className="w-full text-left group"
         >
-          <div className={`bg-omnia-surface border ${config.borderColor} rounded-xl p-4 sm:p-5 hover:border-omnia-accent/30 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-omnia-accent/5`}>
+          <div className={`rounded-2xl bg-white/[0.02] border ${config.borderColor} p-4 sm:p-5 hover:border-white/[0.12] transition-all duration-300 group-hover:shadow-lg group-hover:shadow-omnia-accent/5`}>
             <div className="flex items-start justify-between gap-3">
               <div className="flex items-start gap-3 min-w-0">
                 <div className={`flex-shrink-0 w-9 h-9 rounded-lg ${config.badgeBg} flex items-center justify-center`}>
@@ -266,14 +267,14 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
                 </div>
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <span className={`font-mono text-xs ${config.badgeText} font-medium`}>
+                    <span className={`font-[family-name:var(--font-jetbrains-mono)] text-[12px] ${config.badgeText} font-medium`}>
                       {phase.number === '∞' ? 'Post-Phase 5' : `Phase ${phase.number}`}
                     </span>
                     <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium border ${config.badgeBg} ${config.badgeBorder} ${config.badgeText}`}>
                       {config.label}
                     </span>
                   </div>
-                  <h3 className={`text-base sm:text-lg font-semibold ${phase.status === 'future' ? 'text-omnia-text-secondary' : 'text-omnia-text'}`}>
+                  <h3 className={`text-[17px] sm:text-[19px] font-semibold tracking-tight font-[family-name:var(--font-space-grotesk)] ${phase.status === 'future' ? 'text-omnia-text-secondary' : 'text-omnia-text'}`}>
                     {phase.title}
                   </h3>
                 </div>
@@ -296,14 +297,14 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
                   transition={{ duration: 0.3, ease: 'easeInOut' }}
                   className="overflow-hidden"
                 >
-                  <ul className="mt-4 space-y-2 border-t border-omnia-border pt-4">
+                  <ul className="mt-4 space-y-2 border-t border-white/[0.06] pt-4">
                     {phase.items.map((item, i) => (
                       <motion.li
                         key={i}
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.3, delay: i * 0.04 }}
-                        className="flex items-start gap-2.5 text-sm"
+                        className="flex items-start gap-2.5 text-[14px] font-[family-name:var(--font-geist-sans)]"
                       >
                         <div className={`flex-shrink-0 w-1.5 h-1.5 rounded-full mt-1.5 ${config.circleColor}`} />
                         <span className={`${phase.status === 'future' ? 'text-omnia-text-secondary/60' : 'text-omnia-text-secondary'}`}>
@@ -327,7 +328,7 @@ export default function RoadmapPage() {
   const inProgressCount = phases.filter(p => p.status === 'in-progress').length
 
   return (
-    <div className="min-h-screen bg-omnia-base">
+    <div className="min-h-screen bg-omnia-base flex flex-col">
       <PageHeader
         title="Roadmap"
         description="From seed to universality. Every phase completed, every milestone verified. Radical transparency means showing the work, not just the highlights."
@@ -335,36 +336,38 @@ export default function RoadmapPage() {
       />
 
       {/* Summary stats */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-4 mb-12">
+      <div className="max-w-[980px] mx-auto px-6 -mt-4 mb-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap gap-4 sm:gap-6"
+          className="flex flex-wrap gap-3"
         >
-          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-omnia-surface border border-omnia-sage/20">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.02] border border-omnia-sage/20">
             <CheckCircle2 className="w-4 h-4 text-omnia-sage" />
-            <span className="text-sm text-omnia-text-secondary">{completedCount} phases complete</span>
+            <span className="text-[14px] text-omnia-text-secondary font-[family-name:var(--font-geist-sans)]">{completedCount} phases complete</span>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-omnia-surface border border-omnia-accent/20">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.02] border border-omnia-accent/20">
             <Loader2 className="w-4 h-4 text-omnia-accent" />
-            <span className="text-sm text-omnia-text-secondary">{inProgressCount} in progress</span>
+            <span className="text-[14px] text-omnia-text-secondary font-[family-name:var(--font-geist-sans)]">{inProgressCount} in progress</span>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-omnia-surface border border-omnia-text-secondary/10">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.02] border border-omnia-text-secondary/10">
             <Circle className="w-4 h-4 text-omnia-text-secondary/40" />
-            <span className="text-sm text-omnia-text-secondary">4 phases ahead</span>
+            <span className="text-[14px] text-omnia-text-secondary font-[family-name:var(--font-geist-sans)]">4 phases ahead</span>
           </div>
         </motion.div>
       </div>
 
       {/* Timeline */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+      <div className="max-w-[980px] mx-auto px-6 pb-24">
         <div className="relative">
           {phases.map((phase, index) => (
             <PhaseCard key={`${phase.number}-${phase.title}`} phase={phase} index={index} />
           ))}
         </div>
       </div>
+
+      <Footer />
     </div>
   )
 }

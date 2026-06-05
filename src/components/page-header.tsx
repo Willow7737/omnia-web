@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
+import { OmniaNav } from './omnia-nav'
 
 interface PageHeaderProps {
   title: string
@@ -11,32 +12,35 @@ interface PageHeaderProps {
 
 export function PageHeader({ title, description, breadcrumbs }: PageHeaderProps) {
   return (
-    <div className="page-hero-gradient pt-24 pb-16 px-6">
-      <div className="max-w-4xl mx-auto">
-        {breadcrumbs && breadcrumbs.length > 0 && (
-          <nav className="flex items-center gap-1.5 text-xs text-[#A39B92] mb-6 font-[family-name:var(--font-space-grotesk)]">
-            <Link href="/" className="hover:text-[#D4A574] transition-colors">Home</Link>
-            {breadcrumbs.map((crumb, i) => (
-              <span key={i} className="flex items-center gap-1.5">
-                <ChevronRight size={10} />
-                {crumb.href ? (
-                  <Link href={crumb.href} className="hover:text-[#D4A574] transition-colors">
-                    {crumb.label}
-                  </Link>
-                ) : (
-                  <span className="text-[#F5F0EB]">{crumb.label}</span>
-                )}
-              </span>
-            ))}
-          </nav>
-        )}
-        <h1 className="font-[family-name:var(--font-space-grotesk)] text-4xl sm:text-5xl font-bold tracking-[-0.02em] text-[#F5F0EB] mb-4">
-          {title}
-        </h1>
-        <p className="text-lg text-[#A39B92] leading-relaxed max-w-2xl">
-          {description}
-        </p>
+    <>
+      <OmniaNav />
+      <div className="pt-20 pb-16 px-6">
+        <div className="max-w-[980px] mx-auto">
+          {breadcrumbs && breadcrumbs.length > 0 && (
+            <nav className="flex items-center gap-1.5 text-[12px] text-[#86868B] mb-6 font-[family-name:var(--font-geist-sans)]">
+              <Link href="/" className="hover:text-[#F5F5F7] transition-colors">Home</Link>
+              {breadcrumbs.map((crumb, i) => (
+                <span key={i} className="flex items-center gap-1.5">
+                  <ChevronRight size={10} />
+                  {crumb.href ? (
+                    <Link href={crumb.href} className="hover:text-[#F5F5F7] transition-colors">
+                      {crumb.label}
+                    </Link>
+                  ) : (
+                    <span className="text-[#F5F5F7]">{crumb.label}</span>
+                  )}
+                </span>
+              ))}
+            </nav>
+          )}
+          <h1 className="font-[family-name:var(--font-space-grotesk)] text-[48px] sm:text-[56px] font-bold tracking-[-0.03em] text-[#F5F5F7] mb-4 leading-[1.1]">
+            {title}
+          </h1>
+          <p className="text-[17px] text-[#86868B] leading-[1.5] max-w-[600px] font-[family-name:var(--font-geist-sans)]">
+            {description}
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   )
 }

@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { PageHeader } from '@/components/page-header'
+import { Footer } from '@/components/footer'
 import { ChevronDown, HelpCircle } from 'lucide-react'
 import { useState } from 'react'
 
@@ -66,47 +67,37 @@ const faqs: FAQItem[] = [
 function FAQAccordionItem({ item, index, isOpen, onToggle }: { item: FAQItem; index: number; isOpen: boolean; onToggle: () => void }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-30px' }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
-      className="group"
+      transition={{ duration: 0.4, delay: index * 0.04 }}
     >
       <div
-        className={`bg-omnia-surface border rounded-xl overflow-hidden transition-all duration-300 ${
+        className={`rounded-2xl overflow-hidden transition-all duration-300 border ${
           isOpen
-            ? 'border-omnia-accent/40 shadow-lg shadow-omnia-accent/5'
-            : 'border-omnia-border hover:border-omnia-accent/20'
+            ? 'border-white/[0.12] bg-white/[0.03]'
+            : 'border-white/[0.06] bg-white/[0.02] hover:border-white/[0.1] hover:bg-white/[0.03]'
         }`}
       >
-        {/* Question button */}
         <button
           onClick={onToggle}
-          className="w-full flex items-center gap-4 p-5 sm:p-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-omnia-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-omnia-base rounded-xl"
+          className="w-full flex items-center gap-4 p-5 sm:p-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2997FF]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-2xl"
           aria-expanded={isOpen}
         >
-          {/* Accent left border indicator */}
           <div
-            className={`flex-shrink-0 w-1 self-stretch rounded-full transition-colors duration-300 ${
-              isOpen ? 'bg-omnia-accent' : 'bg-omnia-border'
+            className={`flex-shrink-0 w-[3px] self-stretch rounded-full transition-colors duration-300 ${
+              isOpen ? 'bg-[#2997FF]' : 'bg-white/[0.08]'
             }`}
           />
 
           <div className="flex-1 min-w-0">
-            <div className="flex items-start gap-3">
-              <HelpCircle
-                className={`flex-shrink-0 w-5 h-5 mt-0.5 transition-colors duration-300 ${
-                  isOpen ? 'text-omnia-accent' : 'text-omnia-text-secondary/50'
-                }`}
-              />
-              <span
-                className={`text-base sm:text-lg font-medium transition-colors duration-300 ${
-                  isOpen ? 'text-omnia-text' : 'text-omnia-text-secondary'
-                }`}
-              >
-                {item.question}
-              </span>
-            </div>
+            <span
+              className={`text-[15px] sm:text-[17px] font-medium transition-colors duration-300 font-[family-name:var(--font-space-grotesk)] ${
+                isOpen ? 'text-[#F5F5F7]' : 'text-[#86868B]'
+              }`}
+            >
+              {item.question}
+            </span>
           </div>
 
           <motion.div
@@ -116,13 +107,12 @@ function FAQAccordionItem({ item, index, isOpen, onToggle }: { item: FAQItem; in
           >
             <ChevronDown
               className={`w-5 h-5 transition-colors duration-300 ${
-                isOpen ? 'text-omnia-accent' : 'text-omnia-text-secondary/40'
+                isOpen ? 'text-[#2997FF]' : 'text-[#48484A]'
               }`}
             />
           </motion.div>
         </button>
 
-        {/* Answer */}
         <AnimatePresence initial={false}>
           {isOpen && (
             <motion.div
@@ -131,9 +121,9 @@ function FAQAccordionItem({ item, index, isOpen, onToggle }: { item: FAQItem; in
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
-              <div className="px-5 sm:px-6 pb-5 sm:pb-6 pl-12 sm:pl-14">
-                <div className="border-t border-omnia-border pt-4">
-                  <p className="text-omnia-text-secondary text-sm sm:text-base leading-relaxed">
+              <div className="px-5 sm:px-6 pb-5 sm:pb-6 pl-10 sm:pl-12">
+                <div className="border-t border-white/[0.06] pt-4">
+                  <p className="text-[#86868B] text-[14px] sm:text-[15px] leading-[1.6] font-[family-name:var(--font-geist-sans)]">
                     {item.answer}
                   </p>
                 </div>
@@ -150,16 +140,15 @@ export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
   return (
-    <div className="min-h-screen bg-omnia-base">
+    <div className="min-h-screen bg-black">
       <PageHeader
-        title="Frequently Asked Questions"
+        title="FAQ"
         description="Straight answers about the protocol, its architecture, and how to get involved. No marketing speak — just honest, technical responses."
         breadcrumbs={[{ label: 'FAQ' }]}
       />
 
-      {/* FAQ accordion */}
-      <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
-        <div className="space-y-3">
+      <section className="max-w-[680px] mx-auto px-6 pb-24">
+        <div className="space-y-2">
           {faqs.map((item, index) => (
             <FAQAccordionItem
               key={index}
@@ -173,27 +162,26 @@ export default function FAQPage() {
       </section>
 
       {/* Still have questions */}
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pb-24">
+      <div className="max-w-[680px] mx-auto px-6 pb-24">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="bg-omnia-surface border border-omnia-border rounded-xl p-6 sm:p-8 text-center"
+          className="rounded-2xl p-6 sm:p-8 text-center border border-white/[0.06] bg-white/[0.02]"
         >
-          <h3 className="text-xl sm:text-2xl font-bold text-omnia-text mb-3">
+          <h3 className="text-[20px] sm:text-[24px] font-bold text-[#F5F5F7] mb-3 font-[family-name:var(--font-space-grotesk)] tracking-tight">
             Still have questions?
           </h3>
-          <p className="text-omnia-text-secondary text-sm sm:text-base max-w-xl mx-auto mb-6">
-            Join the community on Discord or explore the codebase directly. Every question 
-            deserves a transparent answer.
+          <p className="text-[#86868B] text-[14px] sm:text-[15px] max-w-[420px] mx-auto mb-6 font-[family-name:var(--font-geist-sans)]">
+            Join the community on Discord or explore the codebase directly.
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
             <a
               href="https://discord.gg/qYkpAeSYR"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-omnia-accent text-omnia-base font-medium text-sm hover:bg-omnia-accent/90 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#2997FF] text-white font-medium text-[14px] hover:bg-[#2384d6] transition-colors font-[family-name:var(--font-space-grotesk)]"
             >
               Join Discord
             </a>
@@ -201,13 +189,15 @@ export default function FAQPage() {
               href="https://github.com/Willow7737/omnia-protocol"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-omnia-surface border border-omnia-border text-omnia-text text-sm hover:border-omnia-accent/40 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/[0.1] text-[#F5F5F7] text-[14px] hover:bg-white/[0.04] transition-colors font-[family-name:var(--font-space-grotesk)]"
             >
               Read the Code
             </a>
           </div>
         </motion.div>
       </div>
+
+      <Footer />
     </div>
   )
 }

@@ -23,15 +23,14 @@ const stubData: StubRow[] = [
 
 function statusBadge(status: StubRow['status']) {
   const styles: Record<StubRow['status'], { bg: string; text: string }> = {
-    Stub: { bg: 'rgba(163, 155, 146, 0.2)', text: '#A39B92' },
-    Partial: { bg: 'rgba(212, 165, 116, 0.2)', text: '#D4A574' },
-    'Not Started': { bg: 'rgba(163, 155, 146, 0.1)', text: '#6B6560' },
+    Stub: { bg: 'bg-white/[0.06]', text: 'text-[#86868B]' },
+    Partial: { bg: 'bg-[#FF9F0A]/10', text: 'text-[#FF9F0A]' },
+    'Not Started': { bg: 'bg-white/[0.03]', text: 'text-[#48484A]' },
   }
   const s = styles[status]
   return (
     <span
-      className="text-xs font-[family-name:var(--font-space-grotesk)] px-2.5 py-0.5 rounded-full whitespace-nowrap"
-      style={{ background: s.bg, color: s.text }}
+      className={`text-[11px] font-[family-name:var(--font-space-grotesk)] px-2.5 py-0.5 rounded-full whitespace-nowrap ${s.bg} ${s.text}`}
     >
       {status}
     </span>
@@ -41,32 +40,29 @@ function statusBadge(status: StubRow['status']) {
 export function TransparencySection() {
   return (
     <section id="transparency" className="section-padding px-6">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-[680px] mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-3xl sm:text-4xl font-semibold tracking-[-0.02em] text-[#F5F0EB] mb-3">
-            Radical Transparency
+          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] text-[#F5F5F7] mb-3">
+            Radical transparency.
           </h2>
-          <p className="text-[#A39B92] leading-relaxed mb-10">
+          <p className="text-[15px] text-[#86868B] leading-relaxed mb-10 font-[family-name:var(--font-geist-sans)]">
             No protocol should claim completeness it hasn&apos;t earned. Here&apos;s what&apos;s stubbed, partial, or not yet started.
           </p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           {/* Header row */}
-          <div
-            className="hidden sm:grid grid-cols-[1fr_60px_100px_80px] gap-4 px-5 py-2 border-b text-xs text-[#A39B92] uppercase tracking-wider font-[family-name:var(--font-space-grotesk)]"
-            style={{ borderColor: 'rgba(212, 165, 116, 0.15)' }}
-          >
+          <div className="hidden sm:grid grid-cols-[1fr_60px_100px_80px] gap-4 px-5 py-2 text-[11px] text-[#86868B] uppercase tracking-wider font-[family-name:var(--font-space-grotesk)]">
             <span>Feature</span>
             <span>Layer</span>
             <span>Status</span>
@@ -74,32 +70,27 @@ export function TransparencySection() {
           </div>
 
           {/* Data rows */}
-          <div className="border rounded-md overflow-hidden" style={{ borderColor: 'rgba(212, 165, 116, 0.15)' }}>
+          <div className="rounded-2xl overflow-hidden border border-white/[0.06]">
             {stubData.map((row, i) => (
               <div
                 key={row.feature}
-                className={`grid grid-cols-1 sm:grid-cols-[1fr_60px_100px_80px] gap-1 sm:gap-4 px-5 py-3 ${
-                  i < stubData.length - 1 ? 'border-b' : ''
+                className={`grid grid-cols-1 sm:grid-cols-[1fr_60px_100px_80px] gap-1 sm:gap-4 px-5 py-3.5 ${
+                  i < stubData.length - 1 ? 'border-b border-white/[0.04]' : ''
                 }`}
-                style={{
-                  borderColor: 'rgba(212, 165, 116, 0.1)',
-                  background: i % 2 === 0 ? 'rgba(26, 26, 26, 0.3)' : 'transparent',
-                }}
               >
-                <span className="text-sm text-[#F5F0EB]">{row.feature}</span>
-                <span className="font-[family-name:var(--font-jetbrains-mono)] text-xs text-[#A39B92]">
+                <span className="text-[14px] text-[#F5F5F7] font-[family-name:var(--font-geist-sans)]">{row.feature}</span>
+                <span className="font-[family-name:var(--font-jetbrains-mono)] text-[12px] text-[#86868B]">
                   {row.layer}
                 </span>
                 <span>{statusBadge(row.status)}</span>
-                <span className="font-[family-name:var(--font-jetbrains-mono)] text-xs text-[#A39B92]">
+                <span className="font-[family-name:var(--font-jetbrains-mono)] text-[12px] text-[#86868B]">
                   {row.phase}
                 </span>
               </div>
             ))}
           </div>
 
-          {/* Note */}
-          <p className="text-xs text-[#A39B92] mt-4 leading-relaxed">
+          <p className="text-[12px] text-[#86868B] mt-4 leading-relaxed font-[family-name:var(--font-geist-sans)]">
             Celestia Settlement (L0) is fully implemented. Ethereum adapter is live. All other settlement targets are stubbed.
           </p>
         </motion.div>

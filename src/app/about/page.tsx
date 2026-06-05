@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { PageHeader } from '@/components/page-header'
+import { Footer } from '@/components/footer'
 import {
   Network,
   Vote,
@@ -20,22 +21,22 @@ import {
 } from 'lucide-react'
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 20 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: '-50px' },
-  transition: { duration: 0.6, ease: 'easeOut' },
+  transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
 }
 
 const staggerContainer = {
   initial: {},
-  whileInView: { transition: { staggerChildren: 0.1 } },
+  whileInView: { transition: { staggerChildren: 0.08 } },
   viewport: { once: true, margin: '-50px' },
 }
 
 const staggerItem = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 16 },
   whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, ease: 'easeOut' },
+  transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
 }
 
 const problems = [
@@ -109,34 +110,33 @@ const stats = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-omnia-base">
+    <div className="min-h-screen bg-black">
       <PageHeader
         title="About Omnia"
         description="A protocol — not a company, not a coin, not an app. A fundamental set of rules for a shared, unchangeable record of truth."
-        backHref="/"
-        backLabel="Home"
+        breadcrumbs={[{ label: 'About' }]}
       />
 
       {/* What is Omnia? */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section className="max-w-[980px] mx-auto px-6 py-16 sm:py-24">
         <motion.div {...fadeInUp}>
-          <h2 className="text-2xl sm:text-3xl font-bold text-omnia-text mb-6">
+          <h2 className="text-[28px] sm:text-[32px] font-bold text-[#F5F5F7] mb-6 font-[family-name:var(--font-space-grotesk)] tracking-tight">
             What is Omnia?
           </h2>
-          <div className="space-y-5 text-omnia-text-secondary leading-relaxed text-base sm:text-lg max-w-4xl">
+          <div className="space-y-5 text-[#86868B] leading-[1.6] text-[15px] sm:text-[17px] max-w-[680px] font-[family-name:var(--font-geist-sans)]">
             <p>
-              Omnia is not a company, a coin, or an app. It is a <span className="text-omnia-accent font-medium">protocol</span> — a
+              Omnia is not a company, a coin, or an app. It is a <span className="text-[#F5F5F7] font-medium">protocol</span> — a
               fundamental set of rules that any computer can follow to participate in a shared,
               unchangeable record of truth.
             </p>
             <p>
-              It uses <span className="text-omnia-accent font-medium">causal graph consensus</span> (DAG + vector clocks + CRDTs) instead
+              It uses <span className="text-[#F5F5F7] font-medium">causal graph consensus</span> (DAG + vector clocks + CRDTs) instead
               of sequential blockchains to achieve parallel transaction processing. This means
               transactions don&apos;t wait in a single line — they flow through a directed acyclic graph,
               preserving causal relationships while enabling massive throughput.
             </p>
             <p>
-              The protocol is <span className="text-omnia-accent font-medium">settlement-agnostic</span> — it can settle on Ethereum, Bitcoin,
+              The protocol is <span className="text-[#F5F5F7] font-medium">settlement-agnostic</span> — it can settle on Ethereum, Bitcoin,
               Solana, or any L1 with data availability and proof verification. Omnia doesn&apos;t compete
               with existing chains; it extends them with a parallel execution layer that settles on
               whatever base layer makes sense for your use case.
@@ -145,18 +145,17 @@ export default function AboutPage() {
         </motion.div>
       </section>
 
-      {/* Separator */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-px bg-omnia-border" />
+      <div className="max-w-[980px] mx-auto px-6">
+        <div className="h-px bg-white/[0.06]" />
       </div>
 
       {/* The Problem We Solve */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section className="max-w-[980px] mx-auto px-6 py-16 sm:py-24">
         <motion.div {...fadeInUp}>
-          <h2 className="text-2xl sm:text-3xl font-bold text-omnia-text mb-4">
+          <h2 className="text-[28px] sm:text-[32px] font-bold text-[#F5F5F7] mb-4 font-[family-name:var(--font-space-grotesk)] tracking-tight">
             The Problem We Solve
           </h2>
-          <p className="text-omnia-text-secondary mb-10 text-base sm:text-lg max-w-3xl">
+          <p className="text-[#86868B] mb-10 text-[15px] sm:text-[17px] max-w-[600px] font-[family-name:var(--font-geist-sans)]">
             The current infrastructure of the internet and financial systems is fundamentally broken.
             Here are the problems and how Omnia addresses each one.
           </p>
@@ -164,7 +163,7 @@ export default function AboutPage() {
 
         <motion.div
           {...staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"
         >
           {problems.map((item, i) => {
             const Icon = item.icon
@@ -172,20 +171,20 @@ export default function AboutPage() {
               <motion.div
                 key={i}
                 {...staggerItem}
-                className="group bg-omnia-surface border border-omnia-border rounded-xl p-5 sm:p-6 hover:border-omnia-accent/30 transition-colors"
+                className="group rounded-2xl p-5 sm:p-6 transition-all duration-300 bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]"
               >
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-omnia-accent/10 flex items-center justify-center">
-                    <Icon className="w-5 h-5 text-omnia-accent" />
+                  <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-[#2997FF]/10 flex items-center justify-center">
+                    <Icon className="w-5 h-5 text-[#2997FF]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-omnia-text text-sm sm:text-base">
+                    <h3 className="font-semibold text-[#F5F5F7] text-[14px] font-[family-name:var(--font-space-grotesk)]">
                       {item.problem}
                     </h3>
-                    <p className="text-omnia-text-secondary text-sm mt-1">{item.consequence}</p>
+                    <p className="text-[#86868B] text-[13px] mt-1 font-[family-name:var(--font-geist-sans)]">{item.consequence}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 text-omnia-sage text-sm font-medium pt-3 border-t border-omnia-border">
+                <div className="flex items-center gap-2 text-[#2997FF] text-[13px] font-medium pt-3 border-t border-white/[0.06] font-[family-name:var(--font-space-grotesk)]">
                   <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
                   <span>{item.solution}</span>
                 </div>
@@ -195,25 +194,24 @@ export default function AboutPage() {
         </motion.div>
       </section>
 
-      {/* Separator */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-px bg-omnia-border" />
+      <div className="max-w-[980px] mx-auto px-6">
+        <div className="h-px bg-white/[0.06]" />
       </div>
 
       {/* Our Philosophy */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section className="max-w-[980px] mx-auto px-6 py-16 sm:py-24">
         <motion.div {...fadeInUp}>
-          <h2 className="text-2xl sm:text-3xl font-bold text-omnia-text mb-4">
+          <h2 className="text-[28px] sm:text-[32px] font-bold text-[#F5F5F7] mb-4 font-[family-name:var(--font-space-grotesk)] tracking-tight">
             Our Philosophy
           </h2>
-          <p className="text-omnia-text-secondary mb-10 text-base sm:text-lg max-w-3xl">
+          <p className="text-[#86868B] mb-10 text-[15px] sm:text-[17px] max-w-[600px] font-[family-name:var(--font-geist-sans)]">
             Three principles guide every decision in the Omnia Protocol.
           </p>
         </motion.div>
 
         <motion.div
           {...staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8"
+          className="grid grid-cols-1 md:grid-cols-3 gap-3"
         >
           {philosophies.map((item, i) => {
             const Icon = item.icon
@@ -221,13 +219,13 @@ export default function AboutPage() {
               <motion.div
                 key={i}
                 {...staggerItem}
-                className="bg-omnia-surface border border-omnia-border rounded-xl p-6 sm:p-8 hover:border-omnia-accent/30 transition-colors"
+                className="rounded-2xl p-6 sm:p-8 transition-all duration-300 bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]"
               >
-                <div className="w-12 h-12 rounded-xl bg-omnia-accent/10 flex items-center justify-center mb-5">
-                  <Icon className="w-6 h-6 text-omnia-accent" />
+                <div className="w-12 h-12 rounded-xl bg-[#2997FF]/10 flex items-center justify-center mb-5">
+                  <Icon className="w-6 h-6 text-[#2997FF]" />
                 </div>
-                <h3 className="text-lg font-semibold text-omnia-text mb-3">{item.title}</h3>
-                <p className="text-omnia-text-secondary text-sm sm:text-base leading-relaxed">
+                <h3 className="text-[17px] font-semibold text-[#F5F5F7] mb-3 font-[family-name:var(--font-space-grotesk)]">{item.title}</h3>
+                <p className="text-[#86868B] text-[14px] sm:text-[15px] leading-[1.6] font-[family-name:var(--font-geist-sans)]">
                   {item.description}
                 </p>
               </motion.div>
@@ -236,25 +234,24 @@ export default function AboutPage() {
         </motion.div>
       </section>
 
-      {/* Separator */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-px bg-omnia-border" />
+      <div className="max-w-[980px] mx-auto px-6">
+        <div className="h-px bg-white/[0.06]" />
       </div>
 
       {/* By The Numbers */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section className="max-w-[980px] mx-auto px-6 py-16 sm:py-24">
         <motion.div {...fadeInUp}>
-          <h2 className="text-2xl sm:text-3xl font-bold text-omnia-text mb-4">
+          <h2 className="text-[28px] sm:text-[32px] font-bold text-[#F5F5F7] mb-4 font-[family-name:var(--font-space-grotesk)] tracking-tight">
             By The Numbers
           </h2>
-          <p className="text-omnia-text-secondary mb-10 text-base sm:text-lg max-w-3xl">
+          <p className="text-[#86868B] mb-10 text-[15px] sm:text-[17px] max-w-[600px] font-[family-name:var(--font-geist-sans)]">
             Real metrics from the codebase. No vanity numbers, no marketing spin.
           </p>
         </motion.div>
 
         <motion.div
           {...staggerContainer}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6"
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3"
         >
           {stats.map((stat, i) => {
             const Icon = stat.icon
@@ -262,23 +259,22 @@ export default function AboutPage() {
               <motion.div
                 key={i}
                 {...staggerItem}
-                className="bg-omnia-surface border border-omnia-border rounded-xl p-5 sm:p-6 text-center hover:border-omnia-accent/30 transition-colors"
+                className="rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]"
               >
                 <div className="flex justify-center mb-3">
-                  <Icon className="w-5 h-5 text-omnia-accent" />
+                  <Icon className="w-5 h-5 text-[#2997FF]" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-omnia-text mb-1">
+                <div className="text-[24px] sm:text-[28px] font-bold text-[#F5F5F7] mb-1 font-[family-name:var(--font-space-grotesk)]">
                   {stat.value}
                 </div>
-                <div className="text-omnia-text-secondary text-xs sm:text-sm">{stat.label}</div>
+                <div className="text-[#86868B] text-[12px] font-[family-name:var(--font-geist-sans)]">{stat.label}</div>
               </motion.div>
             )
           })}
         </motion.div>
       </section>
 
-      {/* Footer spacer */}
-      <div className="h-16" />
+      <Footer />
     </div>
   )
 }

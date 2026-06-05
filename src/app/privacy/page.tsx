@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { PageHeader } from '@/components/page-header'
+import { Footer } from '@/components/footer'
 import { Shield, Eye, Cookie, ExternalLink, Lock, UserCheck, RefreshCw, Mail } from 'lucide-react'
 
 const fadeInUp = {
@@ -24,24 +25,24 @@ const sections = [
         </p>
         <ul className="space-y-3 ml-1">
           <li className="flex items-start gap-3">
-            <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4A574] mt-2.5" />
+            <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-accent mt-2.5" />
             <div>
-              <span className="text-[#F5F0EB] font-medium">Usage Data:</span>{' '}
+              <span className="text-omnia-text font-medium">Usage Data:</span>{' '}
               Anonymous analytics about page visits, browser type, and device information
             </div>
           </li>
           <li className="flex items-start gap-3">
-            <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4A574] mt-2.5" />
+            <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-accent mt-2.5" />
             <div>
-              <span className="text-[#F5F0EB] font-medium">Blockchain Data:</span>{' '}
+              <span className="text-omnia-text font-medium">Blockchain Data:</span>{' '}
               All transactions on the Omnia Protocol are public by design and recorded on the
               distributed ledger
             </div>
           </li>
           <li className="flex items-start gap-3">
-            <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4A574] mt-2.5" />
+            <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-accent mt-2.5" />
             <div>
-              <span className="text-[#F5F0EB] font-medium">Voluntary Information:</span>{' '}
+              <span className="text-omnia-text font-medium">Voluntary Information:</span>{' '}
               Information you provide when joining community channels (Discord, GitHub), reporting
               bugs, or making donations
             </div>
@@ -57,20 +58,20 @@ const sections = [
     content: (
       <ul className="space-y-3 ml-1">
         <li className="flex items-start gap-3">
-          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#8C9E8E] mt-2.5" />
+          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-sage mt-2.5" />
           To improve the website and documentation
         </li>
         <li className="flex items-start gap-3">
-          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#8C9E8E] mt-2.5" />
+          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-sage mt-2.5" />
           To respond to bug reports and security disclosures
         </li>
         <li className="flex items-start gap-3">
-          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#8C9E8E] mt-2.5" />
+          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-sage mt-2.5" />
           To facilitate community interactions
         </li>
         <li className="flex items-start gap-3">
-          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#8C9E8E] mt-2.5" />
-          We do <span className="text-[#F5F0EB] font-medium">not</span> sell, rent, or share
+          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-sage mt-2.5" />
+          We do <span className="text-omnia-text font-medium">not</span> sell, rent, or share
           personal information with third parties for marketing purposes
         </li>
       </ul>
@@ -84,7 +85,7 @@ const sections = [
       <p>
         The Omnia Protocol is designed for transparency. All consensus events, governance actions,
         and state changes are recorded on the public ledger. This is a{' '}
-        <span className="text-[#D4A574] font-medium">fundamental property of the protocol</span>,
+        <span className="text-omnia-accent font-medium">fundamental property of the protocol</span>,
         not a privacy violation. Users should understand that on-chain actions are publicly visible.
       </p>
     ),
@@ -96,16 +97,16 @@ const sections = [
     content: (
       <ul className="space-y-3 ml-1">
         <li className="flex items-start gap-3">
-          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4A574] mt-2.5" />
+          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-accent mt-2.5" />
           We use minimal, functional cookies for website operation
         </li>
         <li className="flex items-start gap-3">
-          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4A574] mt-2.5" />
-          We do <span className="text-[#F5F0EB] font-medium">not</span> use tracking cookies from
+          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-accent mt-2.5" />
+          We do <span className="text-omnia-text font-medium">not</span> use tracking cookies from
           third-party advertisers
         </li>
         <li className="flex items-start gap-3">
-          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4A574] mt-2.5" />
+          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-accent mt-2.5" />
           Analytics, if used, are anonymized and aggregated
         </li>
       </ul>
@@ -120,15 +121,15 @@ const sections = [
         <p>The website may link to:</p>
         <ul className="space-y-2 ml-1">
           <li className="flex items-start gap-3">
-            <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#8C9E8E] mt-2.5" />
+            <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-sage mt-2.5" />
             <div>
-              <span className="text-[#F5F0EB] font-medium">GitHub</span> (repository hosting)
+              <span className="text-omnia-text font-medium">GitHub</span> (repository hosting)
             </div>
           </li>
           <li className="flex items-start gap-3">
-            <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#8C9E8E] mt-2.5" />
+            <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-sage mt-2.5" />
             <div>
-              <span className="text-[#F5F0EB] font-medium">Discord</span> (community chat)
+              <span className="text-omnia-text font-medium">Discord</span> (community chat)
             </div>
           </li>
         </ul>
@@ -143,19 +144,19 @@ const sections = [
     content: (
       <ul className="space-y-3 ml-1">
         <li className="flex items-start gap-3">
-          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4A574] mt-2.5" />
+          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-accent mt-2.5" />
           We follow industry-standard security practices
         </li>
         <li className="flex items-start gap-3">
-          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4A574] mt-2.5" />
+          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-accent mt-2.5" />
           Bug bounty program for vulnerability disclosure
         </li>
         <li className="flex items-start gap-3">
-          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D4A574] mt-2.5" />
+          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-accent mt-2.5" />
           Security contact:{' '}
           <a
             href="mailto:security@omnia-protocol.org"
-            className="text-[#D4A574] hover:underline"
+            className="text-omnia-accent hover:underline"
           >
             security@omnia-protocol.org
           </a>
@@ -170,21 +171,21 @@ const sections = [
     content: (
       <ul className="space-y-3 ml-1">
         <li className="flex items-start gap-3">
-          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#8C9E8E] mt-2.5" />
+          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-sage mt-2.5" />
           Right to access any personal data we hold
         </li>
         <li className="flex items-start gap-3">
-          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#8C9E8E] mt-2.5" />
+          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-sage mt-2.5" />
           Right to request deletion of personal data
         </li>
         <li className="flex items-start gap-3">
-          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#8C9E8E] mt-2.5" />
+          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-sage mt-2.5" />
           Right to opt out of non-essential data collection
         </li>
         <li className="flex items-start gap-3">
-          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#8C9E8E] mt-2.5" />
+          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-sage mt-2.5" />
           Contact:{' '}
-          <a href="mailto:conduct@omnia.protocol" className="text-[#D4A574] hover:underline">
+          <a href="mailto:conduct@omnia.protocol" className="text-omnia-accent hover:underline">
             conduct@omnia.protocol
           </a>
         </li>
@@ -209,7 +210,7 @@ const sections = [
     content: (
       <p>
         For privacy-related inquiries:{' '}
-        <a href="mailto:conduct@omnia.protocol" className="text-[#D4A574] hover:underline">
+        <a href="mailto:conduct@omnia.protocol" className="text-omnia-accent hover:underline">
           conduct@omnia.protocol
         </a>
       </p>
@@ -219,7 +220,7 @@ const sections = [
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-[#0F0F0F]">
+    <div className="min-h-screen bg-omnia-base flex flex-col">
       <PageHeader
         title="Privacy Policy"
         description="How the Omnia Protocol handles data and privacy in a decentralized ecosystem."
@@ -229,13 +230,13 @@ export default function PrivacyPage() {
         ]}
       />
 
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+      <section className="max-w-[980px] mx-auto px-6 py-16 sm:py-24">
         {/* Last updated */}
         <motion.div
           {...fadeInUp}
-          className="mb-12 flex items-center gap-3 text-sm text-[#A39B92]"
+          className="mb-12 flex items-center gap-3 text-[14px] text-omnia-text-secondary"
         >
-          <div className="w-2 h-2 rounded-full bg-[#8C9E8E] animate-pulse-sage" />
+          <div className="w-2 h-2 rounded-full bg-omnia-sage animate-pulse-sage" />
           <span className="font-[family-name:var(--font-space-grotesk)]">
             Last Updated: June 2026
           </span>
@@ -253,22 +254,21 @@ export default function PrivacyPage() {
                 className="scroll-mt-20"
               >
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[#D4A574]/10 flex items-center justify-center mt-0.5">
-                    <Icon className="w-5 h-5 text-[#D4A574]" />
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[#2997FF]/10 flex items-center justify-center mt-0.5">
+                    <Icon className="w-5 h-5 text-omnia-accent" />
                   </div>
                   <div>
                     <span
-                      className="text-xs font-mono text-[#8C9E8E] tracking-wider uppercase mb-1 block"
-                      style={{ fontFamily: 'var(--font-jetbrains-mono)' }}
+                      className="text-[12px] text-omnia-sage tracking-wider uppercase mb-1 block font-[family-name:var(--font-jetbrains-mono)]"
                     >
                       Section {section.number}
                     </span>
-                    <h2 className="text-xl sm:text-2xl font-bold text-[#F5F0EB] font-[family-name:var(--font-space-grotesk)]">
+                    <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">
                       {section.title}
                     </h2>
                   </div>
                 </div>
-                <div className="ml-14 text-[#A39B92] leading-relaxed text-base">
+                <div className="ml-14 text-omnia-text-secondary leading-[1.6] text-[15px] font-[family-name:var(--font-geist-sans)]">
                   {section.content}
                 </div>
               </motion.section>
@@ -277,8 +277,7 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      {/* Footer spacer */}
-      <div className="h-16" />
+      <Footer />
     </div>
   )
 }

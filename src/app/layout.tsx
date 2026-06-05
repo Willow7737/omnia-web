@@ -17,16 +17,16 @@ const jetbrainsMono = JetBrains_Mono({
 const inter = Inter({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Omnia Protocol — Settlement-Agnostic Causal Graph Consensus",
-    template: "%s | Omnia Protocol",
+    default: "Omnia Protocol",
+    template: "%s — Omnia Protocol",
   },
   description:
-    "Sub-100µs finality. DAG + vector clocks + CRDTs. ZK-rollup settlement on any DA layer. Public domain.",
+    "Settlement-agnostic causal graph consensus. Sub-100µs finality. Public domain.",
   keywords: [
     "Omnia", "protocol", "DAG", "consensus", "ZK-rollup", "CRDTs",
     "blockchain", "causal graph", "decentralized", "cryptography",
@@ -55,7 +55,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${inter.variable} antialiased bg-[#0F0F0F] text-[#F5F0EB]`}
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${inter.variable} antialiased bg-black text-[#F5F5F7]`}
       >
         {children}
       </body>

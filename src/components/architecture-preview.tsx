@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 
@@ -57,79 +56,48 @@ const layers: LayerData[] = [
   },
 ]
 
-function LayerCard({ layer, index }: { layer: LayerData; index: number }) {
-  const [hovered, setHovered] = useState(false)
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: '-30px' }}
-      transition={{ duration: 0.4, delay: index * 0.08, ease: 'easeOut' }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="cursor-default"
-    >
-      <div
-        className="flex items-center justify-between px-5 py-4 border rounded-md transition-all duration-200 hover:border-[rgba(212,165,116,0.3)]"
-        style={{
-          background: hovered ? 'rgba(26, 26, 26, 0.8)' : 'rgba(26, 26, 26, 0.4)',
-          borderColor: 'rgba(212, 165, 116, 0.15)',
-        }}
-      >
-        <div className="flex items-center gap-4">
-          <span className="font-[family-name:var(--font-jetbrains-mono)] text-xs text-[#A39B92] w-8">
-            {layer.label}
-          </span>
-          <span className="font-[family-name:var(--font-space-grotesk)] text-sm font-medium text-[#F5F0EB] tracking-tight">
-            {layer.name}
-          </span>
-        </div>
-        <span
-          className="text-xs font-[family-name:var(--font-space-grotesk)] px-2.5 py-0.5 rounded-full"
-          style={{
-            background: 'rgba(140, 158, 142, 0.2)',
-            color: '#8C9E8E',
-          }}
-        >
-          {layer.badge}
-        </span>
-      </div>
-      {hovered && (
-        <motion.p
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          transition={{ duration: 0.2, ease: 'easeOut' }}
-          className="text-sm text-[#A39B92] leading-relaxed pl-[3.5rem] pr-5 pt-2 pb-1"
-        >
-          {layer.description}
-        </motion.p>
-      )}
-    </motion.div>
-  )
-}
-
 export function ArchitecturePreview() {
   return (
     <section id="architecture" className="section-padding px-6">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-[680px] mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-3xl sm:text-4xl font-semibold tracking-[-0.02em] text-[#F5F0EB] mb-3">
-            Architecture Stack
+          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] text-[#F5F5F7] mb-3">
+            Six layers.
           </h2>
-          <p className="text-sm text-[#A39B92] mb-10">
-            Hover each layer for details. All six layers are implemented in the v0.1.67 codebase.
+          <p className="text-[15px] text-[#86868B] mb-10 font-[family-name:var(--font-geist-sans)]">
+            Every layer implemented. Every layer tested.
           </p>
         </motion.div>
 
-        <div className="flex flex-col gap-2 mb-8">
+        <div className="flex flex-col gap-1 mb-10">
           {layers.map((layer, i) => (
-            <LayerCard key={layer.id} layer={layer} index={i} />
+            <motion.div
+              key={layer.id}
+              initial={{ opacity: 0, x: -12 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '-20px' }}
+              transition={{ duration: 0.4, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
+              className="group"
+            >
+              <div className="flex items-center justify-between px-5 py-4 rounded-xl transition-all duration-200 bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]">
+                <div className="flex items-center gap-4">
+                  <span className="font-[family-name:var(--font-jetbrains-mono)] text-[12px] text-[#86868B] w-8">
+                    {layer.label}
+                  </span>
+                  <span className="font-[family-name:var(--font-space-grotesk)] text-[14px] font-medium text-[#F5F5F7] tracking-tight">
+                    {layer.name}
+                  </span>
+                </div>
+                <span className="text-[11px] font-[family-name:var(--font-space-grotesk)] px-2.5 py-1 rounded-full bg-[#30D158]/10 text-[#30D158]">
+                  {layer.badge}
+                </span>
+              </div>
+            </motion.div>
           ))}
         </div>
 
@@ -141,10 +109,10 @@ export function ArchitecturePreview() {
         >
           <a
             href="/architecture"
-            className="inline-flex items-center gap-2 text-sm font-[family-name:var(--font-space-grotesk)] text-[#D4A574] hover:text-[#c49564] transition-colors group"
+            className="inline-flex items-center gap-2 text-[14px] font-[family-name:var(--font-space-grotesk)] text-[#2997FF] hover:text-[#5eb8ff] transition-colors group"
           >
             Explore Full Architecture
-            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
           </a>
         </motion.div>
       </div>

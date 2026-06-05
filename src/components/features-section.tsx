@@ -41,36 +41,36 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.08,
     },
   },
 }
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' },
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
   },
 }
 
 export function FeaturesSection() {
   return (
     <section id="features" className="section-padding px-6">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-[980px] mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-center mb-12"
+          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="text-center mb-16"
         >
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-3xl sm:text-4xl font-semibold tracking-[-0.02em] text-[#F5F0EB] mb-3">
-            Core Protocol Features
+          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] text-[#F5F5F7] mb-3">
+            Built different.
           </h2>
-          <p className="text-[#A39B92] leading-relaxed max-w-xl mx-auto">
-            Six pillars of infrastructure — from consensus to identity, every layer is built with mathematical guarantees.
+          <p className="text-[17px] text-[#86868B] leading-relaxed max-w-[480px] mx-auto font-[family-name:var(--font-geist-sans)]">
+            Six pillars of infrastructure. Every layer built with mathematical guarantees.
           </p>
         </motion.div>
 
@@ -79,25 +79,21 @@ export function FeaturesSection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
         >
           {features.map((feature) => (
             <motion.div
               key={feature.title}
               variants={cardVariants}
-              className="group border rounded-lg p-6 transition-all duration-200 hover:border-[rgba(212,165,116,0.3)]"
-              style={{
-                borderColor: 'rgba(212, 165, 116, 0.15)',
-                background: 'rgba(26, 26, 26, 0.4)',
-              }}
+              className="group rounded-2xl p-6 transition-all duration-300 bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]"
             >
-              <div className="mb-4 inline-flex items-center justify-center w-10 h-10 rounded-md bg-[rgba(212,165,116,0.1)] text-[#D4A574] group-hover:bg-[rgba(212,165,116,0.2)] transition-colors">
+              <div className="mb-4 inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#2997FF]/10 text-[#2997FF] group-hover:bg-[#2997FF]/15 transition-colors">
                 <feature.icon size={20} />
               </div>
-              <h3 className="font-[family-name:var(--font-space-grotesk)] text-base font-semibold text-[#F5F0EB] mb-2 tracking-tight">
+              <h3 className="font-[family-name:var(--font-space-grotesk)] text-[15px] font-semibold text-[#F5F5F7] mb-2 tracking-tight">
                 {feature.title}
               </h3>
-              <p className="text-sm text-[#A39B92] leading-relaxed">
+              <p className="text-[13px] text-[#86868B] leading-[1.5] font-[family-name:var(--font-geist-sans)]">
                 {feature.description}
               </p>
             </motion.div>
