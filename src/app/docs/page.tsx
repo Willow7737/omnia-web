@@ -16,21 +16,19 @@ import {
   Check,
   ArrowRight,
   BookOpen,
-  GitBranch,
   ShieldCheck,
   HeartHandshake,
 } from 'lucide-react'
 import { useState, useCallback } from 'react'
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: '-50px' },
-  transition: { duration: 0.6, ease: 'easeOut' },
+  transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
 }
 
-/* ── Copy button ────────────────────────────────────────── */
-function CopyButton({ text }: { text: string }) {
+function CopyButton({ text, isLight }: { text: string; isLight?: boolean }) {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = useCallback(() => {
@@ -43,28 +41,31 @@ function CopyButton({ text }: { text: string }) {
   return (
     <button
       onClick={handleCopy}
-      className="absolute top-3 right-3 p-1.5 rounded-md bg-black/80 border border-white/[0.06] hover:border-white/[0.12] transition-colors"
+      className={`absolute top-3 right-3 p-1.5 rounded-md border transition-colors ${
+        isLight
+          ? 'bg-white border-[rgba(0,0,0,0.08)] hover:border-[rgba(0,0,0,0.15)]'
+          : 'bg-black/80 border-white/[0.06] hover:border-white/[0.12]'
+      }`}
       aria-label="Copy code"
     >
       {copied ? (
         <Check className="w-3.5 h-3.5 text-[#30D158]" />
       ) : (
-        <Copy className="w-3.5 h-3.5 text-omnia-text-secondary" />
+        <Copy className={`w-3.5 h-3.5 ${isLight ? 'text-[#6E6E73]' : 'text-[#86868B]'}`} />
       )}
     </button>
   )
 }
 
-/* ── Code block component ──────────────────────────────── */
-function CodeBlock({ code, lang }: { code: string; lang?: string }) {
+function CodeBlock({ code, lang, isLight }: { code: string; lang?: string; isLight?: boolean }) {
   return (
     <div className="relative group">
-      <div className="absolute top-2.5 left-4 text-[10px] uppercase tracking-wider text-omnia-text-secondary/50 font-[family-name:var(--font-jetbrains-mono)]">
+      <div className={`absolute top-2.5 left-4 text-[10px] uppercase tracking-wider font-[family-name:var(--font-jetbrains-mono)] ${isLight ? 'text-[#6E6E73]/50' : 'text-[#86868B]/50'}`}>
         {lang || 'bash'}
       </div>
-      <CopyButton text={code} />
-      <pre className="bg-black border border-white/[0.06] rounded-2xl p-4 pt-8 overflow-x-auto text-[14px] sm:text-[15px]">
-        <code className="font-[family-name:var(--font-jetbrains-mono)] text-omnia-text-secondary leading-[1.6] whitespace-pre">
+      <CopyButton text={code} isLight={isLight} />
+      <pre className={`border rounded-2xl p-4 pt-8 overflow-x-auto text-[14px] sm:text-[15px] ${isLight ? 'bg-[#F5F5F7] border-[rgba(0,0,0,0.06)]' : 'bg-black border-white/[0.06]'}`}>
+        <code className={`font-[family-name:var(--font-jetbrains-mono)] leading-[1.6] whitespace-pre ${isLight ? 'text-[#1D1D1F]' : 'text-[#86868B]'}`}>
           {code}
         </code>
       </pre>
@@ -72,16 +73,14 @@ function CodeBlock({ code, lang }: { code: string; lang?: string }) {
   )
 }
 
-/* ── Inline code ──────────────────────────────────────── */
-function InlineCode({ children }: { children: React.ReactNode }) {
+function InlineCode({ children, isLight }: { children: React.ReactNode; isLight?: boolean }) {
   return (
-    <code className="font-[family-name:var(--font-jetbrains-mono)] text-[14px] text-omnia-accent bg-[#2997FF]/10 px-1.5 py-0.5 rounded">
+    <code className={`font-[family-name:var(--font-jetbrains-mono)] text-[14px] text-[#2997FF] px-1.5 py-0.5 rounded ${isLight ? 'bg-[#2997FF]/8' : 'bg-[#2997FF]/10'}`}>
       {children}
     </code>
   )
 }
 
-/* ── Table row helper ─────────────────────────────────── */
 interface TableRow {
   col1: string
   col2: string
@@ -92,20 +91,22 @@ function DocTable({
   headers,
   rows,
   col3Label,
+  isLight,
 }: {
   headers: [string, string]
   rows: TableRow[]
   col3Label?: string
+  isLight?: boolean
 }) {
   return (
-    <div className="overflow-x-auto rounded-2xl border border-white/[0.06]">
+    <div className={`overflow-x-auto rounded-xl border ${isLight ? 'border-[rgba(0,0,0,0.06)]' : 'border-white/[0.06]'}`}>
       <table className="w-full text-[14px]">
         <thead>
-          <tr className="bg-black/80 border-b border-white/[0.06]">
-            <th className="text-left px-4 py-3 text-omnia-text font-medium font-[family-name:var(--font-geist-sans)]">{headers[0]}</th>
-            <th className="text-left px-4 py-3 text-omnia-text font-medium font-[family-name:var(--font-geist-sans)]">{headers[1]}</th>
+          <tr className={`border-b ${isLight ? 'bg-[#F5F5F7] border-[rgba(0,0,0,0.06)]' : 'bg-black/80 border-white/[0.06]'}`}>
+            <th className={`text-left px-4 py-3 font-medium font-[family-name:var(--font-geist-sans)] ${isLight ? 'text-[#1D1D1F]' : 'text-[#F5F5F7]'}`}>{headers[0]}</th>
+            <th className={`text-left px-4 py-3 font-medium font-[family-name:var(--font-geist-sans)] ${isLight ? 'text-[#1D1D1F]' : 'text-[#F5F5F7]'}`}>{headers[1]}</th>
             {col3Label && (
-              <th className="text-left px-4 py-3 text-omnia-text font-medium font-[family-name:var(--font-geist-sans)] hidden sm:table-cell">
+              <th className={`text-left px-4 py-3 font-medium font-[family-name:var(--font-geist-sans)] hidden sm:table-cell ${isLight ? 'text-[#1D1D1F]' : 'text-[#F5F5F7]'}`}>
                 {col3Label}
               </th>
             )}
@@ -115,14 +116,18 @@ function DocTable({
           {rows.map((row, i) => (
             <tr
               key={i}
-              className="border-b border-white/[0.04] last:border-0 hover:bg-white/[0.04] transition-colors"
+              className={`border-b last:border-0 transition-colors ${
+                isLight
+                  ? 'border-[rgba(0,0,0,0.04)] hover:bg-[#F5F5F7]'
+                  : 'border-white/[0.04] hover:bg-white/[0.04]'
+              }`}
             >
-              <td className="px-4 py-3 text-omnia-accent font-[family-name:var(--font-jetbrains-mono)] text-[12px] sm:text-[14px] align-top">
+              <td className="px-4 py-3 text-[#2997FF] font-[family-name:var(--font-jetbrains-mono)] text-[12px] sm:text-[14px] align-top">
                 {row.col1}
               </td>
-              <td className="px-4 py-3 text-omnia-text-secondary align-top font-[family-name:var(--font-geist-sans)]">{row.col2}</td>
+              <td className={`px-4 py-3 align-top font-[family-name:var(--font-geist-sans)] ${isLight ? 'text-[#6E6E73]' : 'text-[#86868B]'}`}>{row.col2}</td>
               {col3Label && row.col3 && (
-                <td className="px-4 py-3 text-omnia-text-secondary text-[12px] sm:text-[14px] align-top hidden sm:table-cell font-[family-name:var(--font-geist-sans)]">
+                <td className={`px-4 py-3 text-[12px] sm:text-[14px] align-top hidden sm:table-cell font-[family-name:var(--font-geist-sans)] ${isLight ? 'text-[#6E6E73]' : 'text-[#86868B]'}`}>
                   {row.col3}
                 </td>
               )}
@@ -133,8 +138,6 @@ function DocTable({
     </div>
   )
 }
-
-/* ── Data ─────────────────────────────────────────────── */
 
 const apiEndpoints: TableRow[] = [
   { col1: 'GET /health', col2: 'Liveness probe: { status, node_id, uptime_seconds }' },
@@ -169,74 +172,37 @@ const devCommands: TableRow[] = [
 ]
 
 const docLinks = [
-  {
-    icon: BookOpen,
-    title: 'Architecture Docs',
-    description: 'Deep-dive into the six-layer architecture',
-    href: 'https://github.com/Willow7737/omnia-protocol',
-    color: 'text-omnia-accent',
-  },
-  {
-    icon: Plug,
-    title: 'API Reference',
-    description: 'Complete API endpoint documentation',
-    href: 'https://github.com/Willow7737/omnia-protocol',
-    color: 'text-omnia-sage',
-  },
-  {
-    icon: HeartHandshake,
-    title: 'Contributing Guide',
-    description: 'How to contribute to the protocol',
-    href: 'https://github.com/Willow7737/omnia-protocol',
-    color: 'text-amber-400',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Security Audit',
-    description: 'Audit reports and security model',
-    href: 'https://github.com/Willow7737/omnia-protocol',
-    color: 'text-[#30D158]',
-  },
+  { icon: BookOpen, title: 'Architecture Docs', description: 'Deep-dive into the six-layer architecture', href: 'https://github.com/Willow7737/omnia-protocol' },
+  { icon: Plug, title: 'API Reference', description: 'Complete API endpoint documentation', href: 'https://github.com/Willow7737/omnia-protocol' },
+  { icon: HeartHandshake, title: 'Contributing Guide', description: 'How to contribute to the protocol', href: 'https://github.com/Willow7737/omnia-protocol' },
+  { icon: ShieldCheck, title: 'Security Audit', description: 'Audit reports and security model', href: 'https://github.com/Willow7737/omnia-protocol' },
 ]
-
-/* ── Page ─────────────────────────────────────────────── */
 
 export default function DocsPage() {
   return (
-    <div className="min-h-screen bg-omnia-base flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <PageHeader
         title="Documentation"
         description="Everything you need to get started with the Omnia Protocol — from cloning the repo to running a full node."
         breadcrumbs={[{ label: 'Documentation' }]}
       />
 
-      <div className="max-w-[980px] mx-auto px-6 py-12 sm:py-16 space-y-16 sm:space-y-20">
-        {/* Quick Start */}
-        <motion.section {...fadeInUp}>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
-              <Terminal className="w-5 h-5 text-omnia-accent" />
-            </div>
-            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Quick Start</h2>
-          </div>
-          <CodeBlock
-            lang="bash"
-            code={`git clone https://github.com/Willow7737/omnia-protocol.git
+      {/* Quick Start, Running a Node, Docker — Dark section */}
+      <section className="section-dark section-spacing">
+        <div className="max-w-[980px] mx-auto px-6 space-y-16">
+          <motion.div {...fadeInUp}>
+            <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-[#F5F5F7] mb-6">Quick Start</h2>
+            <CodeBlock
+              lang="bash"
+              code={`git clone https://github.com/Willow7737/omnia-protocol.git
 cd omnia-protocol
 cargo test --workspace
 cargo bench --no-run`}
-          />
-        </motion.section>
+            />
+          </motion.div>
 
-        {/* Running a Node */}
-        <motion.section {...fadeInUp}>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
-              <Server className="w-5 h-5 text-omnia-accent" />
-            </div>
-            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Running a Node</h2>
-          </div>
-          <div className="space-y-4">
+          <motion.div {...fadeInUp}>
+            <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] leading-[1.1] text-[#F5F5F7] mb-6">Running a Node</h2>
             <CodeBlock
               lang="bash"
               code={`# Build the node binary
@@ -251,96 +217,60 @@ cargo build --release -p omnia-node
 # Enable live Ethereum settlement
 cargo build --release -p omnia-node --features ethereum-live`}
             />
-          </div>
-        </motion.section>
+          </motion.div>
 
-        {/* Docker Deployment */}
-        <motion.section {...fadeInUp}>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
-              <Container className="w-5 h-5 text-omnia-accent" />
-            </div>
-            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Docker Deployment</h2>
-          </div>
-          <CodeBlock
-            lang="bash"
-            code={`# Start 5-node testnet with monitoring
+          <motion.div {...fadeInUp}>
+            <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] leading-[1.1] text-[#F5F5F7] mb-6">Docker Deployment</h2>
+            <CodeBlock
+              lang="bash"
+              code={`# Start 5-node testnet with monitoring
 docker compose -f docker/docker-compose.yml up -d
 
 # Start testnet variant
 docker compose -f docker/docker-compose.testnet.yml up -d`}
-          />
-        </motion.section>
+            />
+          </motion.div>
+        </div>
+      </section>
 
-        {/* Separator */}
-        <div className="h-px bg-white/[0.06]" />
-
-        {/* API Endpoints Reference */}
-        <motion.section {...fadeInUp}>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
-              <Plug className="w-5 h-5 text-omnia-accent" />
-            </div>
-            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">
+      {/* API, Feature Flags, Env Vars, Dev Commands — Light section */}
+      <section className="section-light section-spacing">
+        <div className="max-w-[980px] mx-auto px-6 space-y-16">
+          <motion.div {...fadeInUp}>
+            <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] leading-[1.1] text-[#1D1D1F] mb-6">
               API Endpoints Reference
             </h2>
-          </div>
-          <DocTable headers={['Endpoint', 'Description']} rows={apiEndpoints} />
-        </motion.section>
+            <DocTable headers={['Endpoint', 'Description']} rows={apiEndpoints} isLight />
+          </motion.div>
 
-        {/* Feature Flags */}
-        <motion.section {...fadeInUp}>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
-              <Flag className="w-5 h-5 text-omnia-accent" />
-            </div>
-            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Feature Flags</h2>
-          </div>
-          <DocTable headers={['Flag', 'Description']} rows={featureFlags} />
-          <p className="mt-3 text-omnia-text-secondary text-[14px] font-[family-name:var(--font-geist-sans)]">
-            Enable features with <InlineCode>--features &lt;flag&gt;</InlineCode> when building with
-            Cargo.
-          </p>
-        </motion.section>
+          <motion.div {...fadeInUp}>
+            <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] leading-[1.1] text-[#1D1D1F] mb-6">Feature Flags</h2>
+            <DocTable headers={['Flag', 'Description']} rows={featureFlags} isLight />
+            <p className="mt-3 text-[#6E6E73] text-[14px] font-[family-name:var(--font-geist-sans)]">
+              Enable features with <InlineCode isLight>--features &lt;flag&gt;</InlineCode> when building with
+              Cargo.
+            </p>
+          </motion.div>
 
-        {/* Environment Variables */}
-        <motion.section {...fadeInUp}>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
-              <Settings2 className="w-5 h-5 text-omnia-accent" />
-            </div>
-            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Environment Variables</h2>
-          </div>
-          <DocTable
-            headers={['Variable', 'Description']}
-            rows={envVars}
-            col3Label="Default"
-          />
-        </motion.section>
+          <motion.div {...fadeInUp}>
+            <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] leading-[1.1] text-[#1D1D1F] mb-6">Environment Variables</h2>
+            <DocTable headers={['Variable', 'Description']} rows={envVars} col3Label="Default" isLight />
+          </motion.div>
 
-        {/* Development Commands */}
-        <motion.section {...fadeInUp}>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
-              <Wrench className="w-5 h-5 text-omnia-accent" />
-            </div>
-            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Development Commands</h2>
-          </div>
-          <DocTable headers={['Command', 'Description']} rows={devCommands} />
-        </motion.section>
+          <motion.div {...fadeInUp}>
+            <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] leading-[1.1] text-[#1D1D1F] mb-6">Development Commands</h2>
+            <DocTable headers={['Command', 'Description']} rows={devCommands} isLight />
+          </motion.div>
+        </div>
+      </section>
 
-        {/* Separator */}
-        <div className="h-px bg-white/[0.06]" />
-
-        {/* Documentation Links */}
-        <motion.section {...fadeInUp}>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
-              <BookOpen className="w-5 h-5 text-omnia-accent" />
-            </div>
-            <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">Documentation Links</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {/* Documentation Links — Dark section */}
+      <section className="section-dark section-spacing">
+        <div className="max-w-[980px] mx-auto px-6">
+          <motion.div {...fadeInUp}>
+            <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] leading-[1.1] text-[#F5F5F7] mb-10">Documentation Links</h2>
+          </motion.div>
+          <div className="space-y-0">
             {docLinks.map((link, i) => {
               const Icon = link.icon
               return (
@@ -349,31 +279,31 @@ docker compose -f docker/docker-compose.testnet.yml up -d`}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.08 }}
-                  className="group flex items-start gap-4 p-5 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] transition-colors"
+                  className="group flex items-center gap-4 sm:gap-8 py-6 border-b border-white/[0.06] last:border-b-0"
                 >
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
-                    <Icon className={`w-5 h-5 ${link.color}`} />
+                  <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
+                    <Icon className="w-4.5 h-4.5 text-[#2997FF]" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <h3 className="font-semibold text-omnia-text text-[15px] sm:text-[17px] font-[family-name:var(--font-space-grotesk)]">
+                      <h3 className="font-semibold text-[#F5F5F7] text-[15px] sm:text-[17px] font-[family-name:var(--font-space-grotesk)] group-hover:text-[#2997FF] transition-colors">
                         {link.title}
                       </h3>
-                      <ExternalLink className="w-3.5 h-3.5 text-omnia-text-secondary opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <ExternalLink className="w-3.5 h-3.5 text-[#86868B] opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
-                    <p className="text-omnia-text-secondary text-[14px] mt-1 font-[family-name:var(--font-geist-sans)]">{link.description}</p>
+                    <p className="text-[#86868B] text-[14px] mt-0.5 font-[family-name:var(--font-geist-sans)]">{link.description}</p>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-omnia-text-secondary group-hover:text-omnia-accent transition-colors flex-shrink-0 mt-1 opacity-0 group-hover:opacity-100" />
+                  <ArrowRight className="w-4 h-4 text-[#86868B] group-hover:text-[#2997FF] transition-colors flex-shrink-0 opacity-0 group-hover:opacity-100" />
                 </motion.a>
               )
             })}
           </div>
-        </motion.section>
-      </div>
+        </div>
+      </section>
 
       <Footer />
     </div>

@@ -43,7 +43,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* Omnia custom colors — Apple-inspired monochrome */
+  /* Omnia custom colors — Apple-inspired */
   --color-omnia-base: #000000;
   --color-omnia-surface: #111111;
   --color-omnia-elevated: #1D1D1F;
@@ -54,6 +54,12 @@
   --color-omnia-text-secondary: #86868B;
   --color-omnia-border: rgba(255, 255, 255, 0.08);
   --color-omnia-border-subtle: rgba(255, 255, 255, 0.04);
+
+  /* Light section colors */
+  --color-omnia-light-bg: #FBFBFD;
+  --color-omnia-light-text: #1D1D1F;
+  --color-omnia-light-text-secondary: #6E6E73;
+  --color-omnia-light-border: rgba(0, 0, 0, 0.08);
 }
 
 :root {
@@ -153,6 +159,14 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
+/* Light section scrollbar */
+.section-light ::-webkit-scrollbar-track {
+  background: #FBFBFD;
+}
+.section-light ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+}
+
 /* Pulsing dot animation — green for live status */
 @keyframes pulse-dot {
   0%, 100% {
@@ -181,8 +195,30 @@
   }
 }
 
+@keyframes flash-light {
+  0% {
+    background-color: rgba(0, 0, 0, 0.08);
+    color: #1D1D1F;
+  }
+  100% {
+    background-color: transparent;
+    color: #6E6E73;
+  }
+}
+
 .animate-flash-white {
   animation: flash-white 0.6s ease-out;
+}
+
+/* Section styles — alternating light/dark for visual rhythm */
+.section-dark {
+  background-color: #000000;
+  color: #F5F5F7;
+}
+
+.section-light {
+  background-color: #FBFBFD;
+  color: #1D1D1F;
 }
 
 /* Section padding — generous like Apple */
@@ -191,9 +227,26 @@
   padding-bottom: min(140px, 18vh);
 }
 
+/* Apple-style generous spacing between sections */
+.section-spacing {
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+
+@media (min-width: 640px) {
+  .section-spacing {
+    padding-top: 160px;
+    padding-bottom: 160px;
+  }
+}
+
 /* Page hero gradient — subtle, barely there */
 .page-hero-gradient {
-  background: linear-gradient(180deg, rgba(41, 151, 255, 0.03) 0%, transparent 50%);
+  background: linear-gradient(180deg, rgba(41, 151, 255, 0.04) 0%, transparent 60%);
+}
+
+.page-hero-gradient-light {
+  background: linear-gradient(180deg, rgba(41, 151, 255, 0.03) 0%, transparent 60%);
 }
 
 /* Smooth fade-in animation class */
@@ -229,4 +282,23 @@
 
 .hover-shimmer:hover {
   animation: shimmer 1.5s ease-in-out;
+}
+
+/* Light section divider */
+.divider-light {
+  height: 1px;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.divider-dark {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Apple-style link hover */
+.apple-link {
+  transition: color 0.2s ease;
+}
+.apple-link:hover {
+  color: #5eb8ff;
 }

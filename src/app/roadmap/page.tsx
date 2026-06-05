@@ -178,113 +178,75 @@ const phases: Phase[] = [
   },
 ]
 
-const statusConfig = {
-  completed: {
-    circleColor: 'bg-omnia-sage',
-    borderColor: 'border-omnia-sage/40',
-    textColor: 'text-omnia-sage',
-    badgeBg: 'bg-omnia-sage/10',
-    badgeBorder: 'border-omnia-sage/30',
-    badgeText: 'text-omnia-sage',
-    lineColor: 'bg-omnia-sage/30',
-    label: 'Complete',
-  },
-  'in-progress': {
-    circleColor: 'bg-omnia-accent',
-    borderColor: 'border-omnia-accent/40',
-    textColor: 'text-omnia-accent',
-    badgeBg: 'bg-[#2997FF]/10',
-    badgeBorder: 'border-omnia-accent/30',
-    badgeText: 'text-omnia-accent',
-    lineColor: 'bg-omnia-accent/30',
-    label: 'In Progress',
-  },
-  future: {
-    circleColor: 'bg-omnia-text-secondary/30',
-    borderColor: 'border-omnia-text-secondary/20',
-    textColor: 'text-omnia-text-secondary/50',
-    badgeBg: 'bg-omnia-text-secondary/5',
-    badgeBorder: 'border-omnia-text-secondary/10',
-    badgeText: 'text-omnia-text-secondary/50',
-    lineColor: 'bg-omnia-text-secondary/10',
-    label: 'Upcoming',
-  },
-}
-
-function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
+function PhaseCard({ phase, index, isDark }: { phase: Phase; index: number; isDark: boolean }) {
   const [isOpen, setIsOpen] = useState(phase.status !== 'future')
-  const config = statusConfig[phase.status]
-  const Icon = phase.icon
+
+  const circleColor = phase.status === 'completed' ? 'bg-[#30D158]' : phase.status === 'in-progress' ? 'bg-[#2997FF]' : 'bg-[#48484A]'
+  const lineColor = phase.status === 'completed' ? 'bg-[#30D158]/30' : phase.status === 'in-progress' ? 'bg-[#2997FF]/30' : 'bg-white/[0.06]'
 
   return (
     <motion.div
       initial={{ opacity: 0, x: -30 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.5, ease: 'easeOut', delay: index * 0.05 }}
+      transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94], delay: index * 0.05 }}
       className="relative flex gap-4 sm:gap-6"
     >
       {/* Timeline line + circle */}
       <div className="flex flex-col items-center flex-shrink-0">
-        {/* Circle */}
-        <motion.div
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: index * 0.05 + 0.2, type: 'spring', stiffness: 200 }}
-          className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-full ${config.circleColor} flex items-center justify-center z-10 shadow-lg`}
-        >
+        <div className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-full ${circleColor} flex items-center justify-center z-10`}>
           {phase.status === 'completed' ? (
-            <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-omnia-base" />
+            <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
           ) : phase.status === 'in-progress' ? (
-            <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 text-omnia-base animate-spin" style={{ animationDuration: '3s' }} />
+            <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 text-black animate-spin" style={{ animationDuration: '3s' }} />
           ) : (
-            <Circle className="w-4 h-4 sm:w-5 sm:h-5 text-omnia-text-secondary/40" />
+            <Circle className="w-4 h-4 sm:w-5 sm:h-5 text-[#48484A]/40" />
           )}
-          {/* Pulse ring for in-progress */}
           {phase.status === 'in-progress' && (
-            <span className="absolute inset-0 rounded-full bg-omnia-accent/30 animate-ping" style={{ animationDuration: '2s' }} />
+            <span className="absolute inset-0 rounded-full bg-[#2997FF]/30 animate-ping" style={{ animationDuration: '2s' }} />
           )}
-        </motion.div>
+        </div>
 
-        {/* Line */}
         {index < phases.length - 1 && (
-          <div className={`w-0.5 flex-1 min-h-[24px] ${config.lineColor}`} />
+          <div className={`w-0.5 flex-1 min-h-[24px] ${lineColor}`} />
         )}
       </div>
 
-      {/* Card */}
+      {/* Content */}
       <div className={`flex-1 pb-8 ${phase.status === 'future' ? 'opacity-50' : ''}`}>
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="w-full text-left group"
         >
-          <div className={`rounded-2xl bg-white/[0.02] border ${config.borderColor} p-4 sm:p-5 hover:border-white/[0.12] transition-all duration-300 group-hover:shadow-lg group-hover:shadow-omnia-accent/5`}>
+          <div className={`py-3 ${isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]'}`}>
             <div className="flex items-start justify-between gap-3">
-              <div className="flex items-start gap-3 min-w-0">
-                <div className={`flex-shrink-0 w-9 h-9 rounded-lg ${config.badgeBg} flex items-center justify-center`}>
-                  <Icon className={`w-4.5 h-4.5 ${config.badgeText}`} />
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2 mb-1">
+                  <span className={`font-[family-name:var(--font-jetbrains-mono)] text-[12px] font-medium ${
+                    phase.status === 'completed' ? 'text-[#30D158]' : phase.status === 'in-progress' ? 'text-[#2997FF]' : 'text-[#86868B]'
+                  }`}>
+                    {phase.number === '∞' ? 'Post-Phase 5' : `Phase ${phase.number}`}
+                  </span>
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium ${
+                    phase.status === 'completed' ? 'bg-[#30D158]/10 text-[#30D158]' :
+                    phase.status === 'in-progress' ? 'bg-[#2997FF]/10 text-[#2997FF]' :
+                    'bg-white/[0.04] text-[#86868B]'
+                  }`}>
+                    {phase.status === 'completed' ? 'Complete' : phase.status === 'in-progress' ? 'In Progress' : 'Upcoming'}
+                  </span>
                 </div>
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <span className={`font-[family-name:var(--font-jetbrains-mono)] text-[12px] ${config.badgeText} font-medium`}>
-                      {phase.number === '∞' ? 'Post-Phase 5' : `Phase ${phase.number}`}
-                    </span>
-                    <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium border ${config.badgeBg} ${config.badgeBorder} ${config.badgeText}`}>
-                      {config.label}
-                    </span>
-                  </div>
-                  <h3 className={`text-[17px] sm:text-[19px] font-semibold tracking-tight font-[family-name:var(--font-space-grotesk)] ${phase.status === 'future' ? 'text-omnia-text-secondary' : 'text-omnia-text'}`}>
-                    {phase.title}
-                  </h3>
-                </div>
+                <h3 className={`text-[17px] sm:text-[19px] font-semibold tracking-tight font-[family-name:var(--font-space-grotesk)] ${
+                  phase.status === 'future' ? 'text-[#86868B]' : isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]'
+                }`}>
+                  {phase.title}
+                </h3>
               </div>
               <motion.div
                 animate={{ rotate: isOpen ? 180 : 0 }}
                 transition={{ duration: 0.2 }}
                 className="flex-shrink-0 mt-1"
               >
-                <ChevronDown className="w-4 h-4 text-omnia-text-secondary" />
+                <ChevronDown className={`w-4 h-4 ${isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'}`} />
               </motion.div>
             </div>
 
@@ -297,7 +259,7 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
                   transition={{ duration: 0.3, ease: 'easeInOut' }}
                   className="overflow-hidden"
                 >
-                  <ul className="mt-4 space-y-2 border-t border-white/[0.06] pt-4">
+                  <ul className="mt-4 space-y-2 pt-4 border-t border-white/[0.06]">
                     {phase.items.map((item, i) => (
                       <motion.li
                         key={i}
@@ -306,8 +268,8 @@ function PhaseCard({ phase, index }: { phase: Phase; index: number }) {
                         transition={{ duration: 0.3, delay: i * 0.04 }}
                         className="flex items-start gap-2.5 text-[14px] font-[family-name:var(--font-geist-sans)]"
                       >
-                        <div className={`flex-shrink-0 w-1.5 h-1.5 rounded-full mt-1.5 ${config.circleColor}`} />
-                        <span className={`${phase.status === 'future' ? 'text-omnia-text-secondary/60' : 'text-omnia-text-secondary'}`}>
+                        <div className={`flex-shrink-0 w-1.5 h-1.5 rounded-full mt-1.5 ${circleColor}`} />
+                        <span className={isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'}>
                           {item.text}
                         </span>
                       </motion.li>
@@ -328,44 +290,48 @@ export default function RoadmapPage() {
   const inProgressCount = phases.filter(p => p.status === 'in-progress').length
 
   return (
-    <div className="min-h-screen bg-omnia-base flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <PageHeader
         title="Roadmap"
         description="From seed to universality. Every phase completed, every milestone verified. Radical transparency means showing the work, not just the highlights."
         breadcrumbs={[{ label: 'Roadmap' }]}
       />
 
-      {/* Summary stats */}
-      <div className="max-w-[980px] mx-auto px-6 -mt-4 mb-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap gap-3"
-        >
-          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.02] border border-omnia-sage/20">
-            <CheckCircle2 className="w-4 h-4 text-omnia-sage" />
-            <span className="text-[14px] text-omnia-text-secondary font-[family-name:var(--font-geist-sans)]">{completedCount} phases complete</span>
-          </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.02] border border-omnia-accent/20">
-            <Loader2 className="w-4 h-4 text-omnia-accent" />
-            <span className="text-[14px] text-omnia-text-secondary font-[family-name:var(--font-geist-sans)]">{inProgressCount} in progress</span>
-          </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.02] border border-omnia-text-secondary/10">
-            <Circle className="w-4 h-4 text-omnia-text-secondary/40" />
-            <span className="text-[14px] text-omnia-text-secondary font-[family-name:var(--font-geist-sans)]">4 phases ahead</span>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Timeline */}
-      <div className="max-w-[980px] mx-auto px-6 pb-24">
-        <div className="relative">
-          {phases.map((phase, index) => (
-            <PhaseCard key={`${phase.number}-${phase.title}`} phase={phase} index={index} />
-          ))}
+      {/* Summary stats — Dark section */}
+      <section className="section-dark py-10">
+        <div className="max-w-[980px] mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex flex-wrap gap-3"
+          >
+            <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#30D158]/10 border border-[#30D158]/20">
+              <CheckCircle2 className="w-4 h-4 text-[#30D158]" />
+              <span className="text-[14px] text-[#F5F5F7] font-[family-name:var(--font-geist-sans)]">{completedCount} phases complete</span>
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#2997FF]/10 border border-[#2997FF]/20">
+              <Loader2 className="w-4 h-4 text-[#2997FF]" />
+              <span className="text-[14px] text-[#F5F5F7] font-[family-name:var(--font-geist-sans)]">{inProgressCount} in progress</span>
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.02] border border-white/[0.06]">
+              <Circle className="w-4 h-4 text-[#86868B]/40" />
+              <span className="text-[14px] text-[#86868B] font-[family-name:var(--font-geist-sans)]">4 phases ahead</span>
+            </div>
+          </motion.div>
         </div>
-      </div>
+      </section>
+
+      {/* Timeline — Dark section (continuing) */}
+      <section className="section-dark pb-24">
+        <div className="max-w-[980px] mx-auto px-6">
+          <div className="relative">
+            {phases.map((phase, index) => (
+              <PhaseCard key={`${phase.number}-${phase.title}`} phase={phase} index={index} isDark />
+            ))}
+          </div>
+        </div>
+      </section>
 
       <Footer />
     </div>

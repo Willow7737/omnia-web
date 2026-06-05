@@ -88,107 +88,107 @@ const useCases: UseCase[] = [
   },
 ]
 
-const staggerContainer = {
-  initial: {},
-  whileInView: { transition: { staggerChildren: 0.12 } },
-  viewport: { once: true, margin: '-50px' },
-}
-
-const staggerItem = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, ease: 'easeOut' },
-}
-
-function UseCaseCard({ useCase, index }: { useCase: UseCase; index: number }) {
-  const Icon = useCase.icon
-
-  return (
-    <motion.div
-      {...staggerItem}
-      transition={{ ...staggerItem.transition, delay: index * 0.08 }}
-      className="group rounded-2xl bg-white/[0.02] border border-white/[0.06] p-5 sm:p-6 hover:border-white/[0.12] transition-all duration-300 hover:shadow-lg hover:shadow-omnia-accent/5"
-    >
-      <div className="flex items-start gap-4 mb-5">
-        <div className="flex-shrink-0 w-11 h-11 rounded-2xl bg-[#2997FF]/10 border border-[#2997FF]/20 flex items-center justify-center group-hover:bg-[#2997FF]/15 group-hover:border-[#2997FF]/30 transition-colors">
-          <Icon className="w-5 h-5 text-omnia-accent" />
-        </div>
-        <div>
-          <h3 className="text-[17px] font-semibold text-omnia-text group-hover:text-omnia-accent transition-colors tracking-tight font-[family-name:var(--font-space-grotesk)]">
-            {useCase.title}
-          </h3>
-          <p className="text-omnia-text-secondary text-[14px] mt-1 font-[family-name:var(--font-geist-sans)]">{useCase.description}</p>
-        </div>
-      </div>
-
-      <ul className="space-y-2.5">
-        {useCase.items.map((item, i) => (
-          <li key={i} className="flex items-start gap-2.5 text-[14px] font-[family-name:var(--font-geist-sans)]">
-            <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-omnia-accent/60 mt-1.5 group-hover:bg-omnia-accent transition-colors" />
-            <span className="text-omnia-text-secondary leading-[1.6]">{item}</span>
-          </li>
-        ))}
-      </ul>
-    </motion.div>
-  )
-}
-
 export default function UseCasesPage() {
   return (
-    <div className="min-h-screen bg-omnia-base flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <PageHeader
         title="Use Cases"
         description="Real-world problems that Omnia's architecture is built to solve. From financial infrastructure to physical-digital fusion — every use case is grounded in the protocol's actual capabilities."
         breadcrumbs={[{ label: 'Use Cases' }]}
       />
 
-      {/* Use cases grid */}
-      <section className="max-w-[980px] mx-auto px-6 pb-24">
-        <motion.div
-          {...staggerContainer}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-3"
-        >
-          {useCases.map((useCase, index) => (
-            <UseCaseCard key={useCase.title} useCase={useCase} index={index} />
-          ))}
-        </motion.div>
-      </section>
+      {/* Use cases — alternating sections */}
+      <div className="flex flex-col">
+        {useCases.map((useCase, index) => {
+          const Icon = useCase.icon
+          const isDark = index % 2 === 0
+          return (
+            <motion.section
+              key={useCase.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.05 }}
+              className={`${isDark ? 'section-dark' : 'section-light'} section-spacing`}
+            >
+              <div className="max-w-[980px] mx-auto px-6">
+                <div className="flex flex-col sm:flex-row gap-8 sm:gap-16">
+                  {/* Left — Title */}
+                  <div className="sm:w-[340px] md:w-[400px] shrink-0">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className={`w-9 h-9 rounded-lg ${isDark ? 'bg-[#2997FF]/10' : 'bg-[#2997FF]/10'} flex items-center justify-center`}>
+                        <Icon className="w-4.5 h-4.5 text-[#2997FF]" />
+                      </div>
+                      <h3 className={`font-[family-name:var(--font-space-grotesk)] text-[28px] sm:text-[36px] font-bold tracking-[-0.02em] leading-[1.1] ${isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]'}`}>
+                        {useCase.title}
+                      </h3>
+                    </div>
+                    <p className={`text-[15px] sm:text-[17px] ${isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'} font-[family-name:var(--font-geist-sans)]`}>
+                      {useCase.description}
+                    </p>
+                  </div>
 
-      {/* Bottom CTA */}
-      <div className="max-w-[980px] mx-auto px-6 pb-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="rounded-2xl bg-white/[0.02] border border-white/[0.06] p-6 sm:p-8 text-center"
-        >
-          <h3 className="text-[28px] sm:text-[32px] font-bold text-omnia-text mb-3 tracking-tight font-[family-name:var(--font-space-grotesk)]">
-            Building something that fits?
-          </h3>
-          <p className="text-omnia-text-secondary text-[14px] sm:text-[15px] max-w-2xl mx-auto mb-6 leading-[1.6] font-[family-name:var(--font-geist-sans)]">
-            Omnia is CC0 public domain — no permissions needed. The protocol is designed to be a 
-            fundamental infrastructure layer that any application can build on, without gatekeepers 
-            or license fees.
-          </p>
-          <div className="flex flex-wrap gap-3 justify-center">
-            <a
-              href="https://github.com/Willow7737/omnia-protocol"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-omnia-accent text-omnia-base font-medium text-[14px] hover:bg-omnia-accent/90 transition-colors font-[family-name:var(--font-geist-sans)]"
-            >
-              View on GitHub
-            </a>
-            <a
-              href="/architecture"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white/[0.02] border border-white/[0.06] text-omnia-text text-[14px] hover:border-white/[0.12] transition-colors font-[family-name:var(--font-geist-sans)]"
-            >
-              Explore Architecture
-            </a>
-          </div>
-        </motion.div>
+                  {/* Right — Items */}
+                  <div className="flex-1 space-y-3">
+                    {useCase.items.map((item, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, x: -10 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: '-20px' }}
+                        transition={{ duration: 0.3, delay: i * 0.05, ease: [0.25, 0.46, 0.45, 0.94] }}
+                        className="flex items-start gap-3"
+                      >
+                        <div className={`flex-shrink-0 w-1.5 h-1.5 rounded-full mt-2 ${isDark ? 'bg-[#2997FF]/60' : 'bg-[#2997FF]/60'}`} />
+                        <span className={`text-[15px] sm:text-[17px] leading-[1.6] font-[family-name:var(--font-geist-sans)] ${isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'}`}>
+                          {item}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.section>
+          )
+        })}
       </div>
+
+      {/* Bottom CTA — Dark section */}
+      <section className="section-dark py-20 sm:py-24">
+        <div className="max-w-[980px] mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3 className="font-[family-name:var(--font-space-grotesk)] text-[28px] sm:text-[40px] md:text-[48px] font-bold text-[#F5F5F7] mb-4 tracking-tight leading-[1.1]">
+              Building something that fits?
+            </h3>
+            <p className="text-[#86868B] text-[14px] sm:text-[15px] max-w-2xl mx-auto mb-8 leading-[1.6] font-[family-name:var(--font-geist-sans)]">
+              Omnia is CC0 public domain — no permissions needed. The protocol is designed to be a 
+              fundamental infrastructure layer that any application can build on, without gatekeepers 
+              or license fees.
+            </p>
+            <div className="flex flex-wrap gap-3 justify-center">
+              <a
+                href="https://github.com/Willow7737/omnia-protocol"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#2997FF] text-white font-medium text-[14px] hover:bg-[#2384d6] transition-colors font-[family-name:var(--font-space-grotesk)]"
+              >
+                View on GitHub
+              </a>
+              <a
+                href="/architecture"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/[0.1] text-[#F5F5F7] text-[14px] hover:bg-white/[0.04] transition-colors font-[family-name:var(--font-space-grotesk)]"
+              >
+                Explore Architecture
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       <Footer />
     </div>

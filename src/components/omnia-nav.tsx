@@ -67,11 +67,7 @@ export function OmniaNav() {
     }
   }, [mobileOpen])
 
-  // Close dropdown on route change
-  useEffect(() => {
-    setDesktopDropdown(null)
-    setMobileOpen(false)
-  }, [pathname])
+  // Navigation state resets are handled in click handlers and the Link components
 
   const scrollToSection = useCallback((href: string) => {
     const target = document.querySelector(href)
@@ -93,7 +89,7 @@ export function OmniaNav() {
   }, [scrollToSection])
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl bg-black/70 border-b border-white/[0.08]">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl bg-black/80 border-b border-white/[0.08]">
       <div className="max-w-[980px] mx-auto px-6 h-12 flex items-center justify-between">
         {/* Logo */}
         <Link

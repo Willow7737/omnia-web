@@ -28,43 +28,16 @@ import {
 } from 'lucide-react'
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: '-50px' },
   transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
 }
 
-const staggerContainer = {
-  initial: {},
-  whileInView: { transition: { staggerChildren: 0.08 } },
-  viewport: { once: true, margin: '-50px' },
-}
-
-const staggerItem = {
-  initial: { opacity: 0, y: 16 },
-  whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
-}
-
 const channels = [
-  {
-    icon: GitBranch,
-    title: 'GitHub',
-    link: 'github.com/Willow7737/omnia-protocol',
-    description: 'Source code, issues, discussions',
-  },
-  {
-    icon: MessageCircle,
-    title: 'Discord',
-    link: 'discord.gg/qYkpAeSYR',
-    description: 'Real-time chat, support, community',
-  },
-  {
-    icon: MessageSquare,
-    title: 'GitHub Discussions',
-    link: 'Questions, ideas, and proposals',
-    description: 'Long-form conversation and proposals',
-  },
+  { icon: GitBranch, title: 'GitHub', link: 'github.com/Willow7737/omnia-protocol', description: 'Source code, issues, discussions' },
+  { icon: MessageCircle, title: 'Discord', link: 'discord.gg/qYkpAeSYR', description: 'Real-time chat, support, community' },
+  { icon: MessageSquare, title: 'GitHub Discussions', link: 'Questions, ideas, and proposals', description: 'Long-form conversation and proposals' },
 ]
 
 const contributeWays = [
@@ -77,26 +50,10 @@ const contributeWays = [
 ]
 
 const governanceFeatures = [
-  {
-    icon: Vote,
-    title: 'Quadratic Voting',
-    description: 'Exponential reputation decay ensures influence must be continuously earned — no permanent power accumulation.',
-  },
-  {
-    icon: Calculator,
-    title: 'Fixed-Point Governance Decay',
-    description: 'PPM (parts-per-million) arithmetic for deterministic results. No floating-point in consensus-critical code.',
-  },
-  {
-    icon: Clock,
-    title: 'Time-Locked Proposals',
-    description: 'Proposals are time-locked before execution, giving the community time to review, discuss, and veto if needed.',
-  },
-  {
-    icon: Hash,
-    title: 'Community-Driven Roadmap',
-    description: 'The protocol roadmap is shaped by community input. No single entity decides what gets built next.',
-  },
+  { icon: Vote, title: 'Quadratic Voting', description: 'Exponential reputation decay ensures influence must be continuously earned — no permanent power accumulation.' },
+  { icon: Calculator, title: 'Fixed-Point Governance Decay', description: 'PPM (parts-per-million) arithmetic for deterministic results. No floating-point in consensus-critical code.' },
+  { icon: Clock, title: 'Time-Locked Proposals', description: 'Proposals are time-locked before execution, giving the community time to review, discuss, and veto if needed.' },
+  { icon: Hash, title: 'Community-Driven Roadmap', description: 'The protocol roadmap is shaped by community input. No single entity decides what gets built next.' },
 ]
 
 const communityStats = [
@@ -108,219 +65,205 @@ const communityStats = [
 
 export default function CommunityPage() {
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen flex flex-col">
       <PageHeader
         title="Community"
         description="Omnia is a public-interest protocol. It thrives through open collaboration, radical transparency, and community governance."
         breadcrumbs={[{ label: 'Community' }]}
       />
 
-      {/* Join the Conversation */}
-      <section className="max-w-[980px] mx-auto px-6 py-16 sm:py-24">
-        <motion.div {...fadeInUp}>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-[#2997FF]/10 flex items-center justify-center">
-              <Users className="w-5 h-5 text-[#2997FF]" />
-            </div>
-            <h2 className="text-[28px] sm:text-[32px] font-bold text-[#F5F5F7] font-[family-name:var(--font-space-grotesk)] tracking-tight">Join the Conversation</h2>
-          </div>
-          <p className="text-[#86868B] leading-[1.6] text-[15px] sm:text-[17px] max-w-[680px] mb-12 font-[family-name:var(--font-geist-sans)]">
-            Omnia is built in the open. Every discussion, every decision, every line of code happens where everyone can see it and participate.
-          </p>
-        </motion.div>
+      {/* Join the Conversation — Dark section */}
+      <section className="section-dark section-spacing">
+        <div className="max-w-[980px] mx-auto px-6">
+          <motion.div {...fadeInUp}>
+            <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-[#F5F5F7] mb-4">
+              Join the Conversation
+            </h2>
+            <p className="text-[#86868B] leading-[1.6] text-[17px] sm:text-[19px] max-w-[680px] mb-12 font-[family-name:var(--font-geist-sans)]">
+              Omnia is built in the open. Every discussion, every decision, every line of code happens where everyone can see it and participate.
+            </p>
+          </motion.div>
 
-        <motion.div
-          {...staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-3 gap-3"
-        >
-          {channels.map((channel, i) => {
-            const Icon = channel.icon
-            return (
-              <motion.div
-                key={i}
-                {...staggerItem}
-                className="group rounded-2xl p-5 sm:p-6 transition-all duration-300 bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]"
-              >
-                <div className="w-12 h-12 rounded-xl bg-[#2997FF]/10 flex items-center justify-center mb-5">
-                  <Icon className="w-6 h-6 text-[#2997FF]" />
-                </div>
-                <h3 className="text-[#F5F5F7] font-semibold text-[17px] mb-2 font-[family-name:var(--font-space-grotesk)]">{channel.title}</h3>
-                <p className="text-[#86868B] text-[14px] mb-4 font-[family-name:var(--font-geist-sans)]">{channel.description}</p>
-                <p className="text-[#2997FF] text-[13px] font-mono">{channel.link}</p>
-              </motion.div>
-            )
-          })}
-        </motion.div>
+          <div className="space-y-0">
+            {channels.map((channel, i) => {
+              const Icon = channel.icon
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-30px' }}
+                  transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] as const }}
+                  className={`group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 py-6 ${
+                    i < channels.length - 1 ? 'border-b border-white/[0.06]' : ''
+                  }`}
+                >
+                  <div className="flex items-center gap-3 sm:w-[220px] shrink-0">
+                    <div className="w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
+                      <Icon className="w-4.5 h-4.5 text-[#2997FF]" />
+                    </div>
+                    <h3 className="text-[#F5F5F7] font-semibold text-[17px] font-[family-name:var(--font-space-grotesk)]">{channel.title}</h3>
+                  </div>
+                  <p className="text-[#86868B] text-[15px] font-[family-name:var(--font-geist-sans)]">{channel.description}</p>
+                  <p className="text-[#2997FF] text-[13px] font-[family-name:var(--font-jetbrains-mono)] sm:ml-auto shrink-0">{channel.link}</p>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
       </section>
 
-      <div className="max-w-[980px] mx-auto px-6">
-        <div className="h-px bg-white/[0.06]" />
-      </div>
+      {/* How to Contribute — Light section */}
+      <section className="section-light section-spacing">
+        <div className="max-w-[980px] mx-auto px-6">
+          <motion.div {...fadeInUp}>
+            <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-[#1D1D1F] mb-4">How to Contribute</h2>
+            <p className="text-[#6E6E73] leading-[1.6] text-[17px] sm:text-[19px] max-w-[600px] mb-12 font-[family-name:var(--font-geist-sans)]">
+              Every contribution matters. Whether you write code, report bugs, or simply share what you have learned — you make the protocol stronger.
+            </p>
+          </motion.div>
 
-      {/* How to Contribute */}
-      <section className="max-w-[980px] mx-auto px-6 py-16 sm:py-24">
-        <motion.div {...fadeInUp}>
-          <h2 className="text-[28px] sm:text-[32px] font-bold text-[#F5F5F7] mb-4 font-[family-name:var(--font-space-grotesk)] tracking-tight">How to Contribute</h2>
-          <p className="text-[#86868B] leading-[1.6] text-[15px] sm:text-[17px] max-w-[600px] mb-12 font-[family-name:var(--font-geist-sans)]">
-            Every contribution matters. Whether you write code, report bugs, or simply share what you have learned — you make the protocol stronger.
-          </p>
-        </motion.div>
-
-        <motion.div
-          {...staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
-        >
-          {contributeWays.map((way, i) => {
-            const Icon = way.icon
-            return (
-              <motion.div
-                key={i}
-                {...staggerItem}
-                className="group rounded-2xl p-5 sm:p-6 transition-all duration-300 bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]"
-              >
-                <div className="flex items-start gap-4">
+          <div className="space-y-0">
+            {contributeWays.map((way, i) => {
+              const Icon = way.icon
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-30px' }}
+                  transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] as const }}
+                  className={`group flex items-center gap-4 sm:gap-6 py-5 ${
+                    i < contributeWays.length - 1 ? 'border-b border-[rgba(0,0,0,0.06)]' : ''
+                  }`}
+                >
                   <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
                     <Icon className="w-4.5 h-4.5 text-[#2997FF]" />
                   </div>
                   <div>
-                    <h3 className="text-[#F5F5F7] font-medium text-[14px] font-[family-name:var(--font-space-grotesk)]">{way.title}</h3>
-                    <p className="text-[#86868B] text-[12px] mt-1 font-[family-name:var(--font-geist-sans)]">{way.description}</p>
+                    <h3 className="text-[#1D1D1F] font-medium text-[15px] sm:text-[17px] font-[family-name:var(--font-space-grotesk)]">{way.title}</h3>
+                    <p className="text-[#6E6E73] text-[13px] sm:text-[14px] mt-0.5 font-[family-name:var(--font-geist-sans)]">{way.description}</p>
                   </div>
-                </div>
-              </motion.div>
-            )
-          })}
-        </motion.div>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
       </section>
 
-      <div className="max-w-[980px] mx-auto px-6">
-        <div className="h-px bg-white/[0.06]" />
-      </div>
+      {/* Governance — Dark section */}
+      <section className="section-dark section-spacing">
+        <div className="max-w-[980px] mx-auto px-6">
+          <motion.div {...fadeInUp}>
+            <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-[#F5F5F7] mb-4">Governance</h2>
+            <p className="text-[#86868B] leading-[1.6] text-[17px] sm:text-[19px] max-w-[680px] mb-12 font-[family-name:var(--font-geist-sans)]">
+              Omnia&apos;s governance is designed to prevent power concentration while enabling efficient decision-making. No whales, no cabals, no permanent majorities.
+            </p>
+          </motion.div>
 
-      {/* Governance */}
-      <section className="max-w-[980px] mx-auto px-6 py-16 sm:py-24">
-        <motion.div {...fadeInUp}>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-[#2997FF]/10 flex items-center justify-center">
-              <Scale className="w-5 h-5 text-[#2997FF]" />
-            </div>
-            <h2 className="text-[28px] sm:text-[32px] font-bold text-[#F5F5F7] font-[family-name:var(--font-space-grotesk)] tracking-tight">Governance</h2>
+          <div className="space-y-0">
+            {governanceFeatures.map((feature, i) => {
+              const Icon = feature.icon
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-30px' }}
+                  transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] as const }}
+                  className={`group flex flex-col sm:flex-row gap-4 sm:gap-8 py-6 ${
+                    i < governanceFeatures.length - 1 ? 'border-b border-white/[0.06]' : ''
+                  }`}
+                >
+                  <div className="flex items-center gap-3 sm:w-[280px] md:w-[320px] shrink-0">
+                    <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
+                      <Icon className="w-4.5 h-4.5 text-[#2997FF]" />
+                    </div>
+                    <h3 className="text-[#F5F5F7] font-semibold text-[15px] sm:text-[17px] font-[family-name:var(--font-space-grotesk)]">{feature.title}</h3>
+                  </div>
+                  <p className="text-[#86868B] text-[14px] sm:text-[15px] leading-[1.6] font-[family-name:var(--font-geist-sans)]">{feature.description}</p>
+                </motion.div>
+              )
+            })}
           </div>
-          <p className="text-[#86868B] leading-[1.6] text-[15px] sm:text-[17px] max-w-[680px] mb-12 font-[family-name:var(--font-geist-sans)]">
-            Omnia&apos;s governance is designed to prevent power concentration while enabling efficient decision-making. No whales, no cabals, no permanent majorities.
-          </p>
-        </motion.div>
-
-        <motion.div
-          {...staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 gap-3"
-        >
-          {governanceFeatures.map((feature, i) => {
-            const Icon = feature.icon
-            return (
-              <motion.div
-                key={i}
-                {...staggerItem}
-                className="rounded-2xl p-5 sm:p-6 transition-all duration-300 bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
-                    <Icon className="w-5 h-5 text-[#2997FF]" />
-                  </div>
-                  <div>
-                    <h3 className="text-[#F5F5F7] font-semibold text-[15px] mb-2 font-[family-name:var(--font-space-grotesk)]">{feature.title}</h3>
-                    <p className="text-[#86868B] text-[14px] leading-[1.5] font-[family-name:var(--font-geist-sans)]">{feature.description}</p>
-                  </div>
-                </div>
-              </motion.div>
-            )
-          })}
-        </motion.div>
+        </div>
       </section>
 
-      <div className="max-w-[980px] mx-auto px-6">
-        <div className="h-px bg-white/[0.06]" />
-      </div>
-
-      {/* Code of Conduct */}
-      <section className="max-w-[980px] mx-auto px-6 py-16 sm:py-24">
-        <motion.div {...fadeInUp}>
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-[#2997FF]/10 flex items-center justify-center">
-              <ShieldCheck className="w-5 h-5 text-[#2997FF]" />
+      {/* Code of Conduct — Light section */}
+      <section className="section-light section-spacing">
+        <div className="max-w-[980px] mx-auto px-6">
+          <motion.div {...fadeInUp}>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-[#2997FF]/10 flex items-center justify-center">
+                <ShieldCheck className="w-5 h-5 text-[#2997FF]" />
+              </div>
+              <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-[#1D1D1F]">Code of Conduct</h2>
             </div>
-            <h2 className="text-[28px] sm:text-[32px] font-bold text-[#F5F5F7] font-[family-name:var(--font-space-grotesk)] tracking-tight">Code of Conduct</h2>
-          </div>
-        </motion.div>
+          </motion.div>
 
-        <motion.div {...fadeInUp}>
-          <div className="rounded-2xl p-5 sm:p-8 transition-all duration-300 bg-white/[0.02] border border-white/[0.06]">
-            <div className="max-w-[680px]">
-              <div className="space-y-5">
-                <p className="text-[#86868B] text-[15px] sm:text-[17px] leading-[1.6] font-[family-name:var(--font-geist-sans)]">
-                  We pledge to make participation in our community a harassment-free experience for everyone, 
-                  regardless of age, body size, disability, ethnicity, gender identity and expression, level 
-                  of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
+          <motion.div {...fadeInUp} className="max-w-[680px]">
+            <div className="space-y-5">
+              <p className="text-[#6E6E73] text-[15px] sm:text-[17px] leading-[1.6] font-[family-name:var(--font-geist-sans)]">
+                We pledge to make participation in our community a harassment-free experience for everyone, 
+                regardless of age, body size, disability, ethnicity, gender identity and expression, level 
+                of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
+              </p>
+              <div className="flex items-start gap-3">
+                <Heart className="w-5 h-5 text-[#2997FF] flex-shrink-0 mt-0.5" />
+                <p className="text-[#1D1D1F] text-[14px] sm:text-[15px] font-medium font-[family-name:var(--font-geist-sans)]">
+                  Read the full Code of Conduct on the{' '}
+                  <Link href="/conduct" className="text-[#2997FF] hover:underline">
+                    conduct page
+                  </Link>.
                 </p>
-                <div className="flex items-start gap-3">
-                  <Heart className="w-5 h-5 text-[#2997FF] flex-shrink-0 mt-0.5" />
-                  <p className="text-[#F5F5F7] text-[14px] font-medium font-[family-name:var(--font-geist-sans)]">
-                    Read the full Code of Conduct on the{' '}
-                    <Link href="/conduct" className="text-[#2997FF] hover:underline">
-                      conduct page
-                    </Link>.
-                  </p>
-                </div>
-                <div className="h-px bg-white/[0.06]" />
-                <div className="flex items-center gap-3">
-                  <Mail className="w-4 h-4 text-[#2997FF]" />
-                  <div>
-                    <p className="text-[#F5F5F7] text-[14px] font-medium font-[family-name:var(--font-space-grotesk)]">Enforcement</p>
-                    <p className="text-[#2997FF] text-[13px] font-mono">conduct@omnia.protocol</p>
-                  </div>
+              </div>
+              <div className="h-px bg-[rgba(0,0,0,0.06)]" />
+              <div className="flex items-center gap-3">
+                <Mail className="w-4 h-4 text-[#2997FF]" />
+                <div>
+                  <p className="text-[#1D1D1F] text-[14px] font-medium font-[family-name:var(--font-space-grotesk)]">Enforcement</p>
+                  <p className="text-[#2997FF] text-[13px] font-[family-name:var(--font-jetbrains-mono)]">conduct@omnia.protocol</p>
                 </div>
               </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </section>
 
-      <div className="max-w-[980px] mx-auto px-6">
-        <div className="h-px bg-white/[0.06]" />
-      </div>
+      {/* Community Stats — Dark section */}
+      <section className="section-dark section-spacing">
+        <div className="max-w-[980px] mx-auto px-6">
+          <motion.div {...fadeInUp}>
+            <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-[#F5F5F7] mb-4">Community Stats</h2>
+            <p className="text-[#86868B] leading-[1.6] text-[17px] sm:text-[19px] max-w-[600px] mb-10 font-[family-name:var(--font-geist-sans)]">
+              Real numbers from the codebase. No vanity metrics, no inflation.
+            </p>
+          </motion.div>
 
-      {/* Community Stats */}
-      <section className="max-w-[980px] mx-auto px-6 py-16 sm:py-24">
-        <motion.div {...fadeInUp}>
-          <h2 className="text-[28px] sm:text-[32px] font-bold text-[#F5F5F7] mb-4 font-[family-name:var(--font-space-grotesk)] tracking-tight">Community Stats</h2>
-          <p className="text-[#86868B] leading-[1.6] text-[15px] sm:text-[17px] max-w-[600px] mb-10 font-[family-name:var(--font-geist-sans)]">
-            Real numbers from the codebase. No vanity metrics, no inflation.
-          </p>
-        </motion.div>
-
-        <motion.div
-          {...staggerContainer}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-3"
-        >
-          {communityStats.map((stat, i) => {
-            const Icon = stat.icon
-            return (
-              <motion.div
-                key={i}
-                {...staggerItem}
-                className="rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]"
-              >
-                <div className="flex justify-center mb-3">
-                  <Icon className="w-5 h-5 text-[#2997FF]" />
-                </div>
-                <div className="text-[24px] sm:text-[28px] font-bold font-mono text-[#F5F5F7] mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-[#86868B] text-[12px] font-[family-name:var(--font-geist-sans)]">{stat.label}</div>
-              </motion.div>
-            )
-          })}
-        </motion.div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.06] rounded-xl overflow-hidden">
+            {communityStats.map((stat, i) => {
+              const Icon = stat.icon
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-30px' }}
+                  transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] as const }}
+                  className="bg-black p-6 sm:p-8 text-center"
+                >
+                  <div className="flex justify-center mb-3">
+                    <Icon className="w-5 h-5 text-[#2997FF]" />
+                  </div>
+                  <div className="text-[28px] sm:text-[36px] font-bold font-[family-name:var(--font-jetbrains-mono)] text-[#F5F5F7] mb-1">
+                    {stat.value}
+                  </div>
+                  <div className="text-[#86868B] text-[13px] font-[family-name:var(--font-geist-sans)]">{stat.label}</div>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
       </section>
 
       <Footer />

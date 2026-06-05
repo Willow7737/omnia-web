@@ -32,11 +32,11 @@ function MetricTable({ metrics, title, liveMetrics }: { metrics: MetricRow[]; ti
   return (
     <div>
       {title && (
-        <h3 className="text-[13px] font-medium text-[#86868B] mb-3 tracking-tight font-[family-name:var(--font-space-grotesk)] uppercase">
+        <h3 className="text-[12px] font-medium text-[#6E6E73] mb-4 tracking-wider font-[family-name:var(--font-space-grotesk)] uppercase">
           {title}
         </h3>
       )}
-      <div className="rounded-2xl overflow-hidden border border-white/[0.06]">
+      <div className="overflow-hidden">
         {metrics.map((row, i) => {
           let displayValue = row.value
           let displayUnit = row.unit
@@ -61,14 +61,14 @@ function MetricTable({ metrics, title, liveMetrics }: { metrics: MetricRow[]; ti
           return (
             <div
               key={row.metric}
-              className={`flex items-center justify-between px-5 py-3.5 ${
-                i < metrics.length - 1 ? 'border-b border-white/[0.04]' : ''
+              className={`flex items-center justify-between py-3.5 ${
+                i < metrics.length - 1 ? 'border-b border-[rgba(0,0,0,0.06)]' : ''
               }`}
             >
-              <span className="text-[14px] text-[#86868B] leading-relaxed font-[family-name:var(--font-geist-sans)]">{row.metric}</span>
-              <span className="font-[family-name:var(--font-jetbrains-mono)] text-[14px] text-[#F5F5F7] shrink-0 ml-6">
+              <span className="text-[15px] sm:text-[17px] text-[#6E6E73] leading-relaxed font-[family-name:var(--font-geist-sans)]">{row.metric}</span>
+              <span className="font-[family-name:var(--font-jetbrains-mono)] text-[15px] sm:text-[17px] text-[#1D1D1F] shrink-0 ml-6">
                 <AnimatedNumber value={displayValue} decimals={row.decimals ?? 0} duration={isLive ? 1000 : 2500} />{' '}
-                <span className="text-[#86868B] text-[12px]">{displayUnit}</span>
+                <span className="text-[#6E6E73] text-[13px]">{displayUnit}</span>
                 {isLive && <span className="ml-2 inline-block w-1.5 h-1.5 rounded-full bg-[#30D158]" />}
               </span>
             </div>
@@ -95,18 +95,18 @@ export function PerformanceSection() {
     : null
 
   return (
-    <section id="performance" className="section-padding px-6">
+    <section id="performance" className="section-light section-spacing px-6">
       <div className="max-w-[680px] mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] text-[#F5F5F7] mb-3">
+          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[56px] md:text-[64px] font-bold tracking-[-0.03em] leading-[1.1] text-[#1D1D1F] mb-4">
             The numbers.
           </h2>
-          <p className="text-[15px] text-[#86868B] mb-10 font-[family-name:var(--font-geist-sans)]">
+          <p className="text-[17px] sm:text-[19px] text-[#6E6E73] mb-12 font-[family-name:var(--font-geist-sans)]">
             Benchmarks from v0.1.67 single-node tests.
             {hasLiveData && <span className="text-[#30D158]"> Live metrics shown with <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#30D158] align-middle" /> dot</span>}
           </p>
@@ -117,7 +117,7 @@ export function PerformanceSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="space-y-6"
+          className="space-y-10"
         >
           <MetricTable metrics={mainMetrics} liveMetrics={liveDataMap} />
           <MetricTable metrics={zkMetrics} title="ZK Performance" liveMetrics={liveDataMap} />

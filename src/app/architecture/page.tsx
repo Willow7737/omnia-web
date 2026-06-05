@@ -13,12 +13,6 @@ import {
   AlertTriangle,
   CheckCircle2,
   Cpu,
-  FileCode2,
-  Lock,
-  Radio,
-  Network,
-  Coins,
-  Database,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -49,7 +43,7 @@ const layers: LayerData[] = [
     title: 'ZK-Rollup Settlement',
     icon: Shield,
     status: 'Implemented',
-    statusColor: 'text-[#30D158] bg-[#30D158]/10 border-[#30D158]/20',
+    statusColor: 'text-[#30D158]',
     description: [
       'The settlement layer is the anchor that ties Omnia\'s parallel execution back to a root of trust on an L1 blockchain. Omnia is settlement-agnostic — it doesn\'t prescribe a single chain. Instead, it defines a SettlementAdapter trait and SettlementLayer trait that any L1 can implement.',
       'The Ethereum adapter deploys a Solidity contract (OmniaRollup.sol) that verifies Groth16 proofs on BN254. In live mode (via the ethereum-live feature flag), it uses Alloy to submit real transactions to Ethereum mainnet or testnets.',
@@ -75,7 +69,7 @@ const layers: LayerData[] = [
     title: 'Causal Graph Substrate',
     icon: GitFork,
     status: 'Implemented',
-    statusColor: 'text-[#30D158] bg-[#30D158]/10 border-[#30D158]/20',
+    statusColor: 'text-[#30D158]',
     description: [
       'The causal graph substrate is the core of Omnia\'s consensus mechanism. Instead of a linear chain of blocks, it uses a directed acyclic graph (DAG) where events reference multiple parents via vector clocks, preserving causal ordering without requiring a single global sequence.',
       'The graph structure is inspired by Hashgraph\'s two-parent event model, with AlephBFT-inspired BFT finality providing fast confirmation. CRDTs (Conflict-free Replicated Data Types) — including GCounter, OrSet, and LWWRegister — ensure state convergence across all nodes without coordination.',
@@ -98,7 +92,7 @@ const layers: LayerData[] = [
     title: 'Domain Shards',
     icon: BoxSelect,
     status: 'Implemented',
-    statusColor: 'text-[#30D158] bg-[#30D158]/10 border-[#30D158]/20',
+    statusColor: 'text-[#30D158]',
     description: [
       'Domain shards partition the protocol\'s state into six specialized domains, each with its own transaction semantics, validation rules, and consistency guarantees. This separation allows each domain to optimize for its specific use case without compromising others.',
       'The ShardRouter implements the EventProcessor trait and automatically dispatches events to the correct shard. Cross-shard messaging is supported with causality proofs, ensuring that dependencies between shards are tracked and verified. Fee enforcement uses FeeSchedule and QuotaSystem to prevent spam.',
@@ -119,7 +113,7 @@ const layers: LayerData[] = [
     title: 'Binding Layer',
     icon: Link2,
     status: 'Implemented',
-    statusColor: 'text-[#30D158] bg-[#30D158]/10 border-[#30D158]/20',
+    statusColor: 'text-[#30D158]',
     description: [
       'The binding layer creates a tamper-proof link between digital records and physical reality. It uses an append-only provenance log implemented as a CRDT with BLAKE3 hash-chain integrity — every entry chains to the previous one, making retroactive modification detectable.',
       'Physical anchoring combines RF fingerprinting, quantum-resistant signatures, and provenance tracking. The ProvenanceTracker manages the full lifecycle: create, transfer, verify, and destroy. Hybrid PQC signatures combine Ed25519 (for current speed) with CRYSTALS-Dilithium (for post-quantum security).',
@@ -141,7 +135,7 @@ const layers: LayerData[] = [
     title: 'Identity Hardening',
     icon: Fingerprint,
     status: 'Implemented',
-    statusColor: 'text-[#30D158] bg-[#30D158]/10 border-[#30D158]/20',
+    statusColor: 'text-[#30D158]',
     description: [
       'The identity layer provides self-sovereign identity with the did:omnia: method, enabling decentralized identifiers that don\'t rely on any central authority. Validation is built directly into the protocol.',
       'Key management uses Shamir\'s Secret Sharing over GF(256) to split keys into shares distributed across trusted parties. Privacy-preserving biometric anchors use BLAKE3(salt || template) — the salt ensures that even if the hash is compromised, the original biometric template cannot be reconstructed.',
@@ -161,7 +155,7 @@ const layers: LayerData[] = [
     title: 'Economics',
     icon: Wallet,
     status: 'Implemented',
-    statusColor: 'text-[#30D158] bg-[#30D158]/10 border-[#30D158]/20',
+    statusColor: 'text-[#30D158]',
     description: [
       'The economics layer introduces Universal Basic Compute (UBC) — a soulbound monthly quota that guarantees every participant a baseline of computational resources. Unlike tokens that can be traded or concentrated, UBC is non-transferable and resets each epoch.',
       'Quota management uses epoch advancement to distribute fresh allocations. Quadratic voting with exponential reputation decay ensures that influence diminishes over time unless continuously earned through participation — preventing permanent power accumulation.',
@@ -179,19 +173,10 @@ const layers: LayerData[] = [
   },
 ]
 
-const layerIconMap: Record<string, LucideIcon> = {
-  0: Shield,
-  1: GitFork,
-  2: BoxSelect,
-  3: Link2,
-  4: Fingerprint,
-  5: Wallet,
-}
-
 function LayerIndicator({ number }: { number: number }) {
   return (
     <div className="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#2997FF]/10 border border-[#2997FF]/20">
-      <span className="text-omnia-accent font-[family-name:var(--font-jetbrains-mono)] font-bold text-xl sm:text-2xl">
+      <span className="font-[family-name:var(--font-jetbrains-mono)] font-bold text-xl sm:text-2xl text-[#2997FF]">
         L{number}
       </span>
     </div>
@@ -200,42 +185,45 @@ function LayerIndicator({ number }: { number: number }) {
 
 export default function ArchitecturePage() {
   return (
-    <div className="min-h-screen bg-omnia-base flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <PageHeader
         title="Architecture"
         description="Six layers, from settlement to economics. Each layer is independently verifiable and contributes to the protocol's trustless operation."
         breadcrumbs={[{ label: 'Architecture' }]}
       />
 
-      {/* Layer overview bar */}
-      <div className="max-w-[980px] mx-auto px-6 py-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-wrap gap-3 justify-center"
-        >
-          {layers.map((layer) => {
-            const Icon = layerIconMap[layer.number]
-            return (
-              <a
-                key={layer.number}
-                href={`#layer-${layer.number}`}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.02] border border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.04] transition-colors text-[14px] text-omnia-text-secondary hover:text-omnia-text font-[family-name:var(--font-geist-sans)]"
-              >
-                <Icon className="w-4 h-4 text-omnia-accent" />
-                <span className="font-[family-name:var(--font-jetbrains-mono)]">L{layer.number}</span>
-                <span className="hidden sm:inline">{layer.title}</span>
-              </a>
-            )
-          })}
-        </motion.div>
-      </div>
+      {/* Layer overview bar — Light section */}
+      <section className="section-light py-10">
+        <div className="max-w-[980px] mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-wrap gap-3 justify-center"
+          >
+            {layers.map((layer) => {
+              const Icon = layer.icon
+              return (
+                <a
+                  key={layer.number}
+                  href={`#layer-${layer.number}`}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white border border-[rgba(0,0,0,0.06)] hover:border-[rgba(0,0,0,0.12)] hover:bg-white/80 transition-colors text-[14px] text-[#6E6E73] hover:text-[#1D1D1F] font-[family-name:var(--font-geist-sans)]"
+                >
+                  <Icon className="w-4 h-4 text-[#2997FF]" />
+                  <span className="font-[family-name:var(--font-jetbrains-mono)]">L{layer.number}</span>
+                  <span className="hidden sm:inline">{layer.title}</span>
+                </a>
+              )
+            })}
+          </motion.div>
+        </div>
+      </section>
 
-      {/* Layer detail cards */}
-      <div className="max-w-[980px] mx-auto px-6 pb-16 sm:pb-24 space-y-8">
+      {/* Layer details — alternating sections */}
+      <div className="flex flex-col">
         {layers.map((layer, idx) => {
           const Icon = layer.icon
+          const isDark = idx % 2 === 0
           return (
             <motion.section
               key={layer.number}
@@ -243,37 +231,32 @@ export default function ArchitecturePage() {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
-              className="rounded-2xl bg-white/[0.02] border border-white/[0.06] overflow-hidden hover:border-white/[0.12] transition-colors"
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.05 }}
+              className={`${isDark ? 'section-dark' : 'section-light'} section-spacing`}
             >
-              {/* Layer header */}
-              <div className="px-5 sm:px-8 py-6 sm:py-8 border-b border-white/[0.06]">
-                <div className="flex items-start gap-4 sm:gap-6">
+              <div className="max-w-[980px] mx-auto px-6">
+                {/* Layer header */}
+                <div className="flex items-start gap-4 sm:gap-6 mb-8">
                   <LayerIndicator number={layer.number} />
                   <div className="flex-1 min-w-0">
                     <div className="flex flex-wrap items-center gap-3 mb-2">
-                      <h3 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">
+                      <h3 className={`text-[28px] sm:text-[40px] md:text-[48px] font-bold tracking-tight font-[family-name:var(--font-space-grotesk)] ${isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]'}`}>
                         {layer.title}
                       </h3>
-                      <span
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-xs font-medium border ${layer.statusColor}`}
-                      >
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-xs font-medium border bg-[#30D158]/10 border-[#30D158]/20 text-[#30D158]">
                         <CheckCircle2 className="w-3 h-3" />
                         {layer.status}
                       </span>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Layer body */}
-              <div className="px-5 sm:px-8 py-6 sm:py-8 space-y-8">
                 {/* Description paragraphs */}
-                <div className="space-y-4">
+                <div className="space-y-4 mb-10 ml-0 sm:ml-20">
                   {layer.description.map((paragraph, pi) => (
                     <p
                       key={pi}
-                      className="text-omnia-text-secondary text-[14px] sm:text-[15px] leading-[1.6] font-[family-name:var(--font-geist-sans)]"
+                      className={`text-[14px] sm:text-[17px] leading-[1.6] font-[family-name:var(--font-geist-sans)] ${isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'}`}
                     >
                       {paragraph}
                     </p>
@@ -281,23 +264,27 @@ export default function ArchitecturePage() {
                 </div>
 
                 {/* Key components */}
-                <div>
-                  <h4 className="text-[12px] font-semibold text-omnia-accent uppercase tracking-wider mb-4 font-[family-name:var(--font-space-grotesk)]">
+                <div className="ml-0 sm:ml-20">
+                  <h4 className="text-[12px] font-semibold text-[#2997FF] uppercase tracking-wider mb-5 font-[family-name:var(--font-space-grotesk)]">
                     Key Components
                   </h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className={`space-y-0 rounded-xl overflow-hidden border ${isDark ? 'border-white/[0.06]' : 'border-[rgba(0,0,0,0.06)]'}`}>
                     {layer.components.map((comp, ci) => (
                       <div
                         key={ci}
-                        className="flex items-start gap-3 p-3 rounded-lg bg-black/50 border border-white/[0.04]"
+                        className={`flex items-start gap-3 p-4 ${
+                          ci < layer.components.length - 1
+                            ? isDark ? 'border-b border-white/[0.04]' : 'border-b border-[rgba(0,0,0,0.04)]'
+                            : ''
+                        } ${isDark ? 'bg-white/[0.02]' : 'bg-white'}`}
                       >
                         <div className="flex-shrink-0 w-6 h-6 rounded bg-[#2997FF]/10 flex items-center justify-center mt-0.5">
-                          <Cpu className="w-3.5 h-3.5 text-omnia-accent" />
+                          <Cpu className="w-3.5 h-3.5 text-[#2997FF]" />
                         </div>
                         <div>
-                          <p className="text-omnia-text text-[15px] font-medium font-[family-name:var(--font-geist-sans)]">{comp.name}</p>
+                          <p className={`text-[15px] font-medium font-[family-name:var(--font-geist-sans)] ${isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]'}`}>{comp.name}</p>
                           {comp.description && (
-                            <p className="text-omnia-text-secondary text-[12px] mt-0.5 font-[family-name:var(--font-geist-sans)]">
+                            <p className={`text-[12px] mt-0.5 font-[family-name:var(--font-geist-sans)] ${isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'}`}>
                               {comp.description}
                             </p>
                           )}
@@ -309,7 +296,7 @@ export default function ArchitecturePage() {
 
                 {/* Stubs / Limitations */}
                 {layer.stubs.length > 0 && (
-                  <div>
+                  <div className="ml-0 sm:ml-20 mt-8">
                     <h4 className="text-[12px] font-semibold text-amber-400 uppercase tracking-wider mb-4 flex items-center gap-2 font-[family-name:var(--font-space-grotesk)]">
                       <AlertTriangle className="w-4 h-4" />
                       Stubs &amp; Limitations
@@ -318,11 +305,11 @@ export default function ArchitecturePage() {
                       {layer.stubs.map((stub, si) => (
                         <div
                           key={si}
-                          className="flex items-start gap-3 p-3 rounded-lg bg-amber-400/5 border border-amber-400/20"
+                          className={`flex items-start gap-3 p-4 rounded-xl border ${isDark ? 'bg-amber-400/5 border-amber-400/20' : 'bg-amber-50 border-amber-200'}`}
                         >
                           <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
                           <div>
-                            <p className="text-omnia-text text-[15px] font-medium font-[family-name:var(--font-geist-sans)]">{stub.name}</p>
+                            <p className={`text-[15px] font-medium font-[family-name:var(--font-geist-sans)] ${isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]'}`}>{stub.name}</p>
                             <p className="text-amber-400/80 text-[12px] mt-0.5">{stub.note}</p>
                           </div>
                         </div>

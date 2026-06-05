@@ -30,37 +30,37 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center px-6"
+      className="section-dark relative min-h-screen flex flex-col items-center justify-center px-6"
     >
-      <div className="text-center max-w-[680px] mx-auto relative z-10">
+      <div className="text-center max-w-[780px] mx-auto relative z-10">
         {/* Overline */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
-          className="mb-4"
+          className="mb-6"
         >
-          <span className="text-[#86868B] text-sm font-[family-name:var(--font-space-grotesk)] tracking-tight">
+          <span className="text-[#86868B] text-[14px] sm:text-[15px] font-[family-name:var(--font-space-grotesk)] tracking-tight">
             Settlement-agnostic consensus infrastructure
           </span>
         </motion.div>
 
-        {/* Headline — large, bold, confident */}
+        {/* Headline — massive, bold, Apple-like */}
         <motion.h1
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="font-[family-name:var(--font-space-grotesk)] text-[56px] sm:text-[72px] md:text-[80px] font-bold tracking-[-0.03em] leading-[1.05] text-[#F5F5F7] mb-5"
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="font-[family-name:var(--font-space-grotesk)] text-[56px] sm:text-[80px] md:text-[96px] font-bold tracking-[-0.04em] leading-[1.02] text-[#F5F5F7] mb-6"
         >
           Omnia
         </motion.h1>
 
         {/* Subheadline */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-[19px] sm:text-[21px] text-[#86868B] leading-[1.4] max-w-[520px] mx-auto mb-8 font-[family-name:var(--font-geist-sans)]"
+          transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="text-[19px] sm:text-[21px] md:text-[24px] text-[#86868B] leading-[1.35] max-w-[560px] mx-auto mb-10 font-[family-name:var(--font-geist-sans)]"
         >
           Causal graph consensus.{' '}
           <span className="text-[#F5F5F7]">Sub-100µs finality.</span>{' '}
@@ -69,10 +69,10 @@ export function HeroSection() {
 
         {/* CTAs — Apple-style pill buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-14"
+          transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16"
         >
           <a
             href="/docs"
@@ -92,9 +92,9 @@ export function HeroSection() {
 
         {/* Live Status Widget — minimal, clean */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.8, delay: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="inline-block w-full max-w-[480px]"
         >
           <div className="border border-white/[0.08] rounded-2xl p-5 text-left bg-white/[0.02]">

@@ -58,47 +58,64 @@ const layers: LayerData[] = [
 
 export function ArchitecturePreview() {
   return (
-    <section id="architecture" className="section-padding px-6">
+    <section id="architecture" className="section-dark section-spacing px-6">
       <div className="max-w-[680px] mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] text-[#F5F5F7] mb-3">
+          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[56px] md:text-[64px] font-bold tracking-[-0.03em] leading-[1.1] text-[#F5F5F7] mb-4">
             Six layers.
           </h2>
-          <p className="text-[15px] text-[#86868B] mb-10 font-[family-name:var(--font-geist-sans)]">
+          <p className="text-[17px] sm:text-[19px] text-[#86868B] mb-14 font-[family-name:var(--font-geist-sans)]">
             Every layer implemented. Every layer tested.
           </p>
         </motion.div>
 
-        <div className="flex flex-col gap-1 mb-10">
-          {layers.map((layer, i) => (
-            <motion.div
-              key={layer.id}
-              initial={{ opacity: 0, x: -12 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-20px' }}
-              transition={{ duration: 0.4, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="group"
-            >
-              <div className="flex items-center justify-between px-5 py-4 rounded-xl transition-all duration-200 bg-white/[0.02] border border-white/[0.06] hover:bg-white/[0.04] hover:border-white/[0.12]">
-                <div className="flex items-center gap-4">
-                  <span className="font-[family-name:var(--font-jetbrains-mono)] text-[12px] text-[#86868B] w-8">
-                    {layer.label}
-                  </span>
-                  <span className="font-[family-name:var(--font-space-grotesk)] text-[14px] font-medium text-[#F5F5F7] tracking-tight">
-                    {layer.name}
-                  </span>
+        {/* Vertical stack of layers with connecting lines */}
+        <div className="relative">
+          {/* Connecting line */}
+          <div className="absolute left-[23px] top-0 bottom-0 w-px bg-gradient-to-b from-[#2997FF]/40 via-[#2997FF]/20 to-transparent hidden sm:block" />
+
+          <div className="flex flex-col gap-0 mb-14">
+            {layers.map((layer, i) => (
+              <motion.div
+                key={layer.id}
+                initial={{ opacity: 0, x: -12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: '-20px' }}
+                transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
+                className="group relative"
+              >
+                <div className="flex items-start gap-5 py-5 border-b border-white/[0.06] last:border-b-0">
+                  {/* Layer indicator with dot on connecting line */}
+                  <div className="relative shrink-0">
+                    <div className="w-12 h-12 rounded-xl bg-[#2997FF]/10 border border-[#2997FF]/20 flex items-center justify-center">
+                      <span className="font-[family-name:var(--font-jetbrains-mono)] text-[13px] font-bold text-[#2997FF]">
+                        {layer.label}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex-1 min-w-0 pt-1">
+                    <div className="flex items-center gap-3 mb-1.5">
+                      <span className="font-[family-name:var(--font-space-grotesk)] text-[17px] font-semibold text-[#F5F5F7] tracking-tight group-hover:text-[#2997FF] transition-colors">
+                        {layer.name}
+                      </span>
+                      <span className="text-[11px] font-[family-name:var(--font-space-grotesk)] px-2.5 py-0.5 rounded-full bg-[#30D158]/10 text-[#30D158]">
+                        {layer.badge}
+                      </span>
+                    </div>
+                    <p className="text-[14px] text-[#86868B] leading-[1.5] font-[family-name:var(--font-geist-sans)]">
+                      {layer.description}
+                    </p>
+                  </div>
                 </div>
-                <span className="text-[11px] font-[family-name:var(--font-space-grotesk)] px-2.5 py-1 rounded-full bg-[#30D158]/10 text-[#30D158]">
-                  {layer.badge}
-                </span>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
 
         <motion.div

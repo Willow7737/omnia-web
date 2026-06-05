@@ -14,24 +14,24 @@ function GitHubIcon({ size = 16 }: { size?: number }) {
 
 export function CTASection() {
   return (
-    <section id="contribute" className="section-padding px-6">
+    <section id="contribute" className="section-dark section-spacing px-6">
       <div className="max-w-[680px] mx-auto text-center">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] text-[#F5F5F7] mb-4">
+          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[48px] sm:text-[64px] md:text-[80px] font-bold tracking-[-0.04em] leading-[1.05] text-[#F5F5F7] mb-6">
             Public domain.
           </h2>
 
-          <p className="text-[17px] text-[#86868B] leading-[1.5] mb-8 max-w-[480px] mx-auto font-[family-name:var(--font-geist-sans)]">
+          <p className="text-[17px] sm:text-[19px] text-[#86868B] leading-[1.5] mb-10 max-w-[480px] mx-auto font-[family-name:var(--font-geist-sans)]">
             CC0. No entity owns it. Every line of code is public, every test is reproducible.
           </p>
 
           {/* Stats row */}
-          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 mb-10">
+          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 mb-12">
             {[
               { value: '224', label: 'files' },
               { value: '81,082', label: 'lines' },
@@ -39,10 +39,10 @@ export function CTASection() {
               { value: 'CC0', label: 'License' },
             ].map((stat) => (
               <div key={stat.label} className="flex items-baseline gap-1.5">
-                <span className="font-[family-name:var(--font-jetbrains-mono)] text-[17px] text-[#F5F5F7]">
+                <span className="font-[family-name:var(--font-jetbrains-mono)] text-[17px] sm:text-[19px] text-[#F5F5F7]">
                   {stat.value}
                 </span>
-                <span className="text-[12px] text-[#86868B] font-[family-name:var(--font-space-grotesk)]">
+                <span className="text-[12px] sm:text-[13px] text-[#86868B] font-[family-name:var(--font-space-grotesk)]">
                   {stat.label}
                 </span>
               </div>
@@ -50,7 +50,7 @@ export function CTASection() {
           </div>
 
           {/* Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-8">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
             <a
               href="https://github.com/Willow7737/omnia-protocol"
               target="_blank"

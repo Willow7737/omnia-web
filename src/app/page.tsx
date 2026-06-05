@@ -12,7 +12,7 @@ import { OmniaProviders } from '@/components/providers'
 export default function Home() {
   return (
     <OmniaProviders>
-      <div className="min-h-screen flex flex-col bg-black">
+      <div className="min-h-screen flex flex-col">
         <OmniaNav />
         <main className="flex-1">
           <HeroSection />

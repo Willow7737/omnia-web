@@ -28,21 +28,21 @@ const principles = [
 
 export function AgentSection() {
   return (
-    <section id="agents" className="section-padding px-6">
+    <section id="agents" className="section-dark section-spacing px-6">
       <div className="max-w-[680px] mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] font-bold tracking-[-0.03em] text-[#F5F5F7] mb-5">
+          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[56px] md:text-[64px] font-bold tracking-[-0.03em] leading-[1.1] text-[#F5F5F7] mb-6">
             Agent coordination.
           </h2>
 
-          <div className="space-y-4 text-[#86868B] leading-[1.6] mb-10 font-[family-name:var(--font-geist-sans)] text-[15px]">
+          <div className="space-y-5 text-[#86868B] leading-[1.6] mb-12 font-[family-name:var(--font-geist-sans)] text-[17px] sm:text-[19px]">
             <p>
-              Every AI agent receives a <code className="font-[family-name:var(--font-jetbrains-mono)] text-[13px] text-[#2997FF] bg-[#2997FF]/8 px-1.5 py-0.5 rounded-md">did:omnia:</code> identifier linked to a human or organizational owner. Identity is delegated, auditable, and revocable.
+              Every AI agent receives a <code className="font-[family-name:var(--font-jetbrains-mono)] text-[14px] text-[#2997FF] bg-[#2997FF]/8 px-1.5 py-0.5 rounded-md">did:omnia:</code> identifier linked to a human or organizational owner. Identity is delegated, auditable, and revocable.
             </p>
             <p>
               Agents operate under 5 narrowly-scoped capability types. Least privilege enforced by construction, not convention.
@@ -56,7 +56,7 @@ export function AgentSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="flex flex-wrap gap-2 mb-12"
+          className="flex flex-wrap gap-2 mb-14"
         >
           {capabilities.map((cap) => (
             <div
@@ -75,12 +75,12 @@ export function AgentSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="space-y-4"
+          className="space-y-5"
         >
           {principles.map((principle, i) => (
             <div key={i} className="flex items-start gap-3">
-              <div className="mt-2 w-1.5 h-1.5 rounded-full bg-[#F5F5F7] shrink-0" />
-              <p className="text-[14px] text-[#86868B] leading-[1.6] font-[family-name:var(--font-geist-sans)]">
+              <div className="mt-2.5 w-1.5 h-1.5 rounded-full bg-[#F5F5F7] shrink-0" />
+              <p className="text-[15px] sm:text-[17px] text-[#86868B] leading-[1.6] font-[family-name:var(--font-geist-sans)]">
                 <span className="text-[#F5F5F7] font-medium">{principle.title}</span>{' '}
                 {principle.description}
               </p>

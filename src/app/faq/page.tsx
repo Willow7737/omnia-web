@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { PageHeader } from '@/components/page-header'
 import { Footer } from '@/components/footer'
-import { ChevronDown, HelpCircle } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import { useState } from 'react'
 
 interface FAQItem {
@@ -64,7 +64,7 @@ const faqs: FAQItem[] = [
   },
 ]
 
-function FAQAccordionItem({ item, index, isOpen, onToggle }: { item: FAQItem; index: number; isOpen: boolean; onToggle: () => void }) {
+function FAQAccordionItem({ item, index, isOpen, onToggle, isDark }: { item: FAQItem; index: number; isOpen: boolean; onToggle: () => void; isDark: boolean }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 12 }}
@@ -72,28 +72,22 @@ function FAQAccordionItem({ item, index, isOpen, onToggle }: { item: FAQItem; in
       viewport={{ once: true, margin: '-30px' }}
       transition={{ duration: 0.4, delay: index * 0.04 }}
     >
-      <div
-        className={`rounded-2xl overflow-hidden transition-all duration-300 border ${
-          isOpen
-            ? 'border-white/[0.12] bg-white/[0.03]'
-            : 'border-white/[0.06] bg-white/[0.02] hover:border-white/[0.1] hover:bg-white/[0.03]'
-        }`}
-      >
+      <div className={`${isDark ? 'border-white/[0.06]' : 'border-[rgba(0,0,0,0.06)]'} border-b`}>
         <button
           onClick={onToggle}
-          className="w-full flex items-center gap-4 p-5 sm:p-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2997FF]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded-2xl"
+          className={`w-full flex items-center gap-4 py-5 sm:py-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2997FF]/50`}
           aria-expanded={isOpen}
         >
           <div
             className={`flex-shrink-0 w-[3px] self-stretch rounded-full transition-colors duration-300 ${
-              isOpen ? 'bg-[#2997FF]' : 'bg-white/[0.08]'
+              isOpen ? 'bg-[#2997FF]' : isDark ? 'bg-white/[0.08]' : 'bg-[rgba(0,0,0,0.08)]'
             }`}
           />
 
           <div className="flex-1 min-w-0">
             <span
               className={`text-[15px] sm:text-[17px] font-medium transition-colors duration-300 font-[family-name:var(--font-space-grotesk)] ${
-                isOpen ? 'text-[#F5F5F7]' : 'text-[#86868B]'
+                isOpen ? (isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]') : (isDark ? 'text-[#86868B]' : 'text-[#6E6E73]')
               }`}
             >
               {item.question}
@@ -107,7 +101,7 @@ function FAQAccordionItem({ item, index, isOpen, onToggle }: { item: FAQItem; in
           >
             <ChevronDown
               className={`w-5 h-5 transition-colors duration-300 ${
-                isOpen ? 'text-[#2997FF]' : 'text-[#48484A]'
+                isOpen ? 'text-[#2997FF]' : isDark ? 'text-[#48484A]' : 'text-[#AEAEB2]'
               }`}
             />
           </motion.div>
@@ -121,12 +115,10 @@ function FAQAccordionItem({ item, index, isOpen, onToggle }: { item: FAQItem; in
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
-              <div className="px-5 sm:px-6 pb-5 sm:pb-6 pl-10 sm:pl-12">
-                <div className="border-t border-white/[0.06] pt-4">
-                  <p className="text-[#86868B] text-[14px] sm:text-[15px] leading-[1.6] font-[family-name:var(--font-geist-sans)]">
-                    {item.answer}
-                  </p>
-                </div>
+              <div className="pb-5 sm:pb-6 pl-7 sm:pl-9">
+                <p className={`${isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'} text-[14px] sm:text-[15px] leading-[1.6] font-[family-name:var(--font-geist-sans)]`}>
+                  {item.answer}
+                </p>
               </div>
             </motion.div>
           )}
@@ -139,63 +131,91 @@ function FAQAccordionItem({ item, index, isOpen, onToggle }: { item: FAQItem; in
 export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
 
+  // Split FAQs into two groups for alternating sections
+  const halfPoint = Math.ceil(faqs.length / 2)
+  const firstHalf = faqs.slice(0, halfPoint)
+  const secondHalf = faqs.slice(halfPoint)
+
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen flex flex-col">
       <PageHeader
         title="FAQ"
         description="Straight answers about the protocol, its architecture, and how to get involved. No marketing speak — just honest, technical responses."
         breadcrumbs={[{ label: 'FAQ' }]}
       />
 
-      <section className="max-w-[680px] mx-auto px-6 pb-24">
-        <div className="space-y-2">
-          {faqs.map((item, index) => (
+      {/* First half — Dark section */}
+      <section className="section-dark section-spacing">
+        <div className="max-w-[680px] mx-auto px-6">
+          {firstHalf.map((item, index) => (
             <FAQAccordionItem
               key={index}
               item={item}
               index={index}
               isOpen={openIndex === index}
               onToggle={() => setOpenIndex(openIndex === index ? null : index)}
+              isDark
             />
           ))}
         </div>
       </section>
 
-      {/* Still have questions */}
-      <div className="max-w-[680px] mx-auto px-6 pb-24">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="rounded-2xl p-6 sm:p-8 text-center border border-white/[0.06] bg-white/[0.02]"
-        >
-          <h3 className="text-[20px] sm:text-[24px] font-bold text-[#F5F5F7] mb-3 font-[family-name:var(--font-space-grotesk)] tracking-tight">
-            Still have questions?
-          </h3>
-          <p className="text-[#86868B] text-[14px] sm:text-[15px] max-w-[420px] mx-auto mb-6 font-[family-name:var(--font-geist-sans)]">
-            Join the community on Discord or explore the codebase directly.
-          </p>
-          <div className="flex flex-wrap gap-3 justify-center">
-            <a
-              href="https://discord.gg/qYkpAeSYR"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#2997FF] text-white font-medium text-[14px] hover:bg-[#2384d6] transition-colors font-[family-name:var(--font-space-grotesk)]"
-            >
-              Join Discord
-            </a>
-            <a
-              href="https://github.com/Willow7737/omnia-protocol"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/[0.1] text-[#F5F5F7] text-[14px] hover:bg-white/[0.04] transition-colors font-[family-name:var(--font-space-grotesk)]"
-            >
-              Read the Code
-            </a>
-          </div>
-        </motion.div>
-      </div>
+      {/* Second half — Light section */}
+      <section className="section-light section-spacing">
+        <div className="max-w-[680px] mx-auto px-6">
+          {secondHalf.map((item, relIndex) => {
+            const absIndex = halfPoint + relIndex
+            return (
+              <FAQAccordionItem
+                key={absIndex}
+                item={item}
+                index={absIndex}
+                isOpen={openIndex === absIndex}
+                onToggle={() => setOpenIndex(openIndex === absIndex ? null : absIndex)}
+                isDark={false}
+              />
+            )
+          })}
+        </div>
+      </section>
+
+      {/* Still have questions — Dark section */}
+      <section className="section-dark py-20 sm:py-24">
+        <div className="max-w-[680px] mx-auto px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center"
+          >
+            <h3 className="font-[family-name:var(--font-space-grotesk)] text-[24px] sm:text-[32px] font-bold text-[#F5F5F7] mb-3 tracking-tight">
+              Still have questions?
+            </h3>
+            <p className="text-[#86868B] text-[14px] sm:text-[15px] max-w-[420px] mx-auto mb-6 font-[family-name:var(--font-geist-sans)]">
+              Join the community on Discord or explore the codebase directly.
+            </p>
+            <div className="flex flex-wrap gap-3 justify-center">
+              <a
+                href="https://discord.gg/qYkpAeSYR"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#2997FF] text-white font-medium text-[14px] hover:bg-[#2384d6] transition-colors font-[family-name:var(--font-space-grotesk)]"
+              >
+                Join Discord
+              </a>
+              <a
+                href="https://github.com/Willow7737/omnia-protocol"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/[0.1] text-[#F5F5F7] text-[14px] hover:bg-white/[0.04] transition-colors font-[family-name:var(--font-space-grotesk)]"
+              >
+                Read the Code
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       <Footer />
     </div>

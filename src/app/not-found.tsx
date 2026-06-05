@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center px-6 relative">
+    <div className="section-dark min-h-screen flex flex-col items-center justify-center px-6 relative">
       <div className="relative z-10 text-center max-w-lg">
         {/* 404 number */}
         <motion.div

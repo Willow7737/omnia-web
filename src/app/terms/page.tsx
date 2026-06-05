@@ -18,10 +18,10 @@ import {
 } from 'lucide-react'
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: '-50px' } as const,
-  transition: { duration: 0.6, ease: 'easeOut' as const },
+  transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const },
 }
 
 const sections = [
@@ -29,6 +29,7 @@ const sections = [
     icon: CheckCircle,
     number: '1',
     title: 'Acceptance of Terms',
+    isDark: true,
     content: (
       <p>
         By accessing or using the Omnia Protocol website and associated resources, you agree to be
@@ -40,10 +41,11 @@ const sections = [
     icon: FileCode2,
     number: '2',
     title: 'Nature of the Protocol',
+    isDark: false,
     content: (
       <p>
         Omnia Protocol is open-source software released under the{' '}
-        <span className="text-omnia-accent font-medium">CC0 Public Domain</span> dedication. No entity
+        <span className="text-[#2997FF] font-medium">CC0 Public Domain</span> dedication. No entity
         owns the protocol. It is provided &quot;as is&quot; without warranty of any kind, express or
         implied.
       </p>
@@ -53,11 +55,12 @@ const sections = [
     icon: AlertTriangle,
     number: '3',
     title: 'No Financial Advice',
+    isDark: true,
     content: (
       <p>
         Nothing on this website constitutes financial, investment, legal, or tax advice. The Omnia
         Protocol is a{' '}
-        <span className="text-omnia-accent font-medium">technology infrastructure project</span>. Any
+        <span className="text-[#2997FF] font-medium">technology infrastructure project</span>. Any
         references to economic mechanisms (UBC, governance, etc.) describe protocol functionality,
         not investment opportunities.
       </p>
@@ -67,9 +70,10 @@ const sections = [
     icon: Ban,
     number: '4',
     title: 'No Guarantee of Returns',
+    isDark: false,
     content: (
       <p>
-        There is <span className="text-omnia-text font-medium">no token sale, no ICO, and no promise of returns</span>.
+        There is <span className="text-[#1D1D1F] font-medium">no token sale, no ICO, and no promise of returns</span>.
         The Universal Basic Compute allocation is a protocol mechanism, not a financial instrument.
         Do not participate in the protocol expecting financial returns.
       </p>
@@ -79,11 +83,12 @@ const sections = [
     icon: Bug,
     number: '5',
     title: 'Software Risks',
+    isDark: true,
     content: (
       <p>
         The Omnia Protocol software is under active development. Despite extensive testing (1,382+
         tests), software may contain bugs, vulnerabilities, or unintended behaviors. You use the
-        software <span className="text-omnia-accent font-medium">at your own risk</span>.
+        software <span className="text-[#2997FF] font-medium">at your own risk</span>.
       </p>
     ),
   },
@@ -91,6 +96,7 @@ const sections = [
     icon: ShieldAlert,
     number: '6',
     title: 'Security',
+    isDark: false,
     content: (
       <div className="space-y-3">
         <p>
@@ -101,7 +107,7 @@ const sections = [
           Report vulnerabilities to:{' '}
           <a
             href="mailto:security@omnia-protocol.org"
-            className="text-omnia-accent hover:underline"
+            className="text-[#2997FF] hover:underline"
           >
             security@omnia-protocol.org
           </a>
@@ -113,16 +119,17 @@ const sections = [
     icon: Scale,
     number: '7',
     title: 'Intellectual Property',
+    isDark: true,
     content: (
       <div className="space-y-3">
         <p>
           All Omnia Protocol source code is released under{' '}
-          <span className="text-omnia-accent font-medium">CC0 Public Domain</span>. Website content is
+          <span className="text-[#2997FF] font-medium">CC0 Public Domain</span>. Website content is
           provided for informational purposes.
         </p>
         <p>
           The Omnia name and branding may have trademark considerations — contact{' '}
-          <a href="mailto:conduct@omnia.protocol" className="text-omnia-accent hover:underline">
+          <a href="mailto:conduct@omnia.protocol" className="text-[#2997FF] hover:underline">
             conduct@omnia.protocol
           </a>{' '}
           for clarification.
@@ -134,10 +141,11 @@ const sections = [
     icon: Users,
     number: '8',
     title: 'Community Standards',
+    isDark: false,
     content: (
       <p>
         All community participants must adhere to our{' '}
-        <a href="/conduct" className="text-omnia-accent hover:underline">
+        <a href="/conduct" className="text-[#2997FF] hover:underline">
           Code of Conduct
         </a>
         . Violations may result in removal from community spaces.
@@ -148,6 +156,7 @@ const sections = [
     icon: ShieldX,
     number: '9',
     title: 'Limitation of Liability',
+    isDark: true,
     content: (
       <p>
         To the fullest extent permitted by law, the Omnia Protocol contributors shall not be liable
@@ -160,6 +169,7 @@ const sections = [
     icon: PenLine,
     number: '10',
     title: 'Modifications',
+    isDark: false,
     content: (
       <p>
         We reserve the right to modify these terms. Continued use after modifications constitutes
@@ -171,10 +181,11 @@ const sections = [
     icon: Mail,
     number: '11',
     title: 'Contact',
+    isDark: true,
     content: (
       <p>
         For questions about these terms:{' '}
-        <a href="mailto:conduct@omnia.protocol" className="text-omnia-accent hover:underline">
+        <a href="mailto:conduct@omnia.protocol" className="text-[#2997FF] hover:underline">
           conduct@omnia.protocol
         </a>
       </p>
@@ -184,7 +195,7 @@ const sections = [
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-omnia-base flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <PageHeader
         title="Terms of Use"
         description="The rules and disclaimers governing your use of the Omnia Protocol website and software."
@@ -194,52 +205,55 @@ export default function TermsPage() {
         ]}
       />
 
-      <section className="max-w-[980px] mx-auto px-6 py-16 sm:py-24">
-        {/* Last updated */}
-        <motion.div
-          {...fadeInUp}
-          className="mb-12 flex items-center gap-3 text-[14px] text-omnia-text-secondary"
-        >
-          <div className="w-2 h-2 rounded-full bg-omnia-sage animate-pulse-sage" />
-          <span className="font-[family-name:var(--font-space-grotesk)]">
-            Last Updated: June 2026
-          </span>
-        </motion.div>
+      {/* Last updated */}
+      <div className="section-dark py-6">
+        <div className="max-w-[980px] mx-auto px-6">
+          <motion.div
+            {...fadeInUp}
+            className="flex items-center gap-3 text-[14px] text-[#86868B]"
+          >
+            <div className="w-2 h-2 rounded-full bg-[#30D158]" />
+            <span className="font-[family-name:var(--font-space-grotesk)]">
+              Last Updated: June 2026
+            </span>
+          </motion.div>
+        </div>
+      </div>
 
-        {/* Sections */}
-        <div className="space-y-12">
-          {sections.map((section, i) => {
-            const Icon = section.icon
-            return (
-              <motion.section
-                key={i}
-                {...fadeInUp}
-                transition={{ duration: 0.6, ease: 'easeOut', delay: i * 0.05 }}
-                className="scroll-mt-20"
-              >
-                <div className="flex items-start gap-4 mb-4">
+      {/* Sections with alternating backgrounds */}
+      <div className="flex flex-col">
+        {sections.map((section, i) => {
+          const Icon = section.icon
+          const isDark = section.isDark
+          return (
+            <motion.section
+              key={i}
+              {...fadeInUp}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: i * 0.03 }}
+              className={`${isDark ? 'section-dark' : 'section-light'} section-spacing scroll-mt-20`}
+            >
+              <div className="max-w-[980px] mx-auto px-6">
+                <div className="flex items-start gap-4 mb-6">
                   <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[#2997FF]/10 flex items-center justify-center mt-0.5">
-                    <Icon className="w-5 h-5 text-omnia-accent" />
+                    <Icon className="w-5 h-5 text-[#2997FF]" />
                   </div>
                   <div>
-                    <span
-                      className="text-[12px] text-omnia-sage tracking-wider uppercase mb-1 block font-[family-name:var(--font-jetbrains-mono)]"
-                    >
+                    <span className="text-[12px] text-[#30D158] tracking-wider uppercase mb-1 block font-[family-name:var(--font-jetbrains-mono)]">
                       Section {section.number}
                     </span>
-                    <h2 className="text-[28px] sm:text-[32px] font-bold text-omnia-text tracking-tight font-[family-name:var(--font-space-grotesk)]">
+                    <h2 className={`font-[family-name:var(--font-space-grotesk)] text-[32px] sm:text-[40px] md:text-[48px] font-bold tracking-[-0.03em] leading-[1.1] ${isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]'}`}>
                       {section.title}
                     </h2>
                   </div>
                 </div>
-                <div className="ml-14 text-omnia-text-secondary leading-[1.6] text-[15px] font-[family-name:var(--font-geist-sans)]">
+                <div className={`ml-14 leading-[1.6] text-[15px] sm:text-[17px] font-[family-name:var(--font-geist-sans)] ${isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'}`}>
                   {section.content}
                 </div>
-              </motion.section>
-            )
-          })}
-        </div>
-      </section>
+              </div>
+            </motion.section>
+          )
+        })}
+      </div>
 
       <Footer />
     </div>

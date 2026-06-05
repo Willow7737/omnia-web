@@ -48,7 +48,7 @@ const footerLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/[0.06] mt-auto">
+    <footer className="section-dark border-t border-white/[0.06] mt-auto">
       <div className="max-w-[980px] mx-auto px-6 py-12">
         {/* Link grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-10">
