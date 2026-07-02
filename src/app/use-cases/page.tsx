@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import { PageHeader } from '@/components/page-header'
 import { Footer } from '@/components/footer'
 import {
@@ -109,21 +110,21 @@ export default function UseCasesPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.05 }}
-              className={`${isDark ? 'section-dark' : 'section-light'} section-spacing`}
+              className={`${isDark ? 'section-paper' : 'section-white'} section-spacing`}
             >
               <div className="max-w-[980px] mx-auto px-6">
                 <div className="flex flex-col sm:flex-row gap-8 sm:gap-16">
                   {/* Left — Title */}
                   <div className="sm:w-[340px] md:w-[400px] shrink-0">
                     <div className="flex items-center gap-3 mb-3">
-                      <div className={`w-9 h-9 rounded-lg ${isDark ? 'bg-[#2997FF]/10' : 'bg-[#2997FF]/10'} flex items-center justify-center`}>
-                        <Icon className="w-4.5 h-4.5 text-[#2997FF]" />
+                      <div className={`w-9 h-9 rounded-lg ${isDark ? 'bg-primary/10' : 'bg-primary/10'} flex items-center justify-center`}>
+                        <Icon className="w-4.5 h-4.5 text-primary" />
                       </div>
-                      <h3 className={`font-[family-name:var(--font-space-grotesk)] text-[28px] sm:text-[36px] font-bold tracking-[-0.02em] leading-[1.1] ${isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]'}`}>
+                      <h3 className={`font-sans text-[28px] sm:text-[36px] font-bold tracking-[-0.02em] leading-[1.1] ${isDark ? 'text-foreground' : 'text-foreground'}`}>
                         {useCase.title}
                       </h3>
                     </div>
-                    <p className={`text-[15px] sm:text-[17px] ${isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'} font-[family-name:var(--font-geist-sans)]`}>
+                    <p className={`text-[15px] sm:text-[17px] ${isDark ? 'text-muted-foreground' : 'text-muted-foreground'} font-sans`}>
                       {useCase.description}
                     </p>
                   </div>
@@ -139,8 +140,8 @@ export default function UseCasesPage() {
                         transition={{ duration: 0.3, delay: i * 0.05, ease: [0.25, 0.46, 0.45, 0.94] }}
                         className="flex items-start gap-3"
                       >
-                        <div className={`flex-shrink-0 w-1.5 h-1.5 rounded-full mt-2 ${isDark ? 'bg-[#2997FF]/60' : 'bg-[#2997FF]/60'}`} />
-                        <span className={`text-[15px] sm:text-[17px] leading-[1.6] font-[family-name:var(--font-geist-sans)] ${isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'}`}>
+                        <div className={`flex-shrink-0 w-1.5 h-1.5 rounded-full mt-2 ${isDark ? 'bg-primary/60' : 'bg-primary/60'}`} />
+                        <span className={`text-[15px] sm:text-[17px] leading-[1.6] font-sans ${isDark ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
                           {item}
                         </span>
                       </motion.div>
@@ -154,7 +155,7 @@ export default function UseCasesPage() {
       </div>
 
       {/* Bottom CTA — Dark section */}
-      <section className="section-dark py-20 sm:py-24">
+      <section className="section-paper py-20 sm:py-24">
         <div className="max-w-[980px] mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -162,10 +163,10 @@ export default function UseCasesPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h3 className="font-[family-name:var(--font-space-grotesk)] text-[28px] sm:text-[40px] md:text-[48px] font-bold text-[#F5F5F7] mb-4 tracking-tight leading-[1.1]">
+            <h3 className="font-sans text-[28px] sm:text-[40px] md:text-[48px] font-bold text-foreground mb-4 tracking-tight leading-[1.1]">
               Building something that fits?
             </h3>
-            <p className="text-[#86868B] text-[14px] sm:text-[15px] max-w-2xl mx-auto mb-8 leading-[1.6] font-[family-name:var(--font-geist-sans)]">
+            <p className="text-muted-foreground text-[14px] sm:text-[15px] max-w-2xl mx-auto mb-8 leading-[1.6] font-sans">
               Omnia is CC0 public domain — no permissions needed. The protocol is designed to be a 
               fundamental infrastructure layer that any application can build on, without gatekeepers 
               or license fees.
@@ -175,16 +176,16 @@ export default function UseCasesPage() {
                 href="https://github.com/Willow7737/omnia-protocol"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#2997FF] text-white font-medium text-[14px] hover:bg-[#2384d6] transition-colors font-[family-name:var(--font-space-grotesk)]"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium text-[14px] hover:bg-primary/90 transition-colors font-sans"
               >
                 View on GitHub
               </a>
-              <a
+              <Link
                 href="/architecture"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/[0.1] text-[#F5F5F7] text-[14px] hover:bg-white/[0.04] transition-colors font-[family-name:var(--font-space-grotesk)]"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card text-foreground text-[14px] hover:bg-muted active:translate-y-px transition-all font-sans"
               >
                 Explore Architecture
-              </a>
+              </Link>
             </div>
           </motion.div>
         </div>

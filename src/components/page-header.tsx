@@ -8,38 +8,38 @@ interface PageHeaderProps {
   title: string
   description: string
   breadcrumbs?: { label: string; href?: string }[]
+  /** Kept for call-site compatibility; both variants share the light system now. */
   variant?: 'dark' | 'light'
 }
 
-export function PageHeader({ title, description, breadcrumbs, variant = 'dark' }: PageHeaderProps) {
-  const isDark = variant === 'dark'
-
+export function PageHeader({ title, description, breadcrumbs }: PageHeaderProps) {
   return (
     <>
       <OmniaNav />
-      <div className={`pt-20 pb-16 sm:pb-20 px-6 ${isDark ? 'section-dark' : 'section-light'} page-hero-gradient`}>
-        <div className="max-w-[980px] mx-auto">
+      <div className="relative pt-24 pb-16 sm:pb-20 px-6 section-paper page-hero-gradient border-b border-border overflow-hidden">
+        <div className="dither absolute top-0 right-0 w-48 h-48 [mask-image:linear-gradient(225deg,black,transparent_70%)] opacity-60 pointer-events-none" aria-hidden />
+        <div className="max-w-[980px] mx-auto relative">
           {breadcrumbs && breadcrumbs.length > 0 && (
-            <nav className={`flex items-center gap-1.5 text-[12px] mb-6 font-[family-name:var(--font-geist-sans)] ${isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'}`}>
-              <Link href="/" className={`hover:${isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]'} transition-colors`}>Home</Link>
+            <nav className="flex items-center gap-1.5 text-[12px] mb-6 text-muted-foreground">
+              <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
               {breadcrumbs.map((crumb, i) => (
                 <span key={i} className="flex items-center gap-1.5">
                   <ChevronRight size={10} />
                   {crumb.href ? (
-                    <Link href={crumb.href} className={`hover:${isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]'} transition-colors`}>
+                    <Link href={crumb.href} className="hover:text-foreground transition-colors">
                       {crumb.label}
                     </Link>
                   ) : (
-                    <span className={isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]'}>{crumb.label}</span>
+                    <span className="text-foreground">{crumb.label}</span>
                   )}
                 </span>
               ))}
             </nav>
           )}
-          <h1 className={`font-[family-name:var(--font-space-grotesk)] text-[48px] sm:text-[56px] md:text-[64px] font-bold tracking-[-0.03em] mb-5 leading-[1.1] ${isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]'}`}>
+          <h1 className="font-sans text-[48px] sm:text-[56px] md:text-[64px] font-bold tracking-[-0.03em] mb-5 leading-[1.1] text-foreground">
             {title}
           </h1>
-          <p className={`text-[17px] sm:text-[19px] leading-[1.5] max-w-[600px] font-[family-name:var(--font-geist-sans)] ${isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'}`}>
+          <p className="text-[17px] sm:text-[19px] leading-[1.5] max-w-[600px] text-muted-foreground">
             {description}
           </p>
         </div>

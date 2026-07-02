@@ -1,8 +1,10 @@
 'use client'
 
+import { withBasePath } from '@/lib/base-path'
 import { useState, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, ChevronDown } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -89,14 +91,22 @@ export function OmniaNav() {
   }, [scrollToSection])
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl bg-black/80 border-b border-white/[0.08]">
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl bg-background/85 border-b border-border">
       <div className="max-w-[980px] mx-auto px-6 h-12 flex items-center justify-between">
-        {/* Logo */}
-        <Link
-          href="/"
-          className="font-[family-name:var(--font-space-grotesk)] text-[17px] font-semibold tracking-tight text-[#F5F5F7] hover:text-white transition-colors"
-        >
-          Omnia
+        {/* Brand */}
+        <Link href="/" className="group flex items-center gap-2.5">
+          <Image
+            src={withBasePath("/omnia-mark.png")}
+            alt=""
+            width={22}
+            height={22}
+            className="shrink-0 transition-transform duration-300 group-hover:rotate-90 motion-reduce:group-hover:rotate-0"
+            priority
+          />
+          <span className="font-mono text-[14px] tracking-wide text-foreground lowercase">
+            omnia
+            <span className="text-foreground/45"> protocol</span>
+          </span>
         </Link>
 
         {/* Desktop nav */}
@@ -108,7 +118,7 @@ export function OmniaNav() {
                   key={link.href}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href, link.isAnchor)}
-                  className="text-[12px] text-[#86868B] hover:text-[#F5F5F7] transition-colors font-[family-name:var(--font-space-grotesk)] tracking-tight"
+                  className="text-[12px] text-muted-foreground hover:text-foreground transition-colors font-sans tracking-tight"
                 >
                   {link.label}
                 </a>
@@ -125,7 +135,7 @@ export function OmniaNav() {
               onMouseLeave={() => setDesktopDropdown(null)}
             >
               <button
-                className="flex items-center gap-0.5 text-[12px] text-[#86868B] hover:text-[#F5F5F7] transition-colors font-[family-name:var(--font-space-grotesk)] tracking-tight"
+                className="flex items-center gap-0.5 text-[12px] text-muted-foreground hover:text-foreground transition-colors font-sans tracking-tight"
               >
                 {section.label}
                 <ChevronDown size={10} className={`transition-transform duration-200 ${desktopDropdown === section.label ? 'rotate-180' : ''}`} />
@@ -140,16 +150,16 @@ export function OmniaNav() {
                     transition={{ duration: 0.15 }}
                     className="absolute top-full left-1/2 -translate-x-1/2 mt-3 pt-2 min-w-[180px]"
                   >
-                    <div className="bg-[#1D1D1F]/95 backdrop-blur-2xl rounded-xl border border-white/[0.08] overflow-hidden py-2 shadow-2xl">
+                    <div className="bg-popover/95 backdrop-blur-2xl rounded-xl border border-border overflow-hidden py-2 shadow-lg">
                       {section.items.map((item) => (
                         <Link
                           key={item.href}
                           href={item.href}
                           className={`block px-4 py-2 text-[13px] transition-colors ${
                             pathname === item.href
-                              ? 'text-white bg-white/[0.06]'
-                              : 'text-[#86868B] hover:text-white hover:bg-white/[0.04]'
-                          } font-[family-name:var(--font-space-grotesk)]`}
+                              ? 'text-foreground bg-accent font-medium'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                          } font-sans`}
                         >
                           {item.label}
                         </Link>
@@ -165,7 +175,7 @@ export function OmniaNav() {
             href="https://github.com/Willow7737/omnia-protocol"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[12px] text-[#86868B] hover:text-[#F5F5F7] transition-colors font-[family-name:var(--font-space-grotesk)] tracking-tight"
+            className="text-[12px] text-muted-foreground hover:text-foreground transition-colors font-sans tracking-tight"
           >
             GitHub
           </a>
@@ -174,7 +184,7 @@ export function OmniaNav() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden p-2 text-[#86868B] hover:text-[#F5F5F7] transition-colors touch-manipulation"
+          className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors touch-manipulation"
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
         >
@@ -191,7 +201,7 @@ export function OmniaNav() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="md:hidden fixed inset-0 top-12 bg-black/60 z-40"
+              className="md:hidden fixed inset-0 top-12 bg-foreground/10 z-40"
               onClick={() => setMobileOpen(false)}
             />
             <motion.div
@@ -199,7 +209,7 @@ export function OmniaNav() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
-              className="md:hidden fixed top-12 left-0 right-0 z-50 overflow-hidden backdrop-blur-2xl bg-black/95 border-b border-white/[0.08]"
+              className="md:hidden fixed top-12 left-0 right-0 z-50 overflow-hidden backdrop-blur-2xl bg-background/95 border-b border-border"
             >
               <div className="px-6 py-4 flex flex-col">
                 {isHome && (
@@ -209,18 +219,18 @@ export function OmniaNav() {
                         key={link.href}
                         href={link.href}
                         onClick={(e) => handleNavClick(e, link.href, link.isAnchor)}
-                        className="text-[17px] text-[#F5F5F7] font-[family-name:var(--font-space-grotesk)] tracking-tight py-2.5 block"
+                        className="text-[17px] text-foreground font-sans tracking-tight py-2.5 block"
                       >
                         {link.label}
                       </a>
                     ))}
-                    <div className="h-px bg-white/[0.08] my-2" />
+                    <div className="h-px bg-border my-2" />
                   </>
                 )}
 
                 {navSections.map((section, i) => (
                   <div key={section.label}>
-                    <div className="text-[11px] uppercase tracking-wider text-[#86868B] font-[family-name:var(--font-space-grotesk)] mt-3 mb-1 px-0">
+                    <div className="text-[11px] uppercase tracking-wider text-muted-foreground font-sans mt-3 mb-1 px-0">
                       {section.label}
                     </div>
                     {section.items.map((item) => (
@@ -228,23 +238,23 @@ export function OmniaNav() {
                         key={item.href}
                         href={item.href}
                         onClick={() => setMobileOpen(false)}
-                        className={`text-[15px] font-[family-name:var(--font-space-grotesk)] tracking-tight py-2 block transition-colors ${
-                          pathname === item.href ? 'text-white' : 'text-[#86868B]'
+                        className={`text-[15px] font-sans tracking-tight py-2 block transition-colors ${
+                          pathname === item.href ? 'text-foreground font-medium' : 'text-muted-foreground'
                         }`}
                       >
                         {item.label}
                       </Link>
                     ))}
-                    {i < navSections.length - 1 && <div className="h-px bg-white/[0.08] my-2" />}
+                    {i < navSections.length - 1 && <div className="h-px bg-border my-2" />}
                   </div>
                 ))}
 
-                <div className="h-px bg-white/[0.08] my-2" />
+                <div className="h-px bg-border my-2" />
                 <a
                   href="https://github.com/Willow7737/omnia-protocol"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[15px] text-[#86868B] font-[family-name:var(--font-space-grotesk)] tracking-tight py-2 block"
+                  className="text-[15px] text-muted-foreground font-sans tracking-tight py-2 block"
                 >
                   GitHub
                 </a>

@@ -120,7 +120,7 @@ const phases: Phase[] = [
     status: 'completed',
     icon: FlaskConical,
     items: [
-      { text: 'Real performance benchmarking (~7,190 events/sec sync; ~527 async)' },
+      { text: 'Real performance benchmarking (~12,000 events/sec sync — v0.1.68 baseline; the earlier ~7,190 figure was an async-runtime artifact)' },
       { text: 'Multi-node BFT testnet validation (3-node E2E)' },
       { text: 'VRF migration to ECVRF per RFC 9381' },
       { text: 'Genesis tooling — network bootstrap' },
@@ -181,8 +181,8 @@ const phases: Phase[] = [
 function PhaseCard({ phase, index, isDark }: { phase: Phase; index: number; isDark: boolean }) {
   const [isOpen, setIsOpen] = useState(phase.status !== 'future')
 
-  const circleColor = phase.status === 'completed' ? 'bg-[#30D158]' : phase.status === 'in-progress' ? 'bg-[#2997FF]' : 'bg-[#48484A]'
-  const lineColor = phase.status === 'completed' ? 'bg-[#30D158]/30' : phase.status === 'in-progress' ? 'bg-[#2997FF]/30' : 'bg-white/[0.06]'
+  const circleColor = phase.status === 'completed' ? 'bg-success' : phase.status === 'in-progress' ? 'bg-primary' : 'bg-muted-foreground/50'
+  const lineColor = phase.status === 'completed' ? 'bg-success/30' : phase.status === 'in-progress' ? 'bg-primary/30' : 'bg-accent'
 
   return (
     <motion.div
@@ -196,14 +196,14 @@ function PhaseCard({ phase, index, isDark }: { phase: Phase; index: number; isDa
       <div className="flex flex-col items-center flex-shrink-0">
         <div className={`relative w-10 h-10 sm:w-12 sm:h-12 rounded-full ${circleColor} flex items-center justify-center z-10`}>
           {phase.status === 'completed' ? (
-            <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-black" />
+            <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground" />
           ) : phase.status === 'in-progress' ? (
-            <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 text-black animate-spin" style={{ animationDuration: '3s' }} />
+            <Loader2 className="w-5 h-5 sm:w-6 sm:h-6 text-primary-foreground animate-spin" style={{ animationDuration: '3s' }} />
           ) : (
-            <Circle className="w-4 h-4 sm:w-5 sm:h-5 text-[#48484A]/40" />
+            <Circle className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground/50" />
           )}
           {phase.status === 'in-progress' && (
-            <span className="absolute inset-0 rounded-full bg-[#2997FF]/30 animate-ping" style={{ animationDuration: '2s' }} />
+            <span className="absolute inset-0 rounded-full bg-primary/30 animate-ping" style={{ animationDuration: '2s' }} />
           )}
         </div>
 
@@ -218,25 +218,25 @@ function PhaseCard({ phase, index, isDark }: { phase: Phase; index: number; isDa
           onClick={() => setIsOpen(!isOpen)}
           className="w-full text-left group"
         >
-          <div className={`py-3 ${isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]'}`}>
+          <div className={`py-3 ${isDark ? 'text-foreground' : 'text-foreground'}`}>
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2 mb-1">
-                  <span className={`font-[family-name:var(--font-jetbrains-mono)] text-[12px] font-medium ${
-                    phase.status === 'completed' ? 'text-[#30D158]' : phase.status === 'in-progress' ? 'text-[#2997FF]' : 'text-[#86868B]'
+                  <span className={`font-mono text-[12px] font-medium ${
+                    phase.status === 'completed' ? 'text-success' : phase.status === 'in-progress' ? 'text-primary' : 'text-muted-foreground'
                   }`}>
                     {phase.number === '∞' ? 'Post-Phase 5' : `Phase ${phase.number}`}
                   </span>
                   <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium ${
-                    phase.status === 'completed' ? 'bg-[#30D158]/10 text-[#30D158]' :
-                    phase.status === 'in-progress' ? 'bg-[#2997FF]/10 text-[#2997FF]' :
-                    'bg-white/[0.04] text-[#86868B]'
+                    phase.status === 'completed' ? 'bg-success/10 text-success' :
+                    phase.status === 'in-progress' ? 'bg-primary/10 text-primary' :
+                    'bg-muted text-muted-foreground'
                   }`}>
                     {phase.status === 'completed' ? 'Complete' : phase.status === 'in-progress' ? 'In Progress' : 'Upcoming'}
                   </span>
                 </div>
-                <h3 className={`text-[17px] sm:text-[19px] font-semibold tracking-tight font-[family-name:var(--font-space-grotesk)] ${
-                  phase.status === 'future' ? 'text-[#86868B]' : isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]'
+                <h3 className={`text-[17px] sm:text-[19px] font-semibold tracking-tight font-sans ${
+                  phase.status === 'future' ? 'text-muted-foreground' : isDark ? 'text-foreground' : 'text-foreground'
                 }`}>
                   {phase.title}
                 </h3>
@@ -246,7 +246,7 @@ function PhaseCard({ phase, index, isDark }: { phase: Phase; index: number; isDa
                 transition={{ duration: 0.2 }}
                 className="flex-shrink-0 mt-1"
               >
-                <ChevronDown className={`w-4 h-4 ${isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'}`} />
+                <ChevronDown className={`w-4 h-4 ${isDark ? 'text-muted-foreground' : 'text-muted-foreground'}`} />
               </motion.div>
             </div>
 
@@ -259,17 +259,17 @@ function PhaseCard({ phase, index, isDark }: { phase: Phase; index: number; isDa
                   transition={{ duration: 0.3, ease: 'easeInOut' }}
                   className="overflow-hidden"
                 >
-                  <ul className="mt-4 space-y-2 pt-4 border-t border-white/[0.06]">
+                  <ul className="mt-4 space-y-2 pt-4 border-t border-border">
                     {phase.items.map((item, i) => (
                       <motion.li
                         key={i}
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.3, delay: i * 0.04 }}
-                        className="flex items-start gap-2.5 text-[14px] font-[family-name:var(--font-geist-sans)]"
+                        className="flex items-start gap-2.5 text-[14px] font-sans"
                       >
                         <div className={`flex-shrink-0 w-1.5 h-1.5 rounded-full mt-1.5 ${circleColor}`} />
-                        <span className={isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'}>
+                        <span className={isDark ? 'text-muted-foreground' : 'text-muted-foreground'}>
                           {item.text}
                         </span>
                       </motion.li>
@@ -298,7 +298,7 @@ export default function RoadmapPage() {
       />
 
       {/* Summary stats — Dark section */}
-      <section className="section-dark py-10">
+      <section className="section-paper py-10">
         <div className="max-w-[980px] mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -306,24 +306,24 @@ export default function RoadmapPage() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex flex-wrap gap-3"
           >
-            <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#30D158]/10 border border-[#30D158]/20">
-              <CheckCircle2 className="w-4 h-4 text-[#30D158]" />
-              <span className="text-[14px] text-[#F5F5F7] font-[family-name:var(--font-geist-sans)]">{completedCount} phases complete</span>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-success/10 border border-success/20">
+              <CheckCircle2 className="w-4 h-4 text-success" />
+              <span className="text-[14px] text-foreground font-sans">{completedCount} phases complete</span>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#2997FF]/10 border border-[#2997FF]/20">
-              <Loader2 className="w-4 h-4 text-[#2997FF]" />
-              <span className="text-[14px] text-[#F5F5F7] font-[family-name:var(--font-geist-sans)]">{inProgressCount} in progress</span>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20">
+              <Loader2 className="w-4 h-4 text-primary" />
+              <span className="text-[14px] text-foreground font-sans">{inProgressCount} in progress</span>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.02] border border-white/[0.06]">
-              <Circle className="w-4 h-4 text-[#86868B]/40" />
-              <span className="text-[14px] text-[#86868B] font-[family-name:var(--font-geist-sans)]">4 phases ahead</span>
+            <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-card border border-border">
+              <Circle className="w-4 h-4 text-muted-foreground/40" />
+              <span className="text-[14px] text-muted-foreground font-sans">4 phases ahead</span>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Timeline — Dark section (continuing) */}
-      <section className="section-dark pb-24">
+      <section className="section-paper pb-24">
         <div className="max-w-[980px] mx-auto px-6">
           <div className="relative">
             {phases.map((phase, index) => (

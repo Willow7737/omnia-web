@@ -1,23 +1,25 @@
 # Omnia Protocol — Website
 
-The official website for the [Omnia Protocol](https://github.com/Willow7737/omnia-protocol). A single-page site built with Next.js 16, Tailwind CSS, and Framer Motion.
+The official website for the [Omnia Protocol](https://github.com/Willow7737/omnia-protocol). A multi-page site built with Next.js 16, Tailwind CSS, and Framer Motion.
 
 ## Design
 
-"Warm Infrastructure Minimalism" — a protocol-grade single-page site that uses warm, human colors. No marketing buzzwords. No exclamation points. Every claim is traceable to a repo file, benchmark, or API response.
+The site shares one design system with [omnia-protocol-interface](https://github.com/Willow7737/omnia-protocol-interface): paper-white surfaces, near-black ink, one restrained blue. The brand voice comes from the logo itself — a monospaced, lowercase wordmark and a halftone-dot texture, both used sparingly. No marketing buzzwords. No exclamation points. Every claim is traceable to a repo file, benchmark, or API response.
+
+All performance figures are copied from the protocol repository's **Honest Performance Numbers** table (README, v0.1.68+ baselines) and `benches/baselines.json`. When the protocol updates its baselines, update `hero-section.tsx`, `performance-section.tsx`, and `cta-section.tsx` — never invent numbers.
 
 ## Tech Stack
 
 - **Framework**: Next.js 16 (App Router, static export)
-- **Styling**: Tailwind CSS 4
-- **Animation**: Framer Motion
+- **Styling**: Tailwind CSS 4 (design tokens in `globals.css`, OKLCH palette)
+- **Animation**: Framer Motion (with `prefers-reduced-motion` support)
 - **Data**: TanStack React Query (live testnet data)
 - **Icons**: Lucide React
-- **Fonts**: Space Grotesk, JetBrains Mono, Inter
+- **Fonts**: Geist Sans, Geist Mono
 
 ## Live Mode
 
-By default, the site runs in **static mode** — it shows benchmark data from v0.1.60 single-node tests. To connect to a live testnet:
+By default, the site runs in **static mode** — it shows benchmark data from the protocol's v0.1.68+ single-node baselines. To connect to a live testnet:
 
 ```bash
 NEXT_PUBLIC_LIVE_MODE=true \
@@ -57,22 +59,24 @@ When the devnet moves, update the status endpoint URL via environment variables:
 ```
 src/
 ├── app/
-│   ├── globals.css          # Omnia color palette, custom animations
-│   ├── layout.tsx           # Root layout with fonts
-│   └── page.tsx             # Main page composing all sections
+│   ├── globals.css          # Design tokens (shared with the interface), animations
+│   ├── layout.tsx           # Root layout, fonts, metadata
+│   ├── page.tsx             # Home page composing all sections
+│   ├── not-found.tsx        # 404 page
+│   └── */page.tsx           # About, Architecture, Docs, FAQ, Roadmap, …
 ├── components/
 │   ├── omnia-nav.tsx        # Fixed navigation with mobile menu
+│   ├── page-header.tsx      # Shared subpage hero
 │   ├── hero-section.tsx     # Hero with live status widget
-│   ├── curl-section.tsx     # curl proof with copy button
-│   ├── architecture-section.tsx  # 6-layer stack diagram
+│   ├── causal-graph-svg.tsx # Hand-drawn causal DAG illustration
+│   ├── features-section.tsx # Six pillars, editorial list
+│   ├── architecture-preview.tsx  # 6-layer stack
+│   ├── performance-section.tsx   # Verified benchmark tables
 │   ├── agent-section.tsx    # AI agent identity section
-│   ├── performance-section.tsx   # Performance dashboard
 │   ├── transparency-section.tsx  # Stub inventory table
-│   ├── event-stream.tsx     # Real-time SSE event stream
-│   ├── contribute-section.tsx    # Contribute/support section
+│   ├── cta-section.tsx      # Contribute/support section
 │   ├── footer.tsx           # Site footer
 │   ├── animated-number.tsx  # Count-up animation component
-│   ├── agent-svgs.tsx       # Geometric robot SVG illustrations
 │   └── providers.tsx        # TanStack Query provider
 ├── hooks/
 │   └── use-omnia-data.ts    # React Query hooks for live data
@@ -80,6 +84,10 @@ src/
     ├── omnia-client.ts      # API client + Prometheus parser
     └── utils.ts             # Utility functions
 ```
+
+## Internal links and GitHub Pages
+
+The production build is a static export served under the `/omnia-web` base path. Always use `next/link` (`<Link href="…">`) for internal navigation — plain `<a href="/docs">` anchors bypass Next's basePath handling and 404 on GitHub Pages.
 
 ## Deployment
 

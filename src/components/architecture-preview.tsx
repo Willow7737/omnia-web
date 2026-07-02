@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 
 interface LayerData {
@@ -58,7 +59,7 @@ const layers: LayerData[] = [
 
 export function ArchitecturePreview() {
   return (
-    <section id="architecture" className="section-dark section-spacing px-6">
+    <section id="architecture" className="section-paper section-spacing px-6">
       <div className="max-w-[680px] mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -66,10 +67,10 @@ export function ArchitecturePreview() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[56px] md:text-[64px] font-bold tracking-[-0.03em] leading-[1.1] text-[#F5F5F7] mb-4">
+          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold tracking-[-0.03em] leading-[1.1] text-foreground mb-4">
             Six layers.
           </h2>
-          <p className="text-[17px] sm:text-[19px] text-[#86868B] mb-14 font-[family-name:var(--font-geist-sans)]">
+          <p className="text-[17px] sm:text-[19px] text-muted-foreground mb-14 font-sans">
             Every layer implemented. Every layer tested.
           </p>
         </motion.div>
@@ -77,7 +78,7 @@ export function ArchitecturePreview() {
         {/* Vertical stack of layers with connecting lines */}
         <div className="relative">
           {/* Connecting line */}
-          <div className="absolute left-[23px] top-0 bottom-0 w-px bg-gradient-to-b from-[#2997FF]/40 via-[#2997FF]/20 to-transparent hidden sm:block" />
+          <div className="absolute left-[23px] top-0 bottom-0 w-px bg-gradient-to-b from-primary/40 via-primary/20 to-transparent hidden sm:block" />
 
           <div className="flex flex-col gap-0 mb-14">
             {layers.map((layer, i) => (
@@ -89,11 +90,11 @@ export function ArchitecturePreview() {
                 transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="group relative"
               >
-                <div className="flex items-start gap-5 py-5 border-b border-white/[0.06] last:border-b-0">
+                <div className="flex items-start gap-5 py-5 border-b border-border last:border-b-0">
                   {/* Layer indicator with dot on connecting line */}
                   <div className="relative shrink-0">
-                    <div className="w-12 h-12 rounded-xl bg-[#2997FF]/10 border border-[#2997FF]/20 flex items-center justify-center">
-                      <span className="font-[family-name:var(--font-jetbrains-mono)] text-[13px] font-bold text-[#2997FF]">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                      <span className="font-mono text-[13px] font-bold text-primary">
                         {layer.label}
                       </span>
                     </div>
@@ -101,14 +102,14 @@ export function ArchitecturePreview() {
 
                   <div className="flex-1 min-w-0 pt-1">
                     <div className="flex items-center gap-3 mb-1.5">
-                      <span className="font-[family-name:var(--font-space-grotesk)] text-[17px] font-semibold text-[#F5F5F7] tracking-tight group-hover:text-[#2997FF] transition-colors">
+                      <span className="font-sans text-[17px] font-semibold text-foreground tracking-tight group-hover:text-primary transition-colors">
                         {layer.name}
                       </span>
-                      <span className="text-[11px] font-[family-name:var(--font-space-grotesk)] px-2.5 py-0.5 rounded-full bg-[#30D158]/10 text-[#30D158]">
+                      <span className="text-[11px] font-sans px-2.5 py-0.5 rounded-full bg-success/10 text-success">
                         {layer.badge}
                       </span>
                     </div>
-                    <p className="text-[14px] text-[#86868B] leading-[1.5] font-[family-name:var(--font-geist-sans)]">
+                    <p className="text-[14px] text-muted-foreground leading-[1.5] font-sans">
                       {layer.description}
                     </p>
                   </div>
@@ -124,13 +125,13 @@ export function ArchitecturePreview() {
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.4, delay: 0.3 }}
         >
-          <a
+          <Link
             href="/architecture"
-            className="inline-flex items-center gap-2 text-[14px] font-[family-name:var(--font-space-grotesk)] text-[#2997FF] hover:text-[#5eb8ff] transition-colors group"
+            className="inline-flex items-center gap-2 text-[14px] font-sans text-primary hover:text-primary/80 transition-colors group"
           >
             Explore Full Architecture
             <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

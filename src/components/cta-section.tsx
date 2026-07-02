@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import { Heart } from 'lucide-react'
 
 function GitHubIcon({ size = 16 }: { size?: number }) {
@@ -12,37 +13,42 @@ function GitHubIcon({ size = 16 }: { size?: number }) {
   )
 }
 
+// Counted from the omnia-protocol working tree at v0.1.76:
+// `find -name '*.rs' | wc -l`, total lines, and #[test]/#[tokio::test] fns.
+const repoStats = [
+  { value: '225', label: 'Rust files' },
+  { value: '87,576', label: 'lines' },
+  { value: '1,536', label: 'tests' },
+  { value: 'CC0', label: 'license' },
+]
+
 export function CTASection() {
   return (
-    <section id="contribute" className="section-dark section-spacing px-6">
-      <div className="max-w-[680px] mx-auto text-center">
+    <section id="contribute" className="section-paper section-spacing px-6 relative overflow-hidden">
+      <div className="dither absolute inset-x-0 top-0 h-24 [mask-image:linear-gradient(black,transparent)] opacity-50 pointer-events-none" aria-hidden />
+      <div className="max-w-[680px] mx-auto text-center relative">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[48px] sm:text-[64px] md:text-[80px] font-bold tracking-[-0.04em] leading-[1.05] text-[#F5F5F7] mb-6">
+          <h2 className="font-sans text-[48px] sm:text-[64px] md:text-[80px] font-bold tracking-[-0.04em] leading-[1.05] text-foreground mb-6">
             Public domain.
           </h2>
 
-          <p className="text-[17px] sm:text-[19px] text-[#86868B] leading-[1.5] mb-10 max-w-[480px] mx-auto font-[family-name:var(--font-geist-sans)]">
-            CC0. No entity owns it. Every line of code is public, every test is reproducible.
+          <p className="text-[17px] sm:text-[19px] text-muted-foreground leading-[1.5] mb-10 max-w-[480px] mx-auto">
+            CC0. No entity owns it. Every line of code is public, every benchmark is reproducible.
           </p>
 
           {/* Stats row */}
           <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 mb-12">
-            {[
-              { value: '224', label: 'files' },
-              { value: '81,082', label: 'lines' },
-              { value: '1,382', label: 'tests' },
-              { value: 'CC0', label: 'License' },
-            ].map((stat) => (
+            {repoStats.map((stat) => (
               <div key={stat.label} className="flex items-baseline gap-1.5">
-                <span className="font-[family-name:var(--font-jetbrains-mono)] text-[17px] sm:text-[19px] text-[#F5F5F7]">
+                <span className="font-mono text-[17px] sm:text-[19px] text-foreground">
                   {stat.value}
                 </span>
-                <span className="text-[12px] sm:text-[13px] text-[#86868B] font-[family-name:var(--font-space-grotesk)]">
+                <span className="text-[12px] sm:text-[13px] text-muted-foreground">
                   {stat.label}
                 </span>
               </div>
@@ -55,7 +61,7 @@ export function CTASection() {
               href="https://github.com/Willow7737/omnia-protocol"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3 bg-[#2997FF] text-white font-[family-name:var(--font-space-grotesk)] font-medium text-[14px] tracking-tight rounded-full hover:bg-[#2384d6] transition-colors"
+              className="inline-flex items-center gap-2 px-7 py-3 bg-primary text-primary-foreground font-medium text-[14px] tracking-tight rounded-full hover:bg-primary/90 active:translate-y-px transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
               <GitHubIcon size={15} />
               View on GitHub
@@ -64,20 +70,20 @@ export function CTASection() {
               href="https://discord.gg/qYkpAeSYR"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-[family-name:var(--font-space-grotesk)] font-medium text-[14px] tracking-tight border border-white/[0.12] text-[#F5F5F7] hover:bg-white/[0.04] transition-colors"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-medium text-[14px] tracking-tight border border-border bg-card text-foreground hover:bg-muted active:translate-y-px transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
               Join Discord
             </a>
           </div>
 
           {/* Support link */}
-          <a
+          <Link
             href="/donate"
-            className="inline-flex items-center gap-1.5 text-[14px] font-[family-name:var(--font-space-grotesk)] text-[#86868B] hover:text-[#2997FF] transition-colors"
+            className="inline-flex items-center gap-1.5 text-[14px] text-muted-foreground hover:text-primary transition-colors"
           >
             <Heart size={13} />
             Support the Protocol
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

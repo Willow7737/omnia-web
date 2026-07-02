@@ -1,5 +1,7 @@
 'use client'
 
+import { withBasePath } from '@/lib/base-path'
+import Image from 'next/image'
 import Link from 'next/link'
 
 function GitHubIcon({ size = 13 }: { size?: number }) {
@@ -48,13 +50,21 @@ const footerLinks = [
 
 export function Footer() {
   return (
-    <footer className="section-dark border-t border-white/[0.06] mt-auto">
+    <footer className="section-white border-t border-border mt-auto">
       <div className="max-w-[980px] mx-auto px-6 py-12">
+        {/* Brand row */}
+        <div className="flex items-center gap-2.5 mb-10">
+          <Image src={withBasePath("/omnia-mark.png")} alt="" width={24} height={24} />
+          <span className="font-mono text-[13px] tracking-wide text-foreground lowercase">
+            omnia<span className="text-foreground/45"> protocol</span>
+          </span>
+        </div>
+
         {/* Link grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-10">
           {footerLinks.map((section) => (
             <div key={section.title}>
-              <h4 className="text-[11px] uppercase tracking-wider text-[#86868B] font-[family-name:var(--font-space-grotesk)] mb-3">
+              <h4 className="text-[11px] uppercase tracking-wider text-muted-foreground font-sans mb-3">
                 {section.title}
               </h4>
               <ul className="space-y-2">
@@ -62,7 +72,7 @@ export function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-[13px] text-[#86868B] hover:text-[#F5F5F7] transition-colors font-[family-name:var(--font-geist-sans)]"
+                      className="link-underline text-[13px] text-muted-foreground hover:text-foreground transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -74,25 +84,25 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/[0.06] pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[12px] text-[#48484A] font-[family-name:var(--font-geist-sans)]">
-            Omnia Protocol — CC0 Public Domain
+        <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="font-mono text-[11px] tracking-wide text-muted-foreground/70 lowercase">
+            settlement-agnostic dag consensus — cc0 public domain
           </p>
           <div className="flex items-center gap-5">
             <a
               href="https://github.com/Willow7737/omnia-protocol"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#86868B] hover:text-[#F5F5F7] transition-colors flex items-center gap-1.5 text-[12px]"
+              className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5 text-[12px]"
             >
               <GitHubIcon size={13} />
-              <span className="font-[family-name:var(--font-geist-sans)]">GitHub</span>
+              <span>GitHub</span>
             </a>
             <a
               href="https://discord.gg/qYkpAeSYR"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#86868B] hover:text-[#F5F5F7] transition-colors text-[12px] font-[family-name:var(--font-geist-sans)]"
+              className="text-muted-foreground hover:text-foreground transition-colors text-[12px]"
             >
               Discord
             </a>
