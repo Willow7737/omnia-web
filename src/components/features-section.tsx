@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 const features = [
   {
     title: 'Causal Graph Consensus',
-    description: 'DAG + vector clocks + CRDTs for parallel transaction processing with sub-100µs finality and deterministic convergence.',
+    description: 'DAG + vector clocks + CRDTs for parallel transaction processing with 24.5 µs p50 single-node finality and deterministic convergence.',
   },
   {
     title: 'ZK-Rollup Settlement',
@@ -31,7 +31,7 @@ const features = [
 
 export function FeaturesSection() {
   return (
-    <section id="features" className="section-light section-spacing px-6">
+    <section id="features" className="section-white section-spacing px-6">
       <div className="max-w-[980px] mx-auto">
         {/* Section header — big, bold, editorial */}
         <motion.div
@@ -41,10 +41,10 @@ export function FeaturesSection() {
           transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="mb-16 sm:mb-20"
         >
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[56px] md:text-[64px] font-bold tracking-[-0.03em] leading-[1.1] text-[#1D1D1F] mb-4">
+          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold tracking-[-0.03em] leading-[1.1] text-foreground mb-4">
             Built different.
           </h2>
-          <p className="text-[17px] sm:text-[19px] text-[#6E6E73] leading-[1.5] max-w-[520px] font-[family-name:var(--font-geist-sans)]">
+          <p className="text-[17px] sm:text-[19px] text-muted-foreground leading-[1.5] max-w-[520px] font-sans">
             Six pillars of infrastructure. Every layer built with mathematical guarantees.
           </p>
         </motion.div>
@@ -59,15 +59,15 @@ export function FeaturesSection() {
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
               className={`group flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-12 py-8 ${
-                i < features.length - 1 ? 'border-b border-[rgba(0,0,0,0.08)]' : ''
+                i < features.length - 1 ? 'border-b border-border' : ''
               }`}
             >
               <div className="sm:w-[320px] md:w-[380px] shrink-0">
-                <h3 className="font-[family-name:var(--font-space-grotesk)] text-[17px] sm:text-[19px] font-semibold text-[#1D1D1F] tracking-tight group-hover:text-[#2997FF] transition-colors">
+                <h3 className="font-sans text-[17px] sm:text-[19px] font-semibold text-foreground tracking-tight group-hover:text-primary transition-colors">
                   {feature.title}
                 </h3>
               </div>
-              <p className="text-[15px] sm:text-[17px] text-[#6E6E73] leading-[1.6] font-[family-name:var(--font-geist-sans)]">
+              <p className="text-[15px] sm:text-[17px] text-muted-foreground leading-[1.6] font-sans">
                 {feature.description}
               </p>
             </motion.div>

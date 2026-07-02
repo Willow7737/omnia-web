@@ -1,67 +1,86 @@
 'use client'
 
+import { withBasePath } from '@/lib/base-path'
+import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { ArrowRight, Home } from 'lucide-react'
+
+const EASE = [0.25, 0.46, 0.45, 0.94] as const
 
 export default function NotFound() {
   return (
-    <div className="section-dark min-h-screen flex flex-col items-center justify-center px-6 relative">
+    <div className="section-paper min-h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden">
+      {/* Halftone texture bleeding in from the corners, like the mark */}
+      <div className="dither absolute top-0 left-0 w-56 h-56 [mask-image:linear-gradient(135deg,black,transparent_70%)] pointer-events-none" aria-hidden />
+      <div className="dither absolute bottom-0 right-0 w-56 h-56 [mask-image:linear-gradient(315deg,black,transparent_70%)] pointer-events-none" aria-hidden />
+
       <div className="relative z-10 text-center max-w-lg">
-        {/* 404 number */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, ease: EASE }}
+        >
+          <Image
+            src={withBasePath("/omnia-mark.png")}
+            alt=""
+            width={56}
+            height={56}
+            className="mx-auto mb-8 opacity-40"
+            priority
+          />
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.7, ease: EASE }}
         >
-          <span
-            className="text-[120px] sm:text-[160px] font-bold leading-none tracking-[-0.04em] text-[#F5F5F7] block font-[family-name:var(--font-space-grotesk)]"
-          >
+          <span className="font-mono text-[96px] sm:text-[128px] font-bold leading-none tracking-tight text-foreground block">
             404
           </span>
         </motion.div>
 
-        {/* Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-[24px] sm:text-[28px] font-bold text-[#F5F5F7] mt-2 mb-3 font-[family-name:var(--font-space-grotesk)] tracking-tight"
-        >
-          Page Not Found
-        </motion.h1>
-
-        {/* Description */}
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-[17px] text-[#86868B] leading-[1.5] mb-10 font-[family-name:var(--font-geist-sans)]"
+          transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
+          className="text-[17px] sm:text-[19px] text-muted-foreground leading-[1.5] mt-5 mb-10"
         >
-          The page you&apos;re looking for doesn&apos;t exist or has been moved.
+          This page drifted off the causal graph. It either never existed,
+          was pruned, or moved somewhere we can no longer reach it.
         </motion.p>
 
-        {/* Links */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-          {[
-            { label: 'Go Home', href: '/' },
-            { label: 'Architecture', href: '/architecture' },
-            { label: 'Docs', href: '/docs' },
-          ].map((link, i) => (
-            <motion.div
-              key={link.label}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.35 + i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              <Link
-                href={link.href}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-[14px] font-medium font-[family-name:var(--font-space-grotesk)] tracking-tight transition-colors border border-white/[0.1] text-[#F5F5F7] hover:bg-white/[0.04]"
-              >
-                {link.label}
-              </Link>
-            </motion.div>
-          ))}
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3, ease: EASE }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3"
+        >
+          <Link
+            href="/"
+            className="group inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full text-[14px] font-medium tracking-tight hover:bg-primary/90 active:translate-y-px transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            <Home size={14} />
+            Back to safety
+          </Link>
+          <Link
+            href="/docs"
+            className="group inline-flex items-center gap-2 px-6 py-3 rounded-full text-[14px] font-medium tracking-tight border border-border bg-card text-foreground hover:bg-muted active:translate-y-px transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            Read the Docs
+            <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+          </Link>
+        </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="font-mono text-[11px] tracking-wide text-muted-foreground/70 lowercase mt-12"
+        >
+          error: event not found in any finalized round
+        </motion.p>
       </div>
     </div>
   )

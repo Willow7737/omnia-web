@@ -1,49 +1,53 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, JetBrains_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
+import { withBasePath } from "@/lib/base-path";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-});
-
-const inter = Inter({
+const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
 });
 
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+});
+
+const description =
+  "Settlement-agnostic causal graph consensus. 24.5 µs p50 finality on a single node, honestly measured. Public domain.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://willow7737.github.io/omnia-web"),
   title: {
     default: "Omnia Protocol",
     template: "%s — Omnia Protocol",
   },
-  description:
-    "Settlement-agnostic causal graph consensus. Sub-100µs finality. Public domain.",
+  description,
   keywords: [
     "Omnia", "protocol", "DAG", "consensus", "ZK-rollup", "CRDTs",
     "blockchain", "causal graph", "decentralized", "cryptography",
   ],
   authors: [{ name: "Omnia Protocol Contributors" }],
+  icons: {
+    icon: [
+      { url: withBasePath("/icon.svg"), type: "image/svg+xml" },
+      { url: withBasePath("/omnia-mark.png"), type: "image/png" },
+    ],
+    apple: withBasePath("/apple-icon.png"),
+  },
   openGraph: {
     title: "Omnia Protocol",
-    description:
-      "Settlement-agnostic causal graph consensus. Sub-100µs finality. Public domain.",
+    description,
     type: "website",
     siteName: "Omnia Protocol",
+    images: ["/omnia-mark-512.png"],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Omnia Protocol",
-    description:
-      "Settlement-agnostic causal graph consensus. Sub-100µs finality. Public domain.",
+    description,
+    images: ["/omnia-mark-512.png"],
   },
 };
 
@@ -55,7 +59,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${inter.variable} antialiased bg-black text-[#F5F5F7]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
         {children}
       </body>

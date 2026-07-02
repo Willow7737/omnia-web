@@ -60,7 +60,7 @@ export function AnimatedNumber({
   })
 
   return (
-    <span className={`font-[family-name:var(--font-jetbrains-mono)] ${className}`}>
+    <span className={`font-mono ${className}`}>
       {prefix}{formatted}{suffix}
     </span>
   )

@@ -30,7 +30,7 @@ const faqs: FAQItem[] = [
   {
     question: 'Is Omnia ready for production?',
     answer:
-      'Not yet. All 6 architecture layers are implemented and tested (1,382 tests passing), but the protocol is currently in the post-Phase 5 audit stage. A public testnet and external security audit are pending before mainnet launch.',
+      'Not yet. All 6 architecture layers are implemented and tested (1,536 tests passing), but the protocol is currently in the post-Phase 5 audit stage. A public testnet and external security audit are pending before mainnet launch.',
   },
   {
     question: 'What is Universal Basic Compute (UBC)?',
@@ -72,22 +72,22 @@ function FAQAccordionItem({ item, index, isOpen, onToggle, isDark }: { item: FAQ
       viewport={{ once: true, margin: '-30px' }}
       transition={{ duration: 0.4, delay: index * 0.04 }}
     >
-      <div className={`${isDark ? 'border-white/[0.06]' : 'border-[rgba(0,0,0,0.06)]'} border-b`}>
+      <div className={`${isDark ? 'border-border' : 'border-border'} border-b`}>
         <button
           onClick={onToggle}
-          className={`w-full flex items-center gap-4 py-5 sm:py-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2997FF]/50`}
+          className={`w-full flex items-center gap-4 py-5 sm:py-6 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50`}
           aria-expanded={isOpen}
         >
           <div
             className={`flex-shrink-0 w-[3px] self-stretch rounded-full transition-colors duration-300 ${
-              isOpen ? 'bg-[#2997FF]' : isDark ? 'bg-white/[0.08]' : 'bg-[rgba(0,0,0,0.08)]'
+              isOpen ? 'bg-primary' : isDark ? 'bg-border' : 'bg-border'
             }`}
           />
 
           <div className="flex-1 min-w-0">
             <span
-              className={`text-[15px] sm:text-[17px] font-medium transition-colors duration-300 font-[family-name:var(--font-space-grotesk)] ${
-                isOpen ? (isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]') : (isDark ? 'text-[#86868B]' : 'text-[#6E6E73]')
+              className={`text-[15px] sm:text-[17px] font-medium transition-colors duration-300 font-sans ${
+                isOpen ? (isDark ? 'text-foreground' : 'text-foreground') : (isDark ? 'text-muted-foreground' : 'text-muted-foreground')
               }`}
             >
               {item.question}
@@ -101,7 +101,7 @@ function FAQAccordionItem({ item, index, isOpen, onToggle, isDark }: { item: FAQ
           >
             <ChevronDown
               className={`w-5 h-5 transition-colors duration-300 ${
-                isOpen ? 'text-[#2997FF]' : isDark ? 'text-[#48484A]' : 'text-[#AEAEB2]'
+                isOpen ? 'text-primary' : isDark ? 'text-muted-foreground/70' : 'text-muted-foreground/60'
               }`}
             />
           </motion.div>
@@ -116,7 +116,7 @@ function FAQAccordionItem({ item, index, isOpen, onToggle, isDark }: { item: FAQ
               transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
               <div className="pb-5 sm:pb-6 pl-7 sm:pl-9">
-                <p className={`${isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'} text-[14px] sm:text-[15px] leading-[1.6] font-[family-name:var(--font-geist-sans)]`}>
+                <p className={`${isDark ? 'text-muted-foreground' : 'text-muted-foreground'} text-[14px] sm:text-[15px] leading-[1.6] font-sans`}>
                   {item.answer}
                 </p>
               </div>
@@ -145,7 +145,7 @@ export default function FAQPage() {
       />
 
       {/* First half — Dark section */}
-      <section className="section-dark section-spacing">
+      <section className="section-paper section-spacing">
         <div className="max-w-[680px] mx-auto px-6">
           {firstHalf.map((item, index) => (
             <FAQAccordionItem
@@ -161,7 +161,7 @@ export default function FAQPage() {
       </section>
 
       {/* Second half — Light section */}
-      <section className="section-light section-spacing">
+      <section className="section-white section-spacing">
         <div className="max-w-[680px] mx-auto px-6">
           {secondHalf.map((item, relIndex) => {
             const absIndex = halfPoint + relIndex
@@ -180,7 +180,7 @@ export default function FAQPage() {
       </section>
 
       {/* Still have questions — Dark section */}
-      <section className="section-dark py-20 sm:py-24">
+      <section className="section-paper py-20 sm:py-24">
         <div className="max-w-[680px] mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -189,10 +189,10 @@ export default function FAQPage() {
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            <h3 className="font-[family-name:var(--font-space-grotesk)] text-[24px] sm:text-[32px] font-bold text-[#F5F5F7] mb-3 tracking-tight">
+            <h3 className="font-sans text-[24px] sm:text-[32px] font-bold text-foreground mb-3 tracking-tight">
               Still have questions?
             </h3>
-            <p className="text-[#86868B] text-[14px] sm:text-[15px] max-w-[420px] mx-auto mb-6 font-[family-name:var(--font-geist-sans)]">
+            <p className="text-muted-foreground text-[14px] sm:text-[15px] max-w-[420px] mx-auto mb-6 font-sans">
               Join the community on Discord or explore the codebase directly.
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
@@ -200,7 +200,7 @@ export default function FAQPage() {
                 href="https://discord.gg/qYkpAeSYR"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#2997FF] text-white font-medium text-[14px] hover:bg-[#2384d6] transition-colors font-[family-name:var(--font-space-grotesk)]"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-medium text-[14px] hover:bg-primary/90 transition-colors font-sans"
               >
                 Join Discord
               </a>
@@ -208,7 +208,7 @@ export default function FAQPage() {
                 href="https://github.com/Willow7737/omnia-protocol"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/[0.1] text-[#F5F5F7] text-[14px] hover:bg-white/[0.04] transition-colors font-[family-name:var(--font-space-grotesk)]"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-border text-foreground text-[14px] hover:bg-muted transition-colors font-sans"
               >
                 Read the Code
               </a>

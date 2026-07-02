@@ -1,17 +1,27 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import { AnimatedNumber } from './animated-number'
+import { CausalGraphSvg } from './causal-graph-svg'
 import { ArrowRight, Wifi, WifiOff, Loader2 } from 'lucide-react'
 import { useOmniaDashboard } from '@/hooks/use-omnia-data'
 
+/*
+ * Fallback figures when no live testnet is reachable. Sourced from the
+ * protocol's "Honest Performance Numbers" table (README, v0.1.68+
+ * baselines): single-node synchronous pipeline on the reference
+ * benchmark machine.
+ */
 const BENCHMARK_DATA = {
-  eventsFinalized: 7190000,
-  p50Latency: '93.47µs',
+  throughput: 12000,
+  p50Latency: '24.5µs',
   validators: 1,
   networkStatus: 'Benchmark',
   nodeCount: 1,
 } as const
+
+const EASE = [0.25, 0.46, 0.45, 0.94] as const
 
 export function HeroSection() {
   const { data, isLoading, error } = useOmniaDashboard()
@@ -19,7 +29,7 @@ export function HeroSection() {
   const isOnline = data?.healthy ?? false
   const hasLiveData = isOnline && !!data
 
-  const eventsFinalized = hasLiveData ? data.eventsFinalized : BENCHMARK_DATA.eventsFinalized
+  const throughput = hasLiveData && data.metrics?.tps ? data.metrics.tps : BENCHMARK_DATA.throughput
   const latency = hasLiveData ? data.p50Latency : BENCHMARK_DATA.p50Latency
   const validators = hasLiveData ? data.activeValidators : BENCHMARK_DATA.validators
   const networkStatus = hasLiveData
@@ -30,8 +40,12 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="section-dark relative min-h-screen flex flex-col items-center justify-center px-6"
+      className="section-paper relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16"
     >
+      {/* Halftone corner texture, straight from the logo */}
+      <div className="dither absolute top-12 right-0 w-40 h-40 sm:w-64 sm:h-64 [mask-image:linear-gradient(225deg,black,transparent_70%)] pointer-events-none" aria-hidden />
+      <div className="dither absolute bottom-0 left-0 w-40 h-40 sm:w-64 sm:h-64 [mask-image:linear-gradient(45deg,black,transparent_70%)] pointer-events-none" aria-hidden />
+
       <div className="text-center max-w-[780px] mx-auto relative z-10">
         {/* Overline */}
         <motion.div
@@ -40,17 +54,17 @@ export function HeroSection() {
           transition={{ duration: 0.6 }}
           className="mb-6"
         >
-          <span className="text-[#86868B] text-[14px] sm:text-[15px] font-[family-name:var(--font-space-grotesk)] tracking-tight">
-            Settlement-agnostic consensus infrastructure
+          <span className="font-mono text-[12px] sm:text-[13px] tracking-wide text-muted-foreground lowercase">
+            settlement-agnostic dag consensus
           </span>
         </motion.div>
 
-        {/* Headline — massive, bold, Apple-like */}
+        {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="font-[family-name:var(--font-space-grotesk)] text-[56px] sm:text-[80px] md:text-[96px] font-bold tracking-[-0.04em] leading-[1.02] text-[#F5F5F7] mb-6"
+          transition={{ duration: 0.8, ease: EASE }}
+          className="font-sans text-[56px] sm:text-[80px] md:text-[96px] font-bold tracking-[-0.04em] leading-[1.02] text-foreground mb-6"
         >
           Omnia
         </motion.h1>
@@ -59,102 +73,113 @@ export function HeroSection() {
         <motion.p
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-[19px] sm:text-[21px] md:text-[24px] text-[#86868B] leading-[1.35] max-w-[560px] mx-auto mb-10 font-[family-name:var(--font-geist-sans)]"
+          transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+          className="text-[19px] sm:text-[21px] md:text-[24px] text-muted-foreground leading-[1.35] max-w-[560px] mx-auto mb-10"
         >
           Causal graph consensus.{' '}
-          <span className="text-[#F5F5F7]">Sub-100µs finality.</span>{' '}
+          <span className="text-foreground">24.5&thinsp;µs p50 finality.</span>{' '}
           Public domain.
         </motion.p>
 
-        {/* CTAs — Apple-style pill buttons */}
+        {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16"
+          transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-14"
         >
-          <a
+          <Link
             href="/docs"
-            className="inline-flex items-center gap-2 px-7 py-3 bg-[#2997FF] text-white font-[family-name:var(--font-space-grotesk)] font-medium text-[14px] tracking-tight rounded-full hover:bg-[#2384d6] transition-colors"
+            className="group inline-flex items-center gap-2 px-7 py-3 bg-primary text-primary-foreground font-medium text-[14px] tracking-tight rounded-full hover:bg-primary/90 active:translate-y-px transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             Read the Docs
-            <ArrowRight size={14} />
-          </a>
-          <a
+            <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+          </Link>
+          <Link
             href="/architecture"
-            className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-[family-name:var(--font-space-grotesk)] font-medium text-[14px] tracking-tight text-[#2997FF] hover:text-[#5eb8ff] transition-colors"
+            className="group inline-flex items-center gap-2 px-7 py-3 rounded-full font-medium text-[14px] tracking-tight border border-border bg-card text-foreground hover:bg-muted active:translate-y-px transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             View Architecture
-            <ArrowRight size={14} />
-          </a>
+            <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+          </Link>
         </motion.div>
 
-        {/* Live Status Widget — minimal, clean */}
+        {/* Causal graph illustration */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mb-14 hidden sm:block"
+        >
+          <CausalGraphSvg className="w-full max-w-[560px] mx-auto" />
+        </motion.div>
+
+        {/* Live status widget */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.8, delay: 0.35, ease: EASE }}
           className="inline-block w-full max-w-[480px]"
         >
-          <div className="border border-white/[0.08] rounded-2xl p-5 text-left bg-white/[0.02]">
+          <div className="border border-border rounded-2xl p-5 text-left bg-card shadow-sm">
             {isLoading && !data ? (
               <div className="flex items-center justify-center py-8 gap-3">
-                <Loader2 className="h-4 w-4 animate-spin text-[#86868B]" />
-                <span className="text-sm text-[#86868B]">Connecting to testnet...</span>
+                <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                <span className="text-sm text-muted-foreground">Connecting to testnet...</span>
               </div>
             ) : (
               <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-                {/* Events Finalized */}
+                {/* Throughput */}
                 <div>
-                  <div className="text-[11px] text-[#86868B] uppercase tracking-wider mb-1.5 font-[family-name:var(--font-space-grotesk)]">
-                    Events Finalized
+                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1.5">
+                    Throughput
                   </div>
-                  <div className="font-[family-name:var(--font-jetbrains-mono)] text-[15px] text-[#F5F5F7]">
-                    <AnimatedNumber value={eventsFinalized} />
+                  <div className="font-mono text-[15px] text-foreground">
+                    <AnimatedNumber value={throughput} />{' '}
+                    <span className="text-muted-foreground text-[12px]">ev/s</span>
                   </div>
                 </div>
 
                 {/* p50 Latency */}
                 <div>
-                  <div className="text-[11px] text-[#86868B] uppercase tracking-wider mb-1.5 font-[family-name:var(--font-space-grotesk)]">
-                    p50 Latency
+                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1.5">
+                    Finality p50
                   </div>
-                  <div className="font-[family-name:var(--font-jetbrains-mono)] text-[15px] text-[#F5F5F7]">
+                  <div className="font-mono text-[15px] text-foreground">
                     {latency}
                   </div>
                 </div>
 
                 {/* Active Validators */}
                 <div>
-                  <div className="text-[11px] text-[#86868B] uppercase tracking-wider mb-1.5 font-[family-name:var(--font-space-grotesk)]">
+                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1.5">
                     Active Validators
                   </div>
-                  <div className="font-[family-name:var(--font-jetbrains-mono)] text-[15px] text-[#F5F5F7]">
+                  <div className="font-mono text-[15px] text-foreground">
                     <AnimatedNumber value={validators} />
                   </div>
                 </div>
 
                 {/* Network Status */}
                 <div>
-                  <div className="text-[11px] text-[#86868B] uppercase tracking-wider mb-1.5 font-[family-name:var(--font-space-grotesk)]">
+                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1.5">
                     Network Status
                   </div>
                   <div className="flex items-center gap-2">
                     {hasLiveData ? (
                       <>
                         <span className="relative flex h-2 w-2">
-                          <span className="animate-pulse-dot absolute inline-flex h-full w-full rounded-full bg-[#30D158] opacity-75" />
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#30D158]" />
+                          <span className="pulse-dot absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-success" />
                         </span>
-                        <span className="font-[family-name:var(--font-jetbrains-mono)] text-[13px] text-[#30D158]">
+                        <span className="font-mono text-[13px] text-success">
                           {networkStatus}
                         </span>
                       </>
                     ) : (
                       <>
-                        <WifiOff className="h-3 w-3 text-[#86868B]" />
-                        <span className="font-[family-name:var(--font-jetbrains-mono)] text-[13px] text-[#86868B]">
+                        <WifiOff className="h-3 w-3 text-muted-foreground" />
+                        <span className="font-mono text-[13px] text-muted-foreground">
                           {networkStatus}
                         </span>
                       </>
@@ -165,19 +190,19 @@ export function HeroSection() {
             )}
 
             {/* Footer note */}
-            <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] text-[#86868B] flex items-center justify-between">
+            <div className="mt-4 pt-3 border-t border-border text-[11px] text-muted-foreground flex items-center justify-between">
               <span>
                 {hasLiveData
                   ? `${nodeCount} node${nodeCount !== 1 ? 's' : ''} connected`
-                  : 'v0.1.67 benchmarks'}
+                  : 'v0.1.76 · single-node sync baseline'}
               </span>
               {hasLiveData ? (
-                <span className="flex items-center gap-1 text-[#30D158]">
+                <span className="flex items-center gap-1 text-success">
                   <Wifi className="h-3 w-3" />
                   Live
                 </span>
               ) : (
-                <span>Benchmark</span>
+                <span className="font-mono lowercase">benchmark</span>
               )}
             </div>
           </div>

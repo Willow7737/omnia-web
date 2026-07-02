@@ -4,11 +4,11 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: var(--font-geist-sans), 'Geist Fallback', system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), 'Geist Mono Fallback', ui-monospace, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-jetbrains-mono);
-  --font-display: var(--font-space-grotesk);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -26,6 +26,8 @@
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
@@ -38,97 +40,60 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-
-  /* Omnia custom colors — Apple-inspired */
-  --color-omnia-base: #000000;
-  --color-omnia-surface: #111111;
-  --color-omnia-elevated: #1D1D1F;
-  --color-omnia-accent: #2997FF;
-  --color-omnia-blue: #2997FF;
-  --color-omnia-sage: #30D158;
-  --color-omnia-text: #F5F5F7;
-  --color-omnia-text-secondary: #86868B;
-  --color-omnia-border: rgba(255, 255, 255, 0.08);
-  --color-omnia-border-subtle: rgba(255, 255, 255, 0.04);
-
-  /* Light section colors */
-  --color-omnia-light-bg: #FBFBFD;
-  --color-omnia-light-text: #1D1D1F;
-  --color-omnia-light-text-secondary: #6E6E73;
-  --color-omnia-light-border: rgba(0, 0, 0, 0.08);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/*
+ * Omnia light theme — shared with omnia-protocol-interface.
+ *
+ * Paper-white surfaces, near-black ink, one restrained blue.
+ * The brand voice comes from the logo itself: a monospaced,
+ * lowercase wordmark and a halftone-dot texture. Both are used
+ * sparingly — the site should read like a well-set spec sheet,
+ * not a neon landing page.
+ */
 :root {
+  color-scheme: light;
+  --background: oklch(0.982 0.002 250);
+  --foreground: oklch(0.21 0.006 255);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.21 0.006 255);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.21 0.006 255);
+  --primary: oklch(0.51 0.16 255);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.955 0.003 250);
+  --secondary-foreground: oklch(0.25 0.006 255);
+  --muted: oklch(0.955 0.003 250);
+  --muted-foreground: oklch(0.5 0.008 255);
+  --accent: oklch(0.945 0.012 255);
+  --accent-foreground: oklch(0.25 0.006 255);
+  --destructive: oklch(0.54 0.19 27);
+  --success: oklch(0.55 0.13 150);
+  --warning: oklch(0.62 0.13 75);
+  --border: oklch(0.915 0.004 250);
+  --input: oklch(0.915 0.004 250);
+  --ring: oklch(0.51 0.16 255);
+  --chart-1: oklch(0.51 0.16 255);
+  --chart-2: oklch(0.55 0.13 150);
+  --chart-3: oklch(0.62 0.13 75);
+  --chart-4: oklch(0.54 0.19 27);
+  --chart-5: oklch(0.55 0.1 200);
   --radius: 0.75rem;
-  --background: #000000;
-  --foreground: #F5F5F7;
-  --card: #111111;
-  --card-foreground: #F5F5F7;
-  --popover: #111111;
-  --popover-foreground: #F5F5F7;
-  --primary: #F5F5F7;
-  --primary-foreground: #000000;
-  --secondary: #1D1D1F;
-  --secondary-foreground: #F5F5F7;
-  --muted: #1D1D1F;
-  --muted-foreground: #86868B;
-  --accent: #1D1D1F;
-  --accent-foreground: #F5F5F7;
-  --destructive: #FF453A;
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.08);
-  --ring: #2997FF;
-  --chart-1: #2997FF;
-  --chart-2: #30D158;
-  --chart-3: #FF9F0A;
-  --chart-4: #F5F5F7;
-  --chart-5: #000000;
-  --sidebar: #111111;
-  --sidebar-foreground: #F5F5F7;
-  --sidebar-primary: #F5F5F7;
-  --sidebar-primary-foreground: #000000;
-  --sidebar-accent: #1D1D1F;
-  --sidebar-accent-foreground: #F5F5F7;
-  --sidebar-border: rgba(255, 255, 255, 0.08);
-  --sidebar-ring: #2997FF;
-}
-
-.dark {
-  --background: #000000;
-  --foreground: #F5F5F7;
-  --card: #111111;
-  --card-foreground: #F5F5F7;
-  --popover: #111111;
-  --popover-foreground: #F5F5F7;
-  --primary: #F5F5F7;
-  --primary-foreground: #000000;
-  --secondary: #1D1D1F;
-  --secondary-foreground: #F5F5F7;
-  --muted: #1D1D1F;
-  --muted-foreground: #86868B;
-  --accent: #1D1D1F;
-  --accent-foreground: #F5F5F7;
-  --destructive: #FF453A;
-  --border: rgba(255, 255, 255, 0.08);
-  --input: rgba(255, 255, 255, 0.08);
-  --ring: #2997FF;
-  --chart-1: #2997FF;
-  --chart-2: #30D158;
-  --chart-3: #FF9F0A;
-  --chart-4: #F5F5F7;
-  --chart-5: #000000;
-  --sidebar: #111111;
-  --sidebar-foreground: #F5F5F7;
-  --sidebar-primary: #F5F5F7;
-  --sidebar-primary-foreground: #000000;
-  --sidebar-accent: #1D1D1F;
-  --sidebar-accent-foreground: #F5F5F7;
-  --sidebar-border: rgba(255, 255, 255, 0.08);
-  --sidebar-ring: #2997FF;
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.21 0.006 255);
+  --sidebar-primary: oklch(0.51 0.16 255);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.955 0.003 250);
+  --sidebar-accent-foreground: oklch(0.21 0.006 255);
+  --sidebar-border: oklch(0.925 0.004 250);
+  --sidebar-ring: oklch(0.51 0.16 255);
 }
 
 @layer base {
@@ -139,121 +104,93 @@
     @apply bg-background text-foreground;
   }
   html {
+    @apply font-sans;
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
   }
 }
 
-/* Apple-inspired scrollbar — thin, dark, minimal */
+/* Halftone texture lifted from the logo. Use sparingly. */
+@utility dither {
+  background-image: radial-gradient(
+    oklch(0.21 0.006 255 / 0.13) 1px,
+    transparent 1px
+  );
+  background-size: 7px 7px;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #000000;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--border);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--muted-foreground);
 }
 
-/* Light section scrollbar */
-.section-light ::-webkit-scrollbar-track {
-  background: #FBFBFD;
-}
-.section-light ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.12);
-}
-
-/* Pulsing dot animation — green for live status */
-@keyframes pulse-dot {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scale(1.3);
-  }
+/*
+ * Section rhythm. The old dark theme alternated black/white;
+ * the light system alternates paper and plain white instead.
+ * Class names kept semantic: paper = page background, white = card.
+ */
+.section-paper {
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
-.animate-pulse-dot {
-  animation: pulse-dot 2s ease-in-out infinite;
+.section-white {
+  background-color: var(--card);
+  color: var(--card-foreground);
 }
 
-/* Copy flash animation */
-@keyframes flash-white {
-  0% {
-    background-color: rgba(255, 255, 255, 0.15);
-    color: #F5F5F7;
-  }
-  100% {
-    background-color: transparent;
-    color: #86868B;
-  }
-}
-
-@keyframes flash-light {
-  0% {
-    background-color: rgba(0, 0, 0, 0.08);
-    color: #1D1D1F;
-  }
-  100% {
-    background-color: transparent;
-    color: #6E6E73;
-  }
-}
-
-.animate-flash-white {
-  animation: flash-white 0.6s ease-out;
-}
-
-/* Section styles — alternating light/dark for visual rhythm */
-.section-dark {
-  background-color: #000000;
-  color: #F5F5F7;
-}
-
-.section-light {
-  background-color: #FBFBFD;
-  color: #1D1D1F;
-}
-
-/* Section padding — generous like Apple */
-.section-padding {
-  padding-top: min(140px, 18vh);
-  padding-bottom: min(140px, 18vh);
-}
-
-/* Apple-style generous spacing between sections */
 .section-spacing {
-  padding-top: 120px;
-  padding-bottom: 120px;
+  padding-top: 96px;
+  padding-bottom: 96px;
 }
 
 @media (min-width: 640px) {
   .section-spacing {
-    padding-top: 160px;
-    padding-bottom: 160px;
+    padding-top: 128px;
+    padding-bottom: 128px;
   }
 }
 
-/* Page hero gradient — subtle, barely there */
+/* Page hero gradient — one restrained wash of the brand blue */
 .page-hero-gradient {
-  background: linear-gradient(180deg, rgba(41, 151, 255, 0.04) 0%, transparent 60%);
+  background-image: linear-gradient(
+    180deg,
+    oklch(0.51 0.16 255 / 0.045) 0%,
+    transparent 60%
+  );
 }
 
-.page-hero-gradient-light {
-  background: linear-gradient(180deg, rgba(41, 151, 255, 0.03) 0%, transparent 60%);
+/* Live indicator: a quiet breathing dot, no glow */
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
 }
 
-/* Smooth fade-in animation class */
-@keyframes fade-in-up {
+.pulse-dot {
+  animation: soft-pulse 2s ease-in-out infinite;
+}
+
+/* Fade-in for freshly loaded content */
+@keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
@@ -261,44 +198,46 @@
   }
 }
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+.animate-in {
+  animation: fade-in 0.25s ease-out;
 }
 
-/* Subtle shimmer for hover effects */
-@keyframes shimmer {
+/* Copy-to-clipboard confirmation flash */
+@keyframes copy-flash {
   0% {
-    background-position: -200% center;
+    background-color: oklch(0.51 0.16 255 / 0.12);
   }
   100% {
-    background-position: 200% center;
+    background-color: transparent;
   }
 }
 
-.hover-shimmer {
-  background-size: 200% auto;
-  transition: all 0.3s ease;
+.animate-copy-flash {
+  animation: copy-flash 0.6s ease-out;
 }
 
-.hover-shimmer:hover {
-  animation: shimmer 1.5s ease-in-out;
+/* Link underline that slides in from the left */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.25s ease;
+}
+.link-underline:hover {
+  background-size: 100% 1px;
 }
 
-/* Light section divider */
-.divider-light {
-  height: 1px;
-  background: rgba(0, 0, 0, 0.08);
-}
-
-.divider-dark {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.08);
-}
-
-/* Apple-style link hover */
-.apple-link {
-  transition: color 0.2s ease;
-}
-.apple-link:hover {
-  color: #5eb8ff;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-in,
+  .pulse-dot,
+  .animate-copy-flash {
+    animation: none;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
 }

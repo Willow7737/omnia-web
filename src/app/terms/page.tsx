@@ -45,7 +45,7 @@ const sections = [
     content: (
       <p>
         Omnia Protocol is open-source software released under the{' '}
-        <span className="text-[#2997FF] font-medium">CC0 Public Domain</span> dedication. No entity
+        <span className="text-primary font-medium">CC0 Public Domain</span> dedication. No entity
         owns the protocol. It is provided &quot;as is&quot; without warranty of any kind, express or
         implied.
       </p>
@@ -60,7 +60,7 @@ const sections = [
       <p>
         Nothing on this website constitutes financial, investment, legal, or tax advice. The Omnia
         Protocol is a{' '}
-        <span className="text-[#2997FF] font-medium">technology infrastructure project</span>. Any
+        <span className="text-primary font-medium">technology infrastructure project</span>. Any
         references to economic mechanisms (UBC, governance, etc.) describe protocol functionality,
         not investment opportunities.
       </p>
@@ -73,7 +73,7 @@ const sections = [
     isDark: false,
     content: (
       <p>
-        There is <span className="text-[#1D1D1F] font-medium">no token sale, no ICO, and no promise of returns</span>.
+        There is <span className="text-foreground font-medium">no token sale, no ICO, and no promise of returns</span>.
         The Universal Basic Compute allocation is a protocol mechanism, not a financial instrument.
         Do not participate in the protocol expecting financial returns.
       </p>
@@ -86,9 +86,9 @@ const sections = [
     isDark: true,
     content: (
       <p>
-        The Omnia Protocol software is under active development. Despite extensive testing (1,382+
+        The Omnia Protocol software is under active development. Despite extensive testing (1,500+
         tests), software may contain bugs, vulnerabilities, or unintended behaviors. You use the
-        software <span className="text-[#2997FF] font-medium">at your own risk</span>.
+        software <span className="text-primary font-medium">at your own risk</span>.
       </p>
     ),
   },
@@ -107,7 +107,7 @@ const sections = [
           Report vulnerabilities to:{' '}
           <a
             href="mailto:security@omnia-protocol.org"
-            className="text-[#2997FF] hover:underline"
+            className="text-primary hover:underline"
           >
             security@omnia-protocol.org
           </a>
@@ -124,13 +124,13 @@ const sections = [
       <div className="space-y-3">
         <p>
           All Omnia Protocol source code is released under{' '}
-          <span className="text-[#2997FF] font-medium">CC0 Public Domain</span>. Website content is
+          <span className="text-primary font-medium">CC0 Public Domain</span>. Website content is
           provided for informational purposes.
         </p>
         <p>
           The Omnia name and branding may have trademark considerations — contact{' '}
-          <a href="mailto:conduct@omnia.protocol" className="text-[#2997FF] hover:underline">
-            conduct@omnia.protocol
+          <a href="https://github.com/Willow7737/omnia-protocol/security/advisories/new" className="text-primary hover:underline">
+            GitHub Security Advisory
           </a>{' '}
           for clarification.
         </p>
@@ -145,7 +145,7 @@ const sections = [
     content: (
       <p>
         All community participants must adhere to our{' '}
-        <a href="/conduct" className="text-[#2997FF] hover:underline">
+        <a href="/conduct" className="text-primary hover:underline">
           Code of Conduct
         </a>
         . Violations may result in removal from community spaces.
@@ -185,8 +185,8 @@ const sections = [
     content: (
       <p>
         For questions about these terms:{' '}
-        <a href="mailto:conduct@omnia.protocol" className="text-[#2997FF] hover:underline">
-          conduct@omnia.protocol
+        <a href="https://github.com/Willow7737/omnia-protocol/security/advisories/new" className="text-primary hover:underline">
+          GitHub Security Advisory
         </a>
       </p>
     ),
@@ -206,14 +206,14 @@ export default function TermsPage() {
       />
 
       {/* Last updated */}
-      <div className="section-dark py-6">
+      <div className="section-paper py-6">
         <div className="max-w-[980px] mx-auto px-6">
           <motion.div
             {...fadeInUp}
-            className="flex items-center gap-3 text-[14px] text-[#86868B]"
+            className="flex items-center gap-3 text-[14px] text-muted-foreground"
           >
-            <div className="w-2 h-2 rounded-full bg-[#30D158]" />
-            <span className="font-[family-name:var(--font-space-grotesk)]">
+            <div className="w-2 h-2 rounded-full bg-success" />
+            <span className="font-sans">
               Last Updated: June 2026
             </span>
           </motion.div>
@@ -230,23 +230,23 @@ export default function TermsPage() {
               key={i}
               {...fadeInUp}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94], delay: i * 0.03 }}
-              className={`${isDark ? 'section-dark' : 'section-light'} section-spacing scroll-mt-20`}
+              className={`${isDark ? 'section-paper' : 'section-white'} section-spacing scroll-mt-20`}
             >
               <div className="max-w-[980px] mx-auto px-6">
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-[#2997FF]/10 flex items-center justify-center mt-0.5">
-                    <Icon className="w-5 h-5 text-[#2997FF]" />
+                  <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mt-0.5">
+                    <Icon className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <span className="text-[12px] text-[#30D158] tracking-wider uppercase mb-1 block font-[family-name:var(--font-jetbrains-mono)]">
+                    <span className="text-[12px] text-success tracking-wider uppercase mb-1 block font-mono">
                       Section {section.number}
                     </span>
-                    <h2 className={`font-[family-name:var(--font-space-grotesk)] text-[32px] sm:text-[40px] md:text-[48px] font-bold tracking-[-0.03em] leading-[1.1] ${isDark ? 'text-[#F5F5F7]' : 'text-[#1D1D1F]'}`}>
+                    <h2 className={`font-sans text-[32px] sm:text-[40px] md:text-[48px] font-bold tracking-[-0.03em] leading-[1.1] ${isDark ? 'text-foreground' : 'text-foreground'}`}>
                       {section.title}
                     </h2>
                   </div>
                 </div>
-                <div className={`ml-14 leading-[1.6] text-[15px] sm:text-[17px] font-[family-name:var(--font-geist-sans)] ${isDark ? 'text-[#86868B]' : 'text-[#6E6E73]'}`}>
+                <div className={`ml-14 leading-[1.6] text-[15px] sm:text-[17px] font-sans ${isDark ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
                   {section.content}
                 </div>
               </div>

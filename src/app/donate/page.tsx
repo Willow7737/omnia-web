@@ -48,7 +48,7 @@ const donationMethods = [
   { icon: GitBranch, title: 'GitHub Sponsors', description: 'Support ongoing development through GitHub', link: 'github.com/Willow7737', linkLabel: 'Sponsor on GitHub' },
   { icon: Wallet, title: 'Ethereum', description: 'Direct on-chain donation', link: '0x0000...0000', linkLabel: 'Copy Address', isAddress: true },
   { icon: Landmark, title: 'Gitcoin Grants', description: 'Community-driven quadratic funding', link: 'When available', linkLabel: 'Coming Soon', disabled: true },
-  { icon: Mail, title: 'Direct Sponsorship', description: 'For custom arrangements', link: 'conduct@omnia.protocol', linkLabel: 'Send Email' },
+  { icon: Mail, title: 'Direct Sponsorship', description: 'For custom arrangements', link: 'https://github.com/Willow7737/omnia-protocol/issues', linkLabel: 'Open a GitHub Issue' },
 ]
 
 const transparencyPoints = [
@@ -68,13 +68,13 @@ export default function DonatePage() {
       />
 
       {/* Why Support Omnia? — Dark section */}
-      <section className="section-dark section-spacing">
+      <section className="section-paper section-spacing">
         <div className="max-w-[980px] mx-auto px-6">
           <motion.div {...fadeInUp}>
-            <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-[#F5F5F7] mb-4">Why Support Omnia?</h2>
-            <div className="space-y-5 text-[#86868B] leading-[1.6] text-[17px] sm:text-[19px] max-w-[680px] mb-10 font-[family-name:var(--font-geist-sans)]">
+            <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-foreground mb-4">Why Support Omnia?</h2>
+            <div className="space-y-5 text-muted-foreground leading-[1.6] text-[17px] sm:text-[19px] max-w-[680px] mb-10 font-sans">
               <p>
-                Omnia is a public-interest protocol released under <span className="text-[#F5F5F7] font-medium">CC0</span> — 
+                Omnia is a public-interest protocol released under <span className="text-foreground font-medium">CC0</span> — 
                 no entity owns it. There is no token sale, no VC round, no pre-mine. Development is funded by 
                 protocol grants, community contributions, and individual donations.
               </p>
@@ -94,14 +94,14 @@ export default function DonatePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-30px' }}
                   transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] as const }}
-                  className={`flex items-center gap-4 sm:gap-6 py-5 ${i < fundingAreas.length - 1 ? 'border-b border-white/[0.06]' : ''}`}
+                  className={`flex items-center gap-4 sm:gap-6 py-5 ${i < fundingAreas.length - 1 ? 'border-b border-border' : ''}`}
                 >
-                  <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
-                    <Icon className="w-4.5 h-4.5 text-[#2997FF]" />
+                  <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <Icon className="w-4.5 h-4.5 text-primary" />
                   </div>
                   <div>
-                    <p className="text-[#F5F5F7] text-[15px] sm:text-[17px] font-medium font-[family-name:var(--font-space-grotesk)]">{area.label}</p>
-                    <p className="text-[#86868B] text-[13px] mt-0.5 font-[family-name:var(--font-geist-sans)]">{area.detail}</p>
+                    <p className="text-foreground text-[15px] sm:text-[17px] font-medium font-sans">{area.label}</p>
+                    <p className="text-muted-foreground text-[13px] mt-0.5 font-sans">{area.detail}</p>
                   </div>
                 </motion.div>
               )
@@ -111,16 +111,16 @@ export default function DonatePage() {
       </section>
 
       {/* Tier Cards — Light section */}
-      <section className="section-light section-spacing">
+      <section className="section-white section-spacing">
         <div className="max-w-[980px] mx-auto px-6">
           <motion.div {...fadeInUp}>
-            <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-[#1D1D1F] mb-4">How Your Contribution Helps</h2>
-            <p className="text-[#6E6E73] leading-[1.6] text-[17px] sm:text-[19px] max-w-[600px] mb-12 font-[family-name:var(--font-geist-sans)]">
+            <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-foreground mb-4">How Your Contribution Helps</h2>
+            <p className="text-muted-foreground leading-[1.6] text-[17px] sm:text-[19px] max-w-[600px] mb-12 font-sans">
               Every contribution matters. Here is what your support enables at each level.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[rgba(0,0,0,0.06)] rounded-xl overflow-hidden">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border rounded-xl overflow-hidden">
             {tiers.map((tier, i) => {
               const Icon = tier.icon
               return (
@@ -130,14 +130,14 @@ export default function DonatePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-30px' }}
                   transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] as const }}
-                  className="bg-[#FBFBFD] p-6 sm:p-8"
+                  className="bg-card p-6 sm:p-8"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-[#2997FF]/10 flex items-center justify-center mb-4">
-                    <Icon className="w-5 h-5 text-[#2997FF]" />
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                    <Icon className="w-5 h-5 text-primary" />
                   </div>
-                  <h3 className="text-[#1D1D1F] font-bold text-[17px] mb-1 font-[family-name:var(--font-space-grotesk)]">{tier.title}</h3>
-                  <p className="font-[family-name:var(--font-jetbrains-mono)] font-bold text-[20px] text-[#2997FF] mb-3">{tier.amount}</p>
-                  <p className="text-[#6E6E73] text-[13px] leading-[1.5] font-[family-name:var(--font-geist-sans)]">{tier.description}</p>
+                  <h3 className="text-foreground font-bold text-[17px] mb-1 font-sans">{tier.title}</h3>
+                  <p className="font-mono font-bold text-[20px] text-primary mb-3">{tier.amount}</p>
+                  <p className="text-muted-foreground text-[13px] leading-[1.5] font-sans">{tier.description}</p>
                 </motion.div>
               )
             })}
@@ -146,11 +146,11 @@ export default function DonatePage() {
       </section>
 
       {/* Ways to Donate — Dark section */}
-      <section className="section-dark section-spacing">
+      <section className="section-paper section-spacing">
         <div className="max-w-[980px] mx-auto px-6">
           <motion.div {...fadeInUp}>
-            <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-[#F5F5F7] mb-4">Ways to Donate</h2>
-            <p className="text-[#86868B] leading-[1.6] text-[17px] sm:text-[19px] max-w-[600px] mb-12 font-[family-name:var(--font-geist-sans)]">
+            <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-foreground mb-4">Ways to Donate</h2>
+            <p className="text-muted-foreground leading-[1.6] text-[17px] sm:text-[19px] max-w-[600px] mb-12 font-sans">
               Choose the method that works best for you. Every contribution goes directly to protocol development.
             </p>
           </motion.div>
@@ -165,24 +165,24 @@ export default function DonatePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-30px' }}
                   transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] as const }}
-                  className={`group flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 py-6 ${i < donationMethods.length - 1 ? 'border-b border-white/[0.06]' : ''} ${method.disabled ? 'opacity-50' : ''}`}
+                  className={`group flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 py-6 ${i < donationMethods.length - 1 ? 'border-b border-border' : ''} ${method.disabled ? 'opacity-50' : ''}`}
                 >
                   <div className="flex items-center gap-3 sm:w-[240px] shrink-0">
-                    <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
-                      <Icon className="w-4.5 h-4.5 text-[#2997FF]" />
+                    <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Icon className="w-4.5 h-4.5 text-primary" />
                     </div>
-                    <h3 className="text-[#F5F5F7] font-semibold text-[15px] sm:text-[17px] font-[family-name:var(--font-space-grotesk)]">{method.title}</h3>
+                    <h3 className="text-foreground font-semibold text-[15px] sm:text-[17px] font-sans">{method.title}</h3>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[#86868B] text-[14px] font-[family-name:var(--font-geist-sans)]">{method.description}</p>
+                    <p className="text-muted-foreground text-[14px] font-sans">{method.description}</p>
                   </div>
                   <div className="shrink-0">
                     {method.isAddress ? (
-                      <code className="text-[#2997FF] text-[12px] font-[family-name:var(--font-jetbrains-mono)] bg-[#2997FF]/5 px-3 py-1.5 rounded-lg border border-[#2997FF]/10">
+                      <code className="text-primary text-[12px] font-mono bg-primary/5 px-3 py-1.5 rounded-lg border border-primary/10">
                         {method.link}
                       </code>
                     ) : (
-                      <span className={`text-[13px] font-medium font-[family-name:var(--font-space-grotesk)] ${method.disabled ? 'text-[#48484A]' : 'text-[#2997FF]'}`}>
+                      <span className={`text-[13px] font-medium font-sans ${method.disabled ? 'text-muted-foreground/70' : 'text-primary'}`}>
                         {method.linkLabel}
                       </span>
                     )}
@@ -195,12 +195,12 @@ export default function DonatePage() {
       </section>
 
       {/* Transparency + Corporate Sponsorship — Light section */}
-      <section className="section-light section-spacing">
+      <section className="section-white section-spacing">
         <div className="max-w-[980px] mx-auto px-6 space-y-16">
           <div>
             <motion.div {...fadeInUp}>
-              <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-[#1D1D1F] mb-4">Transparency</h2>
-              <p className="text-[#6E6E73] leading-[1.6] text-[17px] sm:text-[19px] max-w-[600px] mb-10 font-[family-name:var(--font-geist-sans)]">
+              <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-foreground mb-4">Transparency</h2>
+              <p className="text-muted-foreground leading-[1.6] text-[17px] sm:text-[19px] max-w-[600px] mb-10 font-sans">
                 We hold ourselves to the same standard we hold the protocol. Every donation, every allocation, every decision — visible by default.
               </p>
             </motion.div>
@@ -215,12 +215,12 @@ export default function DonatePage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-30px' }}
                     transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] as const }}
-                    className={`flex items-center gap-4 py-4 ${i < transparencyPoints.length - 1 ? 'border-b border-[rgba(0,0,0,0.06)]' : ''}`}
+                    className={`flex items-center gap-4 py-4 ${i < transparencyPoints.length - 1 ? 'border-b border-border' : ''}`}
                   >
-                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-[#2997FF]/10 flex items-center justify-center">
-                      <Icon className="w-4 h-4 text-[#2997FF]" />
+                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-primary" />
                     </div>
-                    <p className="text-[#1D1D1F] text-[15px] sm:text-[17px] font-medium font-[family-name:var(--font-geist-sans)]">
+                    <p className="text-foreground text-[15px] sm:text-[17px] font-medium font-sans">
                       {point.text}
                     </p>
                   </motion.div>
@@ -231,8 +231,8 @@ export default function DonatePage() {
 
           <div>
             <motion.div {...fadeInUp}>
-              <h2 className="font-[family-name:var(--font-space-grotesk)] text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-[#1D1D1F] mb-4">Corporate Sponsorship</h2>
-              <p className="text-[#6E6E73] leading-[1.6] text-[17px] sm:text-[19px] max-w-[600px] mb-10 font-[family-name:var(--font-geist-sans)]">
+              <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-foreground mb-4">Corporate Sponsorship</h2>
+              <p className="text-muted-foreground leading-[1.6] text-[17px] sm:text-[19px] max-w-[600px] mb-10 font-sans">
                 For organizations that want to support public infrastructure. This is not a sponsorship deal — it is an investment in the commons.
               </p>
             </motion.div>
@@ -240,7 +240,7 @@ export default function DonatePage() {
             <motion.div {...fadeInUp}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div>
-                  <h3 className="text-[#1D1D1F] font-semibold text-[15px] sm:text-[17px] mb-4 font-[family-name:var(--font-space-grotesk)]">Benefits</h3>
+                  <h3 className="text-foreground font-semibold text-[15px] sm:text-[17px] mb-4 font-sans">Benefits</h3>
                   <ul className="space-y-3">
                     {[
                       'Logo placement on the Omnia website',
@@ -248,21 +248,26 @@ export default function DonatePage() {
                       'Dedicated support channel',
                     ].map((benefit, i) => (
                       <li key={i} className="flex items-center gap-3">
-                        <CheckCircle2 className="w-4 h-4 text-[#2997FF] flex-shrink-0" />
-                        <span className="text-[#6E6E73] text-[14px] sm:text-[15px] font-[family-name:var(--font-geist-sans)]">{benefit}</span>
+                        <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+                        <span className="text-muted-foreground text-[14px] sm:text-[15px] font-sans">{benefit}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
                 <div>
-                  <h3 className="text-[#1D1D1F] font-semibold text-[15px] sm:text-[17px] mb-4 font-[family-name:var(--font-space-grotesk)]">Get in Touch</h3>
-                  <p className="text-[#6E6E73] text-[14px] sm:text-[15px] leading-[1.6] mb-4 font-[family-name:var(--font-geist-sans)]">
+                  <h3 className="text-foreground font-semibold text-[15px] sm:text-[17px] mb-4 font-sans">Get in Touch</h3>
+                  <p className="text-muted-foreground text-[14px] sm:text-[15px] leading-[1.6] mb-4 font-sans">
                     If your organization believes in public infrastructure, we would like to hear from you. No strings attached, no governance capture, no special access to protocol decisions.
                   </p>
-                  <div className="flex items-center gap-2 text-[#2997FF]">
+                  <a
+                    href="https://github.com/Willow7737/omnia-protocol/issues"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+                  >
                     <Mail className="w-4 h-4" />
-                    <span className="font-[family-name:var(--font-jetbrains-mono)] text-[13px]">conduct@omnia.protocol</span>
-                  </div>
+                    <span className="font-mono text-[13px]">github.com/Willow7737/omnia-protocol/issues</span>
+                  </a>
                 </div>
               </div>
             </motion.div>

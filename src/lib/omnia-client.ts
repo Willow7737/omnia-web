@@ -97,7 +97,13 @@ function proxyUrl(path: string, nodeIndex = 0): string {
   return `/api/proxy/${path}?node=${nodeIndex}`
 }
 
+// The /api/proxy routes only exist in live (SSR) builds. In the static
+// export there is nothing to poll — fail fast instead of spamming 404s;
+// callers already fall back to benchmark data.
+const IS_LIVE = process.env.NEXT_PUBLIC_LIVE_MODE === 'true'
+
 async function fetchWithTimeout(url: string, timeoutMs = 5000): Promise<Response> {
+  if (!IS_LIVE) throw new Error('live mode disabled: static build has no API')
   const controller = new AbortController()
   const timeout = setTimeout(() => controller.abort(), timeoutMs)
   try {
