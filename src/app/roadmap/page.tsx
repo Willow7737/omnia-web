@@ -146,8 +146,9 @@ const phases: Phase[] = [
     status: 'in-progress',
     icon: Globe,
     items: [
-      { text: 'First public node live — v0.1.76, HTTPS + CORS, queryable at 78.47.43.136.sslip.io' },
-      { text: 'Multi-node validator set — pending' },
+      { text: 'Five-node public testnet live — v0.1.76, HTTPS + CORS, queryable at 78.47.43.136.sslip.io' },
+      { text: 'First events finalized on the public testnet (2026-07-02)' },
+      { text: 'Geographically distributed validator set — pending' },
       { text: 'External audit — pending' },
     ],
   },

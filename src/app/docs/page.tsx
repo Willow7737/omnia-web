@@ -195,9 +195,11 @@ export default function DocsPage() {
               </span>
             </div>
             <p className="text-[15px] sm:text-[17px] text-muted-foreground leading-[1.6] mb-6 max-w-[680px] font-sans">
-              The first public testnet node (v0.1.76) is live and queryable over HTTPS with open CORS.
-              It currently runs as a single node — no peers, no traffic — while the multi-validator
-              testnet is brought up. Poke it yourself:
+              A public five-node testnet (v0.1.76) is live and queryable over HTTPS with open CORS —
+              the first events finalized on 2026-07-02. All five validators currently run on one host,
+              and an idle mesh sheds peers between bursts of traffic, so you may catch{' '}
+              <code className="font-mono text-[13px] text-foreground bg-muted px-1.5 py-0.5 rounded-md">readyz</code>{' '}
+              reporting not_ready. That is the protocol being honest, not the site being broken. Poke it yourself:
             </p>
             <CodeBlock
               lang="bash"

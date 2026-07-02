@@ -30,7 +30,7 @@ const faqs: FAQItem[] = [
   {
     question: 'Is Omnia ready for production?',
     answer:
-      'Not yet. All 6 architecture layers are implemented and tested (1,536 tests passing), and a first public testnet node (v0.1.76) is live and queryable — but it runs as a single node while the multi-validator testnet is brought up. An external security audit is still pending before mainnet launch.',
+      'Not yet. All 6 architecture layers are implemented and tested (1,536 tests passing), and a public five-node testnet (v0.1.76) is live and queryable — its first events finalized on 2026-07-02. All validators currently run on a single host; a geographically distributed validator set and an external security audit are still pending before mainnet launch.',
   },
   {
     question: 'What is Universal Basic Compute (UBC)?',
