@@ -143,10 +143,12 @@ const phases: Phase[] = [
   {
     number: '6',
     title: 'Public Testnet',
-    status: 'future',
+    status: 'in-progress',
     icon: Globe,
     items: [
-      { text: 'Multi-node testnet, external audit' },
+      { text: 'First public node live — v0.1.76, HTTPS + CORS, queryable at 78.47.43.136.sslip.io' },
+      { text: 'Multi-node validator set — pending' },
+      { text: 'External audit — pending' },
     ],
   },
   {
@@ -288,6 +290,7 @@ function PhaseCard({ phase, index, isDark }: { phase: Phase; index: number; isDa
 export default function RoadmapPage() {
   const completedCount = phases.filter(p => p.status === 'completed').length
   const inProgressCount = phases.filter(p => p.status === 'in-progress').length
+  const futureCount = phases.filter(p => p.status === 'future').length
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -316,7 +319,7 @@ export default function RoadmapPage() {
             </div>
             <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-card border border-border">
               <Circle className="w-4 h-4 text-muted-foreground/40" />
-              <span className="text-[14px] text-muted-foreground font-sans">4 phases ahead</span>
+              <span className="text-[14px] text-muted-foreground font-sans">{futureCount} phases ahead</span>
             </div>
           </motion.div>
         </div>

@@ -33,6 +33,7 @@ jobs:
         run: bun run build
         env:
           NEXT_BASE_PATH: /omnia-web
+          NEXT_PUBLIC_OMNIA_PUBLIC_API_URL: https://78.47.43.136.sslip.io
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -183,9 +183,39 @@ export default function DocsPage() {
         breadcrumbs={[{ label: 'Documentation' }]}
       />
 
-      {/* Quick Start, Running a Node, Docker — Dark section */}
+      {/* Quick Start, Running a Node, Docker */}
       <section className="section-paper section-spacing">
         <div className="max-w-[980px] mx-auto px-6 space-y-16">
+          <motion.div {...fadeInUp}>
+            <div className="flex items-center gap-2.5 mb-6">
+              <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-foreground">Live Testnet Endpoint</h2>
+              <span className="relative flex h-2 w-2 mt-3">
+                <span className="pulse-dot absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-success" />
+              </span>
+            </div>
+            <p className="text-[15px] sm:text-[17px] text-muted-foreground leading-[1.6] mb-6 max-w-[680px] font-sans">
+              The first public testnet node (v0.1.76) is live and queryable over HTTPS with open CORS.
+              It currently runs as a single node — no peers, no traffic — while the multi-validator
+              testnet is brought up. Poke it yourself:
+            </p>
+            <CodeBlock
+              lang="bash"
+              code={`# Node health
+curl https://78.47.43.136.sslip.io/healthz
+# → {"node_id":1,"status":"alive","uptime_seconds":…}
+
+# Readiness (503 while the node has no peers — by design)
+curl https://78.47.43.136.sslip.io/readyz
+
+# Node info: version, protocol, shards, finalized height
+curl https://78.47.43.136.sslip.io/api/v1/node/info
+
+# Prometheus metrics
+curl https://78.47.43.136.sslip.io/metrics`}
+            />
+          </motion.div>
+
           <motion.div {...fadeInUp}>
             <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-[-0.03em] leading-[1.1] text-foreground mb-6">Quick Start</h2>
             <CodeBlock

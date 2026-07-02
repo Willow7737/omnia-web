@@ -17,9 +17,11 @@ All performance figures are copied from the protocol repository's **Honest Perfo
 - **Icons**: Lucide React
 - **Fonts**: Geist Sans, Geist Mono
 
-## Live Mode
+## Live Data
 
-By default, the site runs in **static mode** — it shows benchmark data from the protocol's v0.1.68+ single-node baselines. To connect to a live testnet:
+The static GitHub Pages build polls the public testnet node **directly from the browser** — the node serves `access-control-allow-origin: *`, so no proxy is needed. The endpoint is baked in at build time via `NEXT_PUBLIC_OMNIA_PUBLIC_API_URL` (set in `deploy.yml`, currently `https://78.47.43.136.sslip.io`). When the node is unreachable, or no endpoint is configured, the site falls back to the protocol's v0.1.68+ single-node benchmark baselines and labels itself "Benchmark".
+
+For a full SSR deployment that proxies to a Docker testnet (multi-node) instead:
 
 ```bash
 NEXT_PUBLIC_LIVE_MODE=true \
@@ -38,7 +40,8 @@ When the devnet moves, update the status endpoint URL via environment variables:
 
 | Variable | Default | Purpose |
 |----------|---------|---------|
-| `NEXT_PUBLIC_OMNIA_API_URL` | `http://localhost:9090` | Primary node API endpoint |
+| `NEXT_PUBLIC_OMNIA_API_URL` | `http://localhost:9090` | Primary node API endpoint (SSR proxy mode) |
+| `NEXT_PUBLIC_OMNIA_PUBLIC_API_URL` | — | Public HTTPS node endpoint fetched directly by the browser (static builds) |
 | `NEXT_PUBLIC_OMNIA_NODE_URLS` | `http://localhost:9090` | Comma-separated node URLs |
 | `NEXT_PUBLIC_POLL_INTERVAL_MS` | `5000` | Data polling interval |
 | `NEXT_PUBLIC_LIVE_MODE` | — | Set to `true` for SSR + live data |

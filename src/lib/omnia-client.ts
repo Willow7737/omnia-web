@@ -84,26 +84,42 @@ function getPollInterval(): number {
 
 export { getPollInterval }
 
-// ── Proxy-aware Fetch Helper ───────────────────────────────────────────────
+// ── Endpoint Resolution ────────────────────────────────────────────────────
+//
+// Two ways to reach a node:
+//   1. SSR live mode (NEXT_PUBLIC_LIVE_MODE=true): the browser talks to
+//      /api/proxy/*, which the Next.js server forwards over the Docker
+//      network. Supports multiple nodes via ?node=N.
+//   2. Direct mode (NEXT_PUBLIC_OMNIA_PUBLIC_API_URL set at build time):
+//      the browser fetches the public node endpoint itself. This is how
+//      the static GitHub Pages build reaches the testnet — the node
+//      serves CORS `access-control-allow-origin: *`. Single node only.
+//
+// With neither configured, the static build has nothing to poll — fail
+// fast instead of spamming 404s; callers fall back to benchmark data.
 
-/**
- * Build a proxy URL for the given node path.
- * Uses the Next.js API proxy to route through Docker networking.
- *
- * @param path - API path (e.g. "healthz", "api/v1/node/info", "metrics")
- * @param nodeIndex - Node index (0=bootstrap, 1-4=nodes)
- */
-function proxyUrl(path: string, nodeIndex = 0): string {
-  return `/api/proxy/${path}?node=${nodeIndex}`
+const IS_LIVE = process.env.NEXT_PUBLIC_LIVE_MODE === 'true'
+const PUBLIC_API_URL = (process.env.NEXT_PUBLIC_OMNIA_PUBLIC_API_URL || '').replace(/\/+$/, '')
+
+export function getPublicApiUrl(): string {
+  return PUBLIC_API_URL
 }
 
-// The /api/proxy routes only exist in live (SSR) builds. In the static
-// export there is nothing to poll — fail fast instead of spamming 404s;
-// callers already fall back to benchmark data.
-const IS_LIVE = process.env.NEXT_PUBLIC_LIVE_MODE === 'true'
+/**
+ * Resolve the URL for a node API path.
+ *
+ * @param path - API path (e.g. "healthz", "api/v1/node/info", "metrics")
+ * @param nodeIndex - Node index (0=bootstrap, 1-4=nodes); ignored in direct mode
+ */
+function proxyUrl(path: string, nodeIndex = 0): string {
+  if (IS_LIVE) return `/api/proxy/${path}?node=${nodeIndex}`
+  return `${PUBLIC_API_URL}/${path}`
+}
 
 async function fetchWithTimeout(url: string, timeoutMs = 5000): Promise<Response> {
-  if (!IS_LIVE) throw new Error('live mode disabled: static build has no API')
+  if (!IS_LIVE && !PUBLIC_API_URL) {
+    throw new Error('no API configured: static build without a public endpoint')
+  }
   const controller = new AbortController()
   const timeout = setTimeout(() => controller.abort(), timeoutMs)
   try {
@@ -132,7 +148,9 @@ export async function fetchHealth(nodeIndex = 0): Promise<HealthResponse | null>
 export async function fetchReadyz(nodeIndex = 0): Promise<ReadyzResponse | null> {
   try {
     const res = await fetchWithTimeout(proxyUrl('readyz', nodeIndex))
-    if (!res.ok) return null
+    // The node answers 503 with a JSON body while it has no peers —
+    // that body (peers, reason, status) is still meaningful.
+    if (!res.ok && res.status !== 503) return null
     return await res.json()
   } catch {
     return null
@@ -170,7 +188,7 @@ export async function fetchMetrics(nodeIndex = 0): Promise<string | null> {
 }
 
 export async function fetchAllNodes(): Promise<NodeInfo[]> {
-  const nodeCount = getNodeCount()
+  const nodeCount = IS_LIVE ? getNodeCount() : PUBLIC_API_URL ? 1 : 0
   const nodes = await Promise.all(
     Array.from({ length: nodeCount }, async (_, index) => {
       const [health, status] = await Promise.all([
@@ -179,8 +197,8 @@ export async function fetchAllNodes(): Promise<NodeInfo[]> {
       ])
       return {
         id: `node-${index}`,
-        name: index === 0 ? 'Bootstrap' : `Node ${index}`,
-        url: `/api/proxy/?node=${index}`,
+        name: IS_LIVE ? (index === 0 ? 'Bootstrap' : `Node ${index}`) : 'Public Node',
+        url: IS_LIVE ? `/api/proxy/?node=${index}` : PUBLIC_API_URL,
         health,
         status,
         healthy: health?.status === 'alive',

@@ -54,13 +54,17 @@ function MetricTable({ metrics, title, liveMetrics }: { metrics: MetricRow[]; ti
           if (liveMetrics && row.liveKey) {
             const liveVal = liveMetrics[row.liveKey]
             if (liveVal !== undefined && liveVal !== null) {
+              // An idle node reports zeros — keep the reference benchmark
+              // visible until there is real activity to show.
               if (typeof liveVal === 'string') {
                 const numMatch = liveVal.match(/^([\d.]+)/)
                 const unitMatch = liveVal.match(/([µm]?s)$/)
-                if (numMatch) displayValue = parseFloat(numMatch[1])
-                if (unitMatch) displayUnit = unitMatch[1]
-                isLive = true
-              } else if (typeof liveVal === 'number') {
+                if (numMatch && parseFloat(numMatch[1]) > 0) {
+                  displayValue = parseFloat(numMatch[1])
+                  if (unitMatch) displayUnit = unitMatch[1]
+                  isLive = true
+                }
+              } else if (typeof liveVal === 'number' && liveVal > 0) {
                 displayValue = liveVal
                 isLive = true
               }

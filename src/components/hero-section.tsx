@@ -29,7 +29,7 @@ export function HeroSection() {
   const isOnline = data?.healthy ?? false
   const hasLiveData = isOnline && !!data
 
-  const throughput = hasLiveData && data.metrics?.tps ? data.metrics.tps : BENCHMARK_DATA.throughput
+  const throughput = hasLiveData ? (data.metrics?.tps ?? 0) : BENCHMARK_DATA.throughput
   const latency = hasLiveData ? data.p50Latency : BENCHMARK_DATA.p50Latency
   const validators = hasLiveData ? data.activeValidators : BENCHMARK_DATA.validators
   const networkStatus = hasLiveData
