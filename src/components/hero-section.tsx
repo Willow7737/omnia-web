@@ -77,7 +77,7 @@ export function HeroSection() {
           className="text-[19px] sm:text-[21px] md:text-[24px] text-muted-foreground leading-[1.35] max-w-[560px] mx-auto mb-10"
         >
           Causal graph consensus.{' '}
-          <span className="text-foreground">24.5&thinsp;µs p50 finality.</span>{' '}
+          <span className="text-foreground">BFT finality proven across three continents.</span>{' '}
           Public domain.
         </motion.p>
 

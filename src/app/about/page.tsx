@@ -94,7 +94,7 @@ const stats = [
   { icon: ListChecks, value: '87,576', label: 'Lines of Code' },
   { icon: CheckCircle2, value: '1,536', label: 'Tests' },
   { icon: Layers, value: '6', label: 'Architecture Layers' },
-  { icon: CheckCircle2, value: '5', label: 'Phases Complete' },
+  { icon: CheckCircle2, value: '6', label: 'Phases — Public Testnet Live' },
   { icon: Globe, value: 'CC0', label: 'License' },
 ]
 

@@ -30,7 +30,7 @@ const faqs: FAQItem[] = [
   {
     question: 'Is Omnia ready for production?',
     answer:
-      'Not yet. All 6 architecture layers are implemented and tested (1,536 tests passing), but the protocol is currently in the post-Phase 5 audit stage. A public testnet and external security audit are pending before mainnet launch.',
+      'Not mainnet yet — but the public testnet is live and measured: a multi-node Lane 0 validator network with real BFT finality (10,000/10,000 events finalized in stress runs), proven across a 3-region WAN (EU/US/Asia). The mobile wallet and web dashboard ship against it today. An external security audit is the main remaining gate before mainnet.',
   },
   {
     question: 'What is Universal Basic Compute (UBC)?',
