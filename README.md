@@ -19,7 +19,7 @@ All performance figures are copied from the protocol repository's **Honest Perfo
 
 ## Live Mode
 
-By default, the site runs in **static mode** — it shows benchmark data from the protocol's v0.1.68+ single-node baselines. To connect to a live testnet:
+By default, the site runs in **static mode** — it shows benchmark data from the protocol's v0.1.68+ single-node baselines. The **public multi-node testnet is live** at `https://78.47.43.136.sslip.io` (Lane 0 validator mesh; BFT finality measured at 10k-event bursts and across a 3-region WAN — see the protocol repo's `docs/reference/benchmark-gates.md`). To connect the site to it (or any node):
 
 ```bash
 NEXT_PUBLIC_LIVE_MODE=true \

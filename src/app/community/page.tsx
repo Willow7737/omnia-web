@@ -45,7 +45,7 @@ const contributeWays = [
   { icon: GitPullRequest, title: 'Submit pull requests', description: 'Rust codebase' },
   { icon: BookOpen, title: 'Write documentation', description: 'Guides, API docs, tutorials' },
   { icon: Vote, title: 'Participate in governance', description: 'Discussions and proposals' },
-  { icon: Server, title: 'Run a validator node', description: 'Coming soon' },
+  { icon: Server, title: 'Run a validator node', description: 'Live now — see the validator setup and geo-testnet runbooks' },
   { icon: Megaphone, title: 'Spread the word', description: 'Tell others about Omnia' },
 ]
 

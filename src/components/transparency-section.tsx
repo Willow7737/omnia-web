@@ -9,16 +9,20 @@ interface StubRow {
   phase: string
 }
 
+// Shipped items graduate OUT of this table (mobile wallet, validator
+// network, public testnet — all live as of July 2026); it lists only what
+// is still stubbed, partial, or not started. Source of truth:
+// omnia-protocol/docs/stub-inventory.md
 const stubData: StubRow[] = [
-  { feature: 'RF Fingerprinting', layer: 'L3', status: 'Stub', phase: 'Phase 1' },
-  { feature: 'Proof-of-Useful-Work', layer: 'L5', status: 'Partial', phase: 'Phase 2' },
-  { feature: 'Bitcoin Settlement', layer: 'L0', status: 'Stub', phase: 'Phase 1' },
-  { feature: 'Solana Settlement', layer: 'L0', status: 'Stub', phase: 'Phase 1' },
-  { feature: 'Cosmos Settlement', layer: 'L0', status: 'Stub', phase: 'Phase 1' },
-  { feature: 'Mobile Wallet', layer: '—', status: 'Not Started', phase: 'Phase 1' },
-  { feature: 'Validator Network', layer: '—', status: 'Not Started', phase: 'Phase 1' },
-  { feature: 'Conviction Voting', layer: 'L5', status: 'Not Started', phase: 'Phase 1' },
-  { feature: 'Delegation', layer: 'L5', status: 'Not Started', phase: 'Phase 1' },
+  { feature: 'External security audit', layer: '—', status: 'Not Started', phase: 'Phase 6' },
+  { feature: 'Permanent geo network (WAN campaign done)', layer: '—', status: 'Partial', phase: 'Phase 6' },
+  { feature: 'Bitcoin Settlement', layer: 'L0', status: 'Stub', phase: 'Phase 7' },
+  { feature: 'Solana Settlement', layer: 'L0', status: 'Stub', phase: 'Phase 7' },
+  { feature: 'Celestia Settlement', layer: 'L0', status: 'Stub', phase: 'Phase 7' },
+  { feature: 'RF Fingerprinting', layer: 'L3', status: 'Stub', phase: 'Phase 7' },
+  { feature: 'Proof-of-Useful-Work', layer: 'L5', status: 'Stub', phase: 'Phase 8' },
+  { feature: 'Conviction Voting', layer: 'L5', status: 'Not Started', phase: 'Phase 7' },
+  { feature: 'Delegation', layer: 'L5', status: 'Not Started', phase: 'Phase 7' },
 ]
 
 function statusColor(status: StubRow['status']) {
@@ -90,7 +94,7 @@ export function TransparencySection() {
           </div>
 
           <p className="text-[13px] sm:text-[14px] text-muted-foreground mt-6 leading-relaxed font-sans">
-            Celestia Settlement (L0) is fully implemented. Ethereum adapter is live. All other settlement targets are stubbed.
+            The Ethereum settlement adapter is live; Bitcoin, Solana, and Celestia targets are stubs. The multi-node validator testnet, mobile wallet, and web dashboard shipped in July 2026 and have graduated off this list.
           </p>
         </motion.div>
       </div>

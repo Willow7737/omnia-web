@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 const description =
-  "Settlement-agnostic causal graph consensus. 24.5 µs p50 finality on a single node, honestly measured. Public domain.";
+  "Settlement-agnostic causal graph consensus. BFT finality measured live across three continents. Public domain.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://willow7737.github.io/omnia-web"),

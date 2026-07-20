@@ -143,10 +143,14 @@ const phases: Phase[] = [
   {
     number: '6',
     title: 'Public Testnet',
-    status: 'future',
+    status: 'in-progress',
     icon: Globe,
     items: [
-      { text: 'Multi-node testnet, external audit' },
+      { text: 'Multi-node Lane 0 validator testnet LIVE — 10,000/10,000 events BFT-finalized across 5 validators in stress runs (July 2026)' },
+      { text: 'Geo-distributed WAN campaign: 3 regions (EU / US-East / Asia, RTTs to ~218 ms) — 100% propagation + full quorum finality, zero loss' },
+      { text: 'Self-healing anti-entropy repair with fast drain — burst overload recovers automatically' },
+      { text: 'Mobile wallet v1 + web dashboard + website shipped against the live testnet' },
+      { text: 'Remaining: external security audit, permanently-running geo network' },
     ],
   },
   {
