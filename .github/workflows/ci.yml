@@ -1,0 +1,68 @@
+# CI for omnia-web — runs on every PR and push to main.
+#
+# Three jobs:
+#   lint-typecheck — eslint + tsc --noEmit (fast fail)
+#   build-static   — the exact GitHub Pages static-export build that
+#                    deploy.yml performs (NEXT_BASE_PATH=/omnia-web),
+#                    asserting ./out is produced. This is the check that
+#                    protects Pages deploys from broken merges.
+#   build-standalone — the Docker / live-mode build variant (API routes
+#                    kept), so both build paths stay green.
+#
+# Package manager: Bun (matches deploy.yml and bun.lock). @prisma/client
+# generates its client via postinstall, so no explicit prisma step needed.
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install dependencies
+        run: bun install
+      - name: ESLint
+        run: bun run lint
+      - name: Typecheck
+        run: bunx tsc --noEmit
+
+  build-static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install dependencies
+        run: bun install
+      - name: Build (GitHub Pages static export)
+        run: bun run build
+        env:
+          NEXT_BASE_PATH: /omnia-web
+      - name: Assert static output exists
+        run: test -d out && test -f out/index.html
+
+  build-standalone:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install dependencies
+        run: bun install
+      - name: Build (Docker / live-mode standalone)
+        run: bun run build
