@@ -44,6 +44,8 @@ const footerLinks = [
     links: [
       { label: 'Privacy', href: '/privacy' },
       { label: 'Terms', href: '/terms' },
+      { label: 'Wallet Privacy', href: '/wallet/privacy' },
+      { label: 'Wallet Terms', href: '/wallet/terms' },
     ],
   },
 ]
