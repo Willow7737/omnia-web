@@ -46,6 +46,7 @@ const footerLinks = [
       { label: 'Terms', href: '/terms' },
       { label: 'Wallet Privacy', href: '/wallet/privacy' },
       { label: 'Wallet Terms', href: '/wallet/terms' },
+      { label: 'Delete Account', href: '/wallet/delete-account' },
     ],
   },
 ]
