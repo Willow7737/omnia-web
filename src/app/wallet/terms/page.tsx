@@ -53,7 +53,7 @@ const sections = [
         Omnia Wallet is a{' '}
         <span className="text-foreground font-medium">self-custodial</span> client for
         the Omnia Protocol. It lets you create an on-device identity, view your
-        balance, send Universal Basic Credit (UBC), and use optional social
+        balance, send Universal Basic Compute (UBC), and use optional social
         features. The app is provided as free, open-source software.
       </p>
     ),
@@ -98,7 +98,7 @@ const sections = [
     isDark: false,
     content: (
       <p>
-        Universal Basic Credit (UBC) is a{' '}
+        Universal Basic Compute (UBC) is a{' '}
         <span className="text-foreground font-medium">soulbound utility credit</span>{' '}
         within the Omnia Protocol. It is not a currency, security, investment, or
         payment instrument, it is not purchasable with money, and it carries no
