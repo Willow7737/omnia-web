@@ -94,7 +94,7 @@ export function TransparencySection() {
           </div>
 
           <p className="text-[13px] sm:text-[14px] text-muted-foreground mt-6 leading-relaxed font-sans">
-            The Ethereum settlement adapter is live; Bitcoin, Solana, and Celestia targets are stubs. The multi-node validator testnet, mobile wallet, and web dashboard shipped in July 2026 and have graduated off this list.
+            The Ethereum settlement adapter is live; Bitcoin, Solana, and Cosmos are stubs, and the Celestia adapter is unverified plumbing that has never run against a real Celestia node. The mobile wallet and web dashboard shipped in July 2026 and have graduated off this list. A standing multi-node validator network has not: Lane 0 finality is proven in stress runs, but the public endpoint runs a single node with zero peers.
           </p>
         </motion.div>
       </div>
