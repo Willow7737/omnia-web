@@ -3,12 +3,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
-
 @theme inline {
-  --font-heading: 'Space Grotesk', var(--font-sans), system-ui, sans-serif;
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-heading: var(--font-sans);
+  --font-sans: var(--font-geist-sans), 'Geist Fallback', system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), 'Geist Mono Fallback', ui-monospace, monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -51,192 +49,195 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/*
+ * Omnia light theme — shared with omnia-protocol-interface.
+ *
+ * Paper-white surfaces, near-black ink, one restrained blue.
+ * The brand voice comes from the logo itself: a monospaced,
+ * lowercase wordmark and a halftone-dot texture. Both are used
+ * sparingly — the site should read like a well-set spec sheet,
+ * not a neon landing page.
+ */
 :root {
-  color-scheme: dark;
-  --background: oklch(0.055 0.008 260);
-  --foreground: oklch(0.97 0.005 260);
-  --card: oklch(0.085 0.01 260 / 0.6);
-  --card-foreground: oklch(0.97 0.005 260);
-  --popover: oklch(0.08 0.01 260);
-  --popover-foreground: oklch(0.97 0.005 260);
-  --primary: oklch(0.65 0.18 280);
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.12 0.015 260);
-  --secondary-foreground: oklch(0.85 0.01 260);
-  --muted: oklch(0.14 0.01 260);
-  --muted-foreground: oklch(0.55 0.02 260);
-  --accent: oklch(0.18 0.03 280);
-  --accent-foreground: oklch(0.97 0.005 260);
-  --destructive: oklch(0.58 0.2 25);
-  --success: oklch(0.6 0.14 155);
-  --warning: oklch(0.65 0.14 80);
-  --border: oklch(0.18 0.015 260 / 0.5);
-  --input: oklch(0.14 0.01 260 / 0.6);
-  --ring: oklch(0.65 0.18 280);
-  --chart-1: oklch(0.65 0.18 280);
-  --chart-2: oklch(0.6 0.14 155);
-  --chart-3: oklch(0.65 0.14 80);
-  --chart-4: oklch(0.58 0.2 25);
-  --chart-5: oklch(0.6 0.12 200);
-  --radius: 0.875rem;
-  --sidebar: oklch(0.07 0.008 260);
-  --sidebar-foreground: oklch(0.97 0.005 260);
-  --sidebar-primary: oklch(0.65 0.18 280);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.12 0.015 260);
-  --sidebar-accent-foreground: oklch(0.97 0.005 260);
-  --sidebar-border: oklch(0.16 0.01 260 / 0.4);
-  --sidebar-ring: oklch(0.65 0.18 280);
-
-  --aurora-purple: oklch(0.55 0.22 300);
-  --aurora-blue: oklch(0.55 0.18 250);
-  --aurora-teal: oklch(0.6 0.15 190);
-  --aurora-pink: oklch(0.6 0.2 340);
-  --aurora-cyan: oklch(0.65 0.16 200);
+  color-scheme: light;
+  --background: oklch(0.982 0.002 250);
+  --foreground: oklch(0.21 0.006 255);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.21 0.006 255);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.21 0.006 255);
+  --primary: oklch(0.51 0.16 255);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.955 0.003 250);
+  --secondary-foreground: oklch(0.25 0.006 255);
+  --muted: oklch(0.955 0.003 250);
+  --muted-foreground: oklch(0.5 0.008 255);
+  --accent: oklch(0.945 0.012 255);
+  --accent-foreground: oklch(0.25 0.006 255);
+  --destructive: oklch(0.54 0.19 27);
+  --success: oklch(0.55 0.13 150);
+  --warning: oklch(0.62 0.13 75);
+  --border: oklch(0.915 0.004 250);
+  --input: oklch(0.915 0.004 250);
+  --ring: oklch(0.51 0.16 255);
+  --chart-1: oklch(0.51 0.16 255);
+  --chart-2: oklch(0.55 0.13 150);
+  --chart-3: oklch(0.62 0.13 75);
+  --chart-4: oklch(0.54 0.19 27);
+  --chart-5: oklch(0.55 0.1 200);
+  --radius: 0.75rem;
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.21 0.006 255);
+  --sidebar-primary: oklch(0.51 0.16 255);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.955 0.003 250);
+  --sidebar-accent-foreground: oklch(0.21 0.006 255);
+  --sidebar-border: oklch(0.925 0.004 250);
+  --sidebar-ring: oklch(0.51 0.16 255);
 }
 
 @layer base {
-  * { @apply border-border outline-ring/50; }
-  body { @apply bg-background text-foreground; font-family: var(--font-sans); }
-  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    letter-spacing: -0.02em;
+  * {
+    @apply border-border outline-ring/50;
   }
-  code, pre, .font-mono { font-family: var(--font-mono); }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
 }
 
-.aurora-glow { position: relative; overflow: hidden; }
-.aurora-glow::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 50% at 20% 80%, oklch(0.4 0.2 300 / 0.25) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 80% 90%, oklch(0.4 0.18 250 / 0.2) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 50% at 50% 100%, oklch(0.45 0.15 190 / 0.15) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 0;
+/* Halftone texture lifted from the logo. Use sparingly. */
+@utility dither {
+  background-image: radial-gradient(
+    oklch(0.21 0.006 255 / 0.13) 1px,
+    transparent 1px
+  );
+  background-size: 7px 7px;
 }
 
-.aurora-glow-vivid::before {
-  background:
-    radial-gradient(ellipse 70% 50% at 15% 85%, oklch(0.45 0.22 300 / 0.3) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 45% at 50% 95%, oklch(0.5 0.18 190 / 0.2) 0%, transparent 50%),
-    radial-gradient(ellipse 55% 40% at 85% 80%, oklch(0.5 0.2 340 / 0.18) 0%, transparent 50%);
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
 }
 
-.aurora-glow-top::before {
-  background:
-    radial-gradient(ellipse 60% 40% at 30% 0%, oklch(0.4 0.2 300 / 0.15) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 35% at 70% 5%, oklch(0.4 0.18 250 / 0.12) 0%, transparent 55%);
+/*
+ * Section rhythm. The old dark theme alternated black/white;
+ * the light system alternates paper and plain white instead.
+ * Class names kept semantic: paper = page background, white = card.
+ */
+.section-paper {
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
-.glass-card {
-  background: oklch(0.1 0.01 260 / 0.4);
-  backdrop-filter: blur(20px) saturate(1.4);
-  -webkit-backdrop-filter: blur(20px) saturate(1.4);
-  border: 1px solid oklch(0.2 0.015 260 / 0.3);
-  box-shadow: 0 4px 24px oklch(0 0 0 / 0.2), inset 0 1px 0 oklch(1 0 0 / 0.05);
+.section-white {
+  background-color: var(--card);
+  color: var(--card-foreground);
 }
 
-.glass-card-strong {
-  background: oklch(0.08 0.01 260 / 0.65);
-  backdrop-filter: blur(24px) saturate(1.5);
-  -webkit-backdrop-filter: blur(24px) saturate(1.5);
-  border: 1px solid oklch(0.22 0.02 260 / 0.35);
-  box-shadow: 0 8px 32px oklch(0 0 0 / 0.3), inset 0 1px 0 oklch(1 0 0 / 0.08);
+.section-spacing {
+  padding-top: 96px;
+  padding-bottom: 96px;
 }
 
-.gradient-text {
-  background: linear-gradient(135deg, oklch(0.85 0.05 280) 0%, oklch(0.8 0.08 200) 50%, oklch(0.85 0.06 340) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+@media (min-width: 640px) {
+  .section-spacing {
+    padding-top: 128px;
+    padding-bottom: 128px;
+  }
 }
 
-.gradient-text-purple {
-  background: linear-gradient(135deg, oklch(0.8 0.1 280) 0%, oklch(0.75 0.12 250) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Page hero gradient — one restrained wash of the brand blue */
+.page-hero-gradient {
+  background-image: linear-gradient(
+    180deg,
+    oklch(0.51 0.16 255 / 0.045) 0%,
+    transparent 60%
+  );
 }
 
-.section-void { background-color: var(--background); color: var(--foreground); position: relative; }
-.section-elevated { background-color: oklch(0.07 0.008 260); color: var(--foreground); position: relative; }
-.section-spacing { padding-top: 96px; padding-bottom: 96px; }
-@media (min-width: 640px) { .section-spacing { padding-top: 128px; padding-bottom: 128px; } }
-
-.hero-gradient {
-  background-image:
-    radial-gradient(ellipse 70% 60% at 50% 100%, oklch(0.4 0.2 300 / 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 20% 90%, oklch(0.4 0.18 250 / 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 40% at 80% 90%, oklch(0.45 0.15 190 / 0.06) 0%, transparent 50%);
+/* Live indicator: a quiet breathing dot, no glow */
+@keyframes soft-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
 }
 
-@keyframes soft-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
-.pulse-dot { animation: soft-pulse 2s ease-in-out infinite; }
-
-@keyframes fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-.animate-in { animation: fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-
-@keyframes aurora-shift {
-  0% { transform: translateX(-5%) translateY(0%) rotate(0deg); }
-  33% { transform: translateX(3%) translateY(-2%) rotate(1deg); }
-  66% { transform: translateX(-2%) translateY(1%) rotate(-0.5deg); }
-  100% { transform: translateX(-5%) translateY(0%) rotate(0deg); }
+.pulse-dot {
+  animation: soft-pulse 2s ease-in-out infinite;
 }
-.aurora-animate::before { animation: aurora-shift 20s ease-in-out infinite; }
 
-@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
-.animate-float { animation: float 6s ease-in-out infinite; }
+/* Fade-in for freshly loaded content */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
-@keyframes copy-flash { 0% { background-color: oklch(0.65 0.18 280 / 0.2); } 100% { background-color: transparent; } }
-.animate-copy-flash { animation: copy-flash 0.6s ease-out; }
+.animate-in {
+  animation: fade-in 0.25s ease-out;
+}
 
+/* Copy-to-clipboard confirmation flash */
+@keyframes copy-flash {
+  0% {
+    background-color: oklch(0.51 0.16 255 / 0.12);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.animate-copy-flash {
+  animation: copy-flash 0.6s ease-out;
+}
+
+/* Link underline that slides in from the left */
 .link-underline {
   background-image: linear-gradient(currentColor, currentColor);
   background-size: 0% 1px;
   background-position: 0 100%;
   background-repeat: no-repeat;
-  transition: background-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background-size 0.25s ease;
 }
-.link-underline:hover { background-size: 100% 1px; }
-
-.btn-glow {
-  position: relative;
-  background: linear-gradient(135deg, oklch(0.6 0.18 280) 0%, oklch(0.55 0.16 250) 100%);
-  box-shadow: 0 0 20px oklch(0.6 0.18 280 / 0.3), 0 4px 12px oklch(0 0 0 / 0.2);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+.link-underline:hover {
+  background-size: 100% 1px;
 }
-.btn-glow:hover {
-  box-shadow: 0 0 30px oklch(0.6 0.18 280 / 0.5), 0 6px 20px oklch(0 0 0 / 0.3);
-  transform: translateY(-1px);
-}
-
-.btn-glow-outline {
-  position: relative;
-  background: transparent;
-  border: 1px solid oklch(0.3 0.05 280 / 0.5);
-  box-shadow: 0 0 0 oklch(0.6 0.18 280 / 0);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.btn-glow-outline:hover {
-  border-color: oklch(0.6 0.18 280 / 0.6);
-  box-shadow: 0 0 20px oklch(0.6 0.18 280 / 0.15);
-  background: oklch(0.6 0.18 280 / 0.08);
-}
-
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: oklch(0.2 0.02 260 / 0.5); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: oklch(0.3 0.03 260 / 0.6); }
-
-::selection { background: oklch(0.6 0.18 280 / 0.35); color: oklch(0.98 0 0); }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .animate-in, .pulse-dot, .animate-copy-flash, .aurora-animate::before, .animate-float { animation: none; }
-  * { transition-duration: 0.01ms !important; }
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-in,
+  .pulse-dot,
+  .animate-copy-flash {
+    animation: none;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
 }

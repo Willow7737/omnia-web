@@ -1,111 +1,213 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, Activity, Zap } from "lucide-react";
-import Link from "next/link";
-import { withBasePath } from "@/lib/base-path";
+import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { AnimatedNumber } from './animated-number'
+import { CausalGraphSvg } from './causal-graph-svg'
+import { ArrowRight, Wifi, WifiOff, Loader2 } from 'lucide-react'
+import { useOmniaDashboard } from '@/hooks/use-omnia-data'
+
+/*
+ * Fallback figures when no live testnet is reachable. Sourced from the
+ * protocol's "Honest Performance Numbers" table (README, v0.1.68+
+ * baselines): single-node synchronous pipeline on the reference
+ * benchmark machine.
+ */
+const BENCHMARK_DATA = {
+  throughput: 12000,
+  p50Latency: '24.5µs',
+  validators: 1,
+  networkStatus: 'Benchmark',
+  nodeCount: 1,
+} as const
+
+const EASE = [0.25, 0.46, 0.45, 0.94] as const
 
 export function HeroSection() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
+  const { data, isLoading, error } = useOmniaDashboard()
+
+  const isOnline = data?.healthy ?? false
+  const hasLiveData = isOnline && !!data
+
+  const throughput = hasLiveData && data.metrics?.tps ? data.metrics.tps : BENCHMARK_DATA.throughput
+  const latency = hasLiveData ? data.p50Latency : BENCHMARK_DATA.p50Latency
+  const validators = hasLiveData ? data.activeValidators : BENCHMARK_DATA.validators
+  const networkStatus = hasLiveData
+    ? data.networkStatus
+    : (error ? 'Offline' : 'Benchmark')
+  const nodeCount = hasLiveData ? data.nodeCount : BENCHMARK_DATA.nodeCount
 
   return (
-    <section className="relative min-h-[100dvh] flex flex-col justify-center overflow-hidden aurora-glow aurora-animate">
-      <div className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `linear-gradient(oklch(0.97 0.005 260 / 0.3) 1px, transparent 1px), linear-gradient(90deg, oklch(0.97 0.005 260 / 0.3) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px'
-        }}
-      />
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-[oklch(0.4_0.2_300/0.08)] blur-[100px] animate-float" />
-      <div className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-[oklch(0.4_0.18_250/0.06)] blur-[120px] animate-float" style={{ animationDelay: '-3s' }} />
+    <section
+      id="hero"
+      className="section-paper relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16"
+    >
+      {/* Halftone corner texture, straight from the logo */}
+      <div className="dither absolute top-12 right-0 w-40 h-40 sm:w-64 sm:h-64 [mask-image:linear-gradient(225deg,black,transparent_70%)] pointer-events-none" aria-hidden />
+      <div className="dither absolute bottom-0 left-0 w-40 h-40 sm:w-64 sm:h-64 [mask-image:linear-gradient(45deg,black,transparent_70%)] pointer-events-none" aria-hidden />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-20">
-        <div className="max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={mounted ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[oklch(0.6_0.18_280)] opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[oklch(0.65_0.18_280)]" />
-              </span>
-              <span className="text-sm font-mono text-[oklch(0.7_0.1_280)] tracking-wide">v0.1.76 live on testnet</span>
-            </div>
-          </motion.div>
+      <div className="text-center max-w-[780px] mx-auto relative z-10">
+        {/* Overline */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+          className="mb-6"
+        >
+          <span className="font-mono text-[12px] sm:text-[13px] tracking-wide text-muted-foreground lowercase">
+            settlement-agnostic dag consensus
+          </span>
+        </motion.div>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={mounted ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[0.95] mb-8"
-            style={{ fontFamily: 'var(--font-heading)' }}
-          >
-            <span className="block text-[oklch(0.97_0.005_260)]">Settlement</span>
-            <span className="block"><span className="gradient-text">agnostic</span></span>
-            <span className="block text-[oklch(0.97_0.005_260)]">DAG consensus</span>
-          </motion.h1>
+        {/* Headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: EASE }}
+          className="font-sans text-[56px] sm:text-[80px] md:text-[96px] font-bold tracking-[-0.04em] leading-[1.02] text-foreground mb-6"
+        >
+          Omnia
+        </motion.h1>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={mounted ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg sm:text-xl text-[oklch(0.6_0.02_260)] max-w-2xl mb-10 leading-relaxed"
-          >
-            Causal graph consensus with BFT finality proven across three continents. Public domain. No entity owns it.
-          </motion.p>
+        {/* Subheadline */}
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+          className="text-[19px] sm:text-[21px] md:text-[24px] text-muted-foreground leading-[1.35] max-w-[560px] mx-auto mb-10"
+        >
+          Causal graph consensus.{' '}
+          <span className="text-foreground">BFT finality proven across three continents.</span>{' '}
+          Public domain.
+        </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={mounted ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-wrap gap-4"
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-14"
+        >
+          <Link
+            href="/docs"
+            className="group inline-flex items-center gap-2 px-7 py-3 bg-primary text-primary-foreground font-medium text-[14px] tracking-tight rounded-full hover:bg-primary/90 active:translate-y-px transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
-            <Link href={withBasePath("/docs")} className="btn-glow inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white tracking-wide">
-              <Zap className="w-4 h-4" /> Read the Docs
-            </Link>
-            <Link href={withBasePath("/architecture")} className="btn-glow-outline inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-[oklch(0.85_0.01_260)] tracking-wide">
-              View Architecture <ArrowRight className="w-4 h-4" />
-            </Link>
-          </motion.div>
+            Read the Docs
+            <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+          </Link>
+          <Link
+            href="/architecture"
+            className="group inline-flex items-center gap-2 px-7 py-3 rounded-full font-medium text-[14px] tracking-tight border border-border bg-card text-foreground hover:bg-muted active:translate-y-px transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            View Architecture
+            <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+          </Link>
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={mounted ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-16"
-          >
-            <div className="glass-card-strong rounded-2xl p-6 max-w-md">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-[oklch(0.6_0.18_280)]" />
-                  <span className="text-sm font-mono text-[oklch(0.6_0.02_260)] uppercase tracking-wider">Network Status</span>
-                </div>
-                <span className="text-xs font-mono text-[oklch(0.5_0.02_260)]">3 nodes · 3 continents</span>
+        {/* Causal graph illustration */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mb-14 hidden sm:block"
+        >
+          <CausalGraphSvg className="w-full max-w-[560px] mx-auto" />
+        </motion.div>
+
+        {/* Live status widget */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.35, ease: EASE }}
+          className="inline-block w-full max-w-[480px]"
+        >
+          <div className="border border-border rounded-2xl p-5 text-left bg-card shadow-sm">
+            {isLoading && !data ? (
+              <div className="flex items-center justify-center py-8 gap-3">
+                <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                <span className="text-sm text-muted-foreground">Connecting to testnet...</span>
               </div>
-              <div className="space-y-3">
-                {[
-                  { loc: "Nuremberg", status: "finalizing", color: "oklch(0.6 0.14 155)" },
-                  { loc: "Ashburn", status: "finalizing", color: "oklch(0.6 0.14 155)" },
-                  { loc: "Singapore", status: "finalizing", color: "oklch(0.6 0.14 155)" },
-                ].map((node) => (
-                  <div key={node.loc} className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <span className="w-2 h-2 rounded-full pulse-dot" style={{ backgroundColor: node.color }} />
-                      <span className="text-sm text-[oklch(0.75_0.01_260)]">{node.loc}</span>
-                    </div>
-                    <span className="text-xs font-mono text-[oklch(0.5_0.02_260)] capitalize">{node.status}</span>
+            ) : (
+              <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+                {/* Throughput */}
+                <div>
+                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1.5">
+                    Throughput
                   </div>
-                ))}
+                  <div className="font-mono text-[15px] text-foreground">
+                    <AnimatedNumber value={throughput} />{' '}
+                    <span className="text-muted-foreground text-[12px]">ev/s</span>
+                  </div>
+                </div>
+
+                {/* p50 Latency */}
+                <div>
+                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1.5">
+                    Finality p50
+                  </div>
+                  <div className="font-mono text-[15px] text-foreground">
+                    {latency}
+                  </div>
+                </div>
+
+                {/* Active Validators */}
+                <div>
+                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1.5">
+                    Active Validators
+                  </div>
+                  <div className="font-mono text-[15px] text-foreground">
+                    <AnimatedNumber value={validators} />
+                  </div>
+                </div>
+
+                {/* Network Status */}
+                <div>
+                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1.5">
+                    Network Status
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {hasLiveData ? (
+                      <>
+                        <span className="relative flex h-2 w-2">
+                          <span className="pulse-dot absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-success" />
+                        </span>
+                        <span className="font-mono text-[13px] text-success">
+                          {networkStatus}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <WifiOff className="h-3 w-3 text-muted-foreground" />
+                        <span className="font-mono text-[13px] text-muted-foreground">
+                          {networkStatus}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </div>
               </div>
+            )}
+
+            {/* Footer note */}
+            <div className="mt-4 pt-3 border-t border-border text-[11px] text-muted-foreground flex items-center justify-between">
+              <span>
+                {hasLiveData
+                  ? `${nodeCount} node${nodeCount !== 1 ? 's' : ''} connected`
+                  : 'v0.1.76 · single-node sync baseline'}
+              </span>
+              {hasLiveData ? (
+                <span className="flex items-center gap-1 text-success">
+                  <Wifi className="h-3 w-3" />
+                  Live
+                </span>
+              ) : (
+                <span className="font-mono lowercase">benchmark</span>
+              )}
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[oklch(0.055_0.008_260)] to-transparent pointer-events-none" />
     </section>
-  );
+  )
 }

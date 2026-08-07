@@ -1,151 +1,268 @@
-"use client";
+'use client'
 
-import { useState, useEffect, useCallback } from "react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
-import { Menu, X } from "lucide-react";
-import { withBasePath } from "@/lib/base-path";
+import { withBasePath } from '@/lib/base-path'
+import { useState, useCallback, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Menu, X, ChevronDown } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
-const navLinks = [
-  { label: "Protocol", href: "/" },
-  { label: "Architecture", href: "/architecture" },
-  { label: "Docs", href: "/docs" },
-  { label: "FAQ", href: "/faq" },
-  { label: "Roadmap", href: "/roadmap" },
-  { label: "About", href: "/about" },
-];
+const navSections = [
+  {
+    label: 'Protocol',
+    items: [
+      { href: '/about', label: 'About' },
+      { href: '/architecture', label: 'Architecture' },
+      { href: '/roadmap', label: 'Roadmap' },
+      { href: '/use-cases', label: 'Use Cases' },
+    ],
+  },
+  {
+    label: 'Develop',
+    items: [
+      { href: '/docs', label: 'Documentation' },
+      { href: '/security', label: 'Security' },
+      { href: '/faq', label: 'FAQ' },
+    ],
+  },
+  {
+    label: 'Community',
+    items: [
+      { href: '/community', label: 'Community' },
+      { href: '/conduct', label: 'Code of Conduct' },
+      { href: '/donate', label: 'Support' },
+    ],
+  },
+]
+
+const homeLinks = [
+  { href: '#features', label: 'Features', isAnchor: true },
+  { href: '#architecture', label: 'Architecture', isAnchor: true },
+  { href: '#performance', label: 'Performance', isAnchor: true },
+]
 
 export function OmniaNav() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [desktopDropdown, setDesktopDropdown] = useState<string | null>(null)
+  const pathname = usePathname()
+  const isHome = pathname === '/'
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setMobileOpen(false)
+      }
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   useEffect(() => {
-    const handleResize = () => { if (window.innerWidth >= 768) setMobileOpen(false); };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mobileOpen])
 
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [mobileOpen]);
+  // Navigation state resets are handled in click handlers and the Link components
 
   const scrollToSection = useCallback((href: string) => {
-    const target = document.querySelector(href);
+    const target = document.querySelector(href)
     if (target) {
-      const navHeight = 64;
-      const top = target.getBoundingClientRect().top + window.scrollY - navHeight;
-      window.scrollTo({ top, behavior: "smooth" });
+      const navHeight = 64
+      const top = target.getBoundingClientRect().top + window.scrollY - navHeight
+      window.scrollTo({ top, behavior: 'smooth' })
     }
-  }, []);
+  }, [])
 
-  const handleNavClick = useCallback((e: React.MouseEvent, href: string, isAnchor?: boolean) => {
+  const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string, isAnchor?: boolean) => {
     if (isAnchor) {
-      e.preventDefault();
-      setMobileOpen(false);
-      setTimeout(() => scrollToSection(href), 250);
+      e.preventDefault()
+      setMobileOpen(false)
+      setTimeout(() => scrollToSection(href), 250)
     } else {
-      setMobileOpen(false);
+      setMobileOpen(false)
     }
-  }, [scrollToSection]);
+  }, [scrollToSection])
 
   return (
-    <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-[oklch(0.055_0.008_260/0.8)] backdrop-blur-xl border-b border-[oklch(0.2_0.015_260/0.3)]"
-          : "bg-transparent"
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex items-center justify-between h-16">
-            <Link href={withBasePath("/")} className="flex items-center gap-2.5 group" onClick={(e) => handleNavClick(e, "/")}>
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[oklch(0.6_0.18_280)] to-[oklch(0.55_0.16_250)] flex items-center justify-center shadow-[0_0_16px_oklch(0.6_0.18_280/0.3)]">
-                <span className="text-white text-xs font-bold font-mono">O</span>
-              </div>
-              <span className="text-lg font-bold tracking-tight text-[oklch(0.97_0.005_260)]" style={{ fontFamily: 'var(--font-heading)' }}>omnia</span>
-              <span className="text-lg font-medium tracking-tight text-[oklch(0.5_0.02_260)]" style={{ fontFamily: 'var(--font-heading)' }}>protocol</span>
-            </Link>
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-2xl bg-background/85 border-b border-border">
+      <div className="max-w-[980px] mx-auto px-6 h-12 flex items-center justify-between">
+        {/* Brand */}
+        <Link href="/" className="group flex items-center gap-2.5">
+          <Image
+            src={withBasePath("/omnia-mark.png")}
+            alt=""
+            width={22}
+            height={22}
+            className="shrink-0 transition-transform duration-300 group-hover:rotate-90 motion-reduce:group-hover:rotate-0"
+            priority
+          />
+          <span className="font-mono text-[14px] tracking-wide text-foreground lowercase">
+            omnia
+            <span className="text-foreground/45"> protocol</span>
+          </span>
+        </Link>
 
-            <div className="hidden md:flex items-center gap-1">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={withBasePath(link.href)}
-                    onClick={(e) => handleNavClick(e, link.href)}
-                    className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
-                      isActive
-                        ? "text-[oklch(0.97_0.005_260)] bg-[oklch(0.15_0.02_280/0.3)]"
-                        : "text-[oklch(0.55_0.02_260)] hover:text-[oklch(0.85_0.01_260)] hover:bg-[oklch(0.15_0.02_280/0.15)]"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </div>
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-7">
+          {isHome ? (
+            <>
+              {homeLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href, link.isAnchor)}
+                  className="text-[12px] text-muted-foreground hover:text-foreground transition-colors font-sans tracking-tight"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </>
+          ) : null}
 
-            <div className="hidden md:flex items-center gap-3">
-              <a
-                href="https://github.com/Willow7737/omnia"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-glow-outline px-4 py-2 rounded-lg text-sm font-medium text-[oklch(0.75_0.01_260)]"
-              >
-                GitHub
-              </a>
-            </div>
-
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="md:hidden p-2 rounded-lg text-[oklch(0.75_0.01_260)] hover:bg-[oklch(0.15_0.02_280/0.2)] transition-colors"
-              aria-label="Toggle menu"
+          {/* Dropdown sections */}
+          {navSections.map((section) => (
+            <div
+              key={section.label}
+              className="relative"
+              onMouseEnter={() => setDesktopDropdown(section.label)}
+              onMouseLeave={() => setDesktopDropdown(null)}
             >
-              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </nav>
-        </div>
-      </header>
+              <button
+                className="flex items-center gap-0.5 text-[12px] text-muted-foreground hover:text-foreground transition-colors font-sans tracking-tight"
+              >
+                {section.label}
+                <ChevronDown size={10} className={`transition-transform duration-200 ${desktopDropdown === section.label ? 'rotate-180' : ''}`} />
+              </button>
 
-      {mobileOpen && (
-        <>
-          <div className="fixed inset-0 bg-[oklch(0_0_0/0.6)] backdrop-blur-sm z-40 md:hidden" onClick={() => setMobileOpen(false)} />
-          <div className="fixed inset-x-4 top-20 z-50 md:hidden">
-            <div className="glass-card-strong rounded-2xl p-2">
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={withBasePath(link.href)}
-                    onClick={(e) => handleNavClick(e, link.href)}
-                    className={`block px-4 py-3 text-sm font-medium rounded-xl transition-colors ${
-                      isActive
-                        ? "text-[oklch(0.97_0.005_260)] bg-[oklch(0.15_0.02_280/0.4)]"
-                        : "text-[oklch(0.6_0.02_260)] hover:text-[oklch(0.85_0.01_260)] hover:bg-[oklch(0.15_0.02_280/0.2)]"
-                    }`}
+              <AnimatePresence>
+                {desktopDropdown === section.label && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-3 pt-2 min-w-[180px]"
                   >
-                    {link.label}
-                  </Link>
-                );
-              })}
-              <div className="border-t border-[oklch(0.2_0.015_260/0.3)] mt-2 pt-2 px-4 pb-2">
-                <a href="https://github.com/Willow7737/omnia" target="_blank" rel="noopener noreferrer" className="block py-2 text-sm text-[oklch(0.6_0.02_260)] hover:text-[oklch(0.85_0.01_260)] transition-colors">
-                  GitHub →
+                    <div className="bg-popover/95 backdrop-blur-2xl rounded-xl border border-border overflow-hidden py-2 shadow-lg">
+                      {section.items.map((item) => (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className={`block px-4 py-2 text-[13px] transition-colors ${
+                            pathname === item.href
+                              ? 'text-foreground bg-accent font-medium'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                          } font-sans`}
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ))}
+
+          <a
+            href="https://github.com/Willow7737/omnia-protocol"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[12px] text-muted-foreground hover:text-foreground transition-colors font-sans tracking-tight"
+          >
+            GitHub
+          </a>
+        </div>
+
+        {/* Mobile hamburger */}
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors touch-manipulation"
+          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileOpen}
+        >
+          {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+        </button>
+      </div>
+
+      {/* Mobile menu overlay */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden fixed inset-0 top-12 bg-foreground/10 z-40"
+              onClick={() => setMobileOpen(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden fixed top-12 left-0 right-0 z-50 overflow-hidden backdrop-blur-2xl bg-background/95 border-b border-border"
+            >
+              <div className="px-6 py-4 flex flex-col">
+                {isHome && (
+                  <>
+                    {homeLinks.map((link) => (
+                      <a
+                        key={link.href}
+                        href={link.href}
+                        onClick={(e) => handleNavClick(e, link.href, link.isAnchor)}
+                        className="text-[17px] text-foreground font-sans tracking-tight py-2.5 block"
+                      >
+                        {link.label}
+                      </a>
+                    ))}
+                    <div className="h-px bg-border my-2" />
+                  </>
+                )}
+
+                {navSections.map((section, i) => (
+                  <div key={section.label}>
+                    <div className="text-[11px] uppercase tracking-wider text-muted-foreground font-sans mt-3 mb-1 px-0">
+                      {section.label}
+                    </div>
+                    {section.items.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setMobileOpen(false)}
+                        className={`text-[15px] font-sans tracking-tight py-2 block transition-colors ${
+                          pathname === item.href ? 'text-foreground font-medium' : 'text-muted-foreground'
+                        }`}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                    {i < navSections.length - 1 && <div className="h-px bg-border my-2" />}
+                  </div>
+                ))}
+
+                <div className="h-px bg-border my-2" />
+                <a
+                  href="https://github.com/Willow7737/omnia-protocol"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[15px] text-muted-foreground font-sans tracking-tight py-2 block"
+                >
+                  GitHub
                 </a>
               </div>
-            </div>
-          </div>
-        </>
-      )}
-    </>
-  );
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </nav>
+  )
 }
