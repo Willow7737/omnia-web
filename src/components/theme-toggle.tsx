@@ -1,7 +1,7 @@
 'use client'
 
 import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
+import { useSyncExternalStore } from 'react'
 import { Sun, Moon, MoonStar } from 'lucide-react'
 
 /*
@@ -12,7 +12,10 @@ import { Sun, Moon, MoonStar } from 'lucide-react'
  * for OLED, opt-in only. The icons are deliberately distinct so the user
  * can tell which dark mode they're in at a glance.
  *
- * Suppresses hydration mismatch by rendering a placeholder until mounted.
+ * Hydration safety: we read "is the client mounted?" via useSyncExternalStore
+ * — server snapshot returns false, client snapshot returns true. No effect,
+ * no setState, no cascading render (the pattern flagged by
+ * `react-hooks/set-state-in-effect`).
  */
 const ORDER = ['light', 'dim', 'dark'] as const
 type ThemeName = (typeof ORDER)[number]
@@ -29,11 +32,15 @@ const LABELS: Record<ThemeName, string> = {
   dark: 'Switch to light',
 }
 
+// useSyncExternalStore plumbing — we don't actually subscribe to anything;
+// we just need a stable way to distinguish server vs. client render.
+const emptySubscribe = () => () => {}
+const getMounted = () => true
+const getServerSnapshot = () => false
+
 export function ThemeToggle({ className = '' }: { className?: string }) {
   const { theme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => setMounted(true), [])
+  const mounted = useSyncExternalStore(emptySubscribe, getMounted, getServerSnapshot)
 
   // Stable SSR markup — a Sun-sized placeholder. Replaced on mount.
   if (!mounted) {
