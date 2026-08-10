@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { Heart } from 'lucide-react'
+import { Heart, ArrowUpRight } from 'lucide-react'
 
 function GitHubIcon({ size = 16 }: { size?: number }) {
   return (
@@ -13,8 +13,6 @@ function GitHubIcon({ size = 16 }: { size?: number }) {
   )
 }
 
-// Counted from the omnia-protocol working tree at v0.1.76:
-// `find -name '*.rs' | wc -l`, total lines, and #[test]/#[tokio::test] fns.
 const repoStats = [
   { value: '225', label: 'Rust files' },
   { value: '87,576', label: 'lines' },
@@ -22,36 +20,54 @@ const repoStats = [
   { value: 'CC0', label: 'license' },
 ]
 
+const D_NORMAL = 0.26
+const D_SLOW = 0.42
+const EASE = [0.25, 0.46, 0.45, 0.94] as const
+
 export function CTASection() {
   return (
     <section id="contribute" className="section-paper section-spacing px-6 relative overflow-hidden">
+      {/* Dramatic blue glow backdrop */}
+      <div
+        className="glow-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] pointer-events-none"
+        aria-hidden
+      />
+      {/* Grid texture */}
+      <div
+        className="grid-bg absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_70%)] pointer-events-none"
+        aria-hidden
+      />
       <div className="dither absolute inset-x-0 top-0 h-24 [mask-image:linear-gradient(black,transparent)] opacity-50 pointer-events-none" aria-hidden />
-      <div className="max-w-[680px] mx-auto text-center relative">
+
+      <div className="max-w-[760px] mx-auto text-center relative">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: D_NORMAL, ease: EASE }}
         >
-          {/* tracking is 0 everywhere (DESIGN.md §3) */}
-          <h2 className="font-display text-[47.5px] sm:text-[60px] md:text-[76px] font-bold leading-[1.05] text-foreground mb-6">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-card/50 font-mono text-[11.3px] text-muted-foreground lowercase mb-6">
+            contribute
+          </span>
+
+          <h2 className="font-display text-[47.5px] sm:text-[60px] md:text-[76px] font-bold leading-[1.02] text-foreground mb-6">
             Public domain.
           </h2>
 
-          <p className="text-[16.9px] sm:text-[18.8px] text-muted-foreground leading-[1.5] mb-10 max-w-[480px] mx-auto">
-            CC0. No entity owns it. Every line of code is public, every benchmark is reproducible.
+          <p className="text-[16.9px] sm:text-[18.8px] text-muted-foreground leading-[1.5] mb-12 max-w-[480px] mx-auto">
+            CC0. No entity owns it. Every line of code is public, every benchmark is reproducible. No VC lock-in. No token pre-mine.
           </p>
 
-          {/* Stats row */}
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 mb-12">
+          {/* Stats row — big mono numbers */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-12 max-w-[680px] mx-auto">
             {repoStats.map((stat) => (
-              <div key={stat.label} className="flex items-baseline gap-1.5">
-                <span className="font-mono text-[16.9px] sm:text-[18.8px] text-foreground">
+              <div key={stat.label} className="border-gradient rounded-xl p-4 bg-card/40 border border-border">
+                <div className="font-mono text-[24.3px] sm:text-[30px] font-bold text-foreground leading-none mb-1.5">
                   {stat.value}
-                </span>
-                <span className="text-[13.1px] sm:text-[13.1px] text-muted-foreground">
+                </div>
+                <div className="text-[11.3px] text-muted-foreground">
                   {stat.label}
-                </span>
+                </div>
               </div>
             ))}
           </div>
@@ -62,16 +78,17 @@ export function CTASection() {
               href="https://github.com/Willow7737/omnia-protocol"
               target="_blank"
               rel="noopener noreferrer"
-              className="pressable active:pressable-active inline-flex items-center gap-2 px-7 py-3 bg-primary text-primary-foreground font-medium text-[15px] rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              className="pressable active:pressable-active inline-flex items-center gap-2 px-7 py-3.5 bg-primary text-primary-foreground font-medium text-[15px] rounded-full hover:bg-primary/90 transition-colors ring-glow focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
               <GitHubIcon size={15} />
               View on GitHub
+              <ArrowUpRight size={15} />
             </a>
             <a
               href="https://discord.gg/qYkpAeSYR"
               target="_blank"
               rel="noopener noreferrer"
-              className="pressable active:pressable-active inline-flex items-center gap-2 px-7 py-3 rounded-full font-medium text-[15px] border border-border bg-card text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              className="pressable active:pressable-active inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-medium text-[15px] border border-border bg-card/60 backdrop-blur-sm text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
               Join Discord
             </a>
@@ -80,9 +97,9 @@ export function CTASection() {
           {/* Support link */}
           <Link
             href="/donate"
-            className="inline-flex items-center gap-1.5 text-[15px] text-muted-foreground hover:text-primary transition-colors"
+            className="pressable active:pressable-active inline-flex items-center gap-1.5 text-[14px] text-muted-foreground hover:text-primary transition-colors group"
           >
-            <Heart size={13} />
+            <Heart size={13} className="group-hover:fill-primary transition-all" />
             Support the Protocol
           </Link>
         </motion.div>

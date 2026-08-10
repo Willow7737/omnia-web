@@ -392,6 +392,104 @@ html:not(.light):not(.dim):not(.dark) {
   );
 }
 
+/*
+ * ──────────────────────────────────────────────────────────────────────
+ * Visual richness utilities. The ALF language is flat and hairline-
+ * separated, but "flat" doesn't mean "bland." These utilities add depth
+ * through gradients, glows, and subtle tints — without shadows.
+ * ──────────────────────────────────────────────────────────────────────
+ */
+
+/* Blue glow — radial wash behind hero / CTA. Replaces hero_glow.svg. */
+@utility glow-primary {
+  background-image: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--primary) 18%, transparent) 0%,
+    color-mix(in srgb, var(--primary) 6%, transparent) 35%,
+    transparent 70%
+  );
+}
+
+/* Subtle grid background — technical, spec-sheet feel. */
+@utility grid-bg {
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.4;
+}
+
+/* Gradient border — for premium cards. Uses a mask trick so the border
+   is a gradient while the inside stays the card surface. */
+@utility border-gradient {
+  position: relative;
+}
+
+/* Card hover — lifts the border and tints the background. No shadow. */
+@utility card-hover {
+  transition:
+    border-color var(--motion-fast) ease,
+    background-color var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+@utility card-hover-hover {
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+  background-color: color-mix(in srgb, var(--primary) 4%, var(--card));
+}
+
+/* Animated gradient text — for the hero wordmark. */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@utility text-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--foreground) 0%,
+    var(--primary) 50%,
+    var(--foreground) 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: gradient-shift 8s ease-in-out infinite;
+}
+
+/* Glow ring for live indicators */
+@utility ring-glow {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--primary) 30%, transparent),
+    0 0 12px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+/*
+ * Gradient border — the ::before pseudo-element can't be a Tailwind
+ * utility (names must be alphanumeric), so we define it as a regular
+ * class in the components layer. Used alongside the `border-gradient`
+ * utility which sets position: relative.
+ */
+@layer components {
+  .border-gradient::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--primary) 40%, transparent),
+      transparent 50%,
+      color-mix(in srgb, var(--primary) 20%, transparent)
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
 /* Live indicator: a quiet breathing dot, no glow */
 @keyframes soft-pulse {
   0%, 100% { opacity: 1; }
