@@ -41,7 +41,7 @@ function MetricTable({ metrics, title, liveMetrics }: { metrics: MetricRow[]; ti
   return (
     <div>
       {title && (
-        <h3 className="text-[12px] font-medium text-muted-foreground mb-4 tracking-wider uppercase">
+        <h3 className="text-[12px] font-medium text-muted-foreground mb-4 uppercase">
           {title}
         </h3>
       )}
@@ -116,9 +116,9 @@ export function PerformanceSection() {
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold tracking-[-0.03em] leading-[1.1] text-foreground mb-4">
+          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold leading-[1.1] text-foreground mb-4">
             The numbers.
           </h2>
           <p className="text-[17px] sm:text-[19px] text-muted-foreground mb-12">
@@ -132,13 +132,13 @@ export function PerformanceSection() {
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.26, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="space-y-10"
         >
           <MetricTable metrics={mainMetrics} liveMetrics={liveDataMap} />
           <MetricTable metrics={zkMetrics} title="ZK Settlement — Groth16 on BN254" liveMetrics={liveDataMap} />
 
-          <div className="border border-border rounded-2xl p-5 bg-background">
+          <div className="border border-border rounded-xl p-5 bg-background">
             <p className="text-[13px] sm:text-[14px] text-muted-foreground leading-relaxed">
               <span className="text-foreground font-medium">Read the fine print.</span>{' '}
               Measured on AMD Ryzen 9 7950X, 64&thinsp;GB DDR5-6000, Linux 6.8, rustc 1.91.

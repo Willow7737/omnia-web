@@ -38,10 +38,10 @@ export function FeaturesSection() {
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="mb-16 sm:mb-20"
         >
-          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold tracking-[-0.03em] leading-[1.1] text-foreground mb-4">
+          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold leading-[1.1] text-foreground mb-4">
             Built different.
           </h2>
           <p className="text-[17px] sm:text-[19px] text-muted-foreground leading-[1.5] max-w-[520px] font-sans">
@@ -57,13 +57,13 @@ export function FeaturesSection() {
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
+              transition={{ duration: 0.26, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
               className={`group flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-12 py-8 ${
                 i < features.length - 1 ? 'border-b border-border' : ''
               }`}
             >
               <div className="sm:w-[320px] md:w-[380px] shrink-0">
-                <h3 className="font-sans text-[17px] sm:text-[19px] font-semibold text-foreground tracking-tight group-hover:text-primary transition-colors">
+                <h3 className="font-sans text-[17px] sm:text-[19px] font-semibold text-foreground group-hover:text-primary transition-colors">
                   {feature.title}
                 </h3>
               </div>

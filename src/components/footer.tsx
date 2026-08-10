@@ -58,7 +58,7 @@ export function Footer() {
         {/* Brand row */}
         <div className="flex items-center gap-2.5 mb-10">
           <Image src={withBasePath("/omnia-mark.png")} alt="" width={24} height={24} />
-          <span className="font-mono text-[13px] tracking-wide text-foreground lowercase">
+          <span className="font-mono text-[13px] text-foreground lowercase">
             omnia<span className="text-foreground/45"> protocol</span>
           </span>
         </div>
@@ -67,7 +67,7 @@ export function Footer() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-10">
           {footerLinks.map((section) => (
             <div key={section.title}>
-              <h4 className="text-[11px] uppercase tracking-wider text-muted-foreground font-sans mb-3">
+              <h4 className="text-[11px] uppercase text-muted-foreground font-sans mb-3">
                 {section.title}
               </h4>
               <ul className="space-y-2">
@@ -88,7 +88,7 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="font-mono text-[11px] tracking-wide text-muted-foreground/70 lowercase">
+          <p className="font-mono text-[11px] text-muted-foreground/70 lowercase">
             settlement-agnostic dag consensus — cc0 public domain
           </p>
           <div className="flex items-center gap-5">

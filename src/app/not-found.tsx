@@ -36,7 +36,7 @@ export default function NotFound() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: EASE }}
         >
-          <span className="font-mono text-[96px] sm:text-[128px] font-bold leading-none tracking-tight text-foreground block">
+          <span className="font-mono text-[96px] sm:text-[128px] font-bold leading-none text-foreground block">
             404
           </span>
         </motion.div>
@@ -59,14 +59,14 @@ export default function NotFound() {
         >
           <Link
             href="/"
-            className="group inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full text-[14px] font-medium tracking-tight hover:bg-primary/90 active:translate-y-px transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="pressable active:pressable-active group inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full text-[14px] font-medium hover:bg-primary/90 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             <Home size={14} />
             Back to safety
           </Link>
           <Link
             href="/docs"
-            className="group inline-flex items-center gap-2 px-6 py-3 rounded-full text-[14px] font-medium tracking-tight border border-border bg-card text-foreground hover:bg-muted active:translate-y-px transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="pressable active:pressable-active group inline-flex items-center gap-2 px-6 py-3 rounded-full text-[14px] font-medium border border-border bg-card text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             Read the Docs
             <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
@@ -77,7 +77,7 @@ export default function NotFound() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="font-mono text-[11px] tracking-wide text-muted-foreground/70 lowercase mt-12"
+          className="font-mono text-[11px] text-muted-foreground/70 lowercase mt-12"
         >
           error: event not found in any finalized round
         </motion.p>

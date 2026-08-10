@@ -36,7 +36,7 @@ export function PageHeader({ title, description, breadcrumbs }: PageHeaderProps)
               ))}
             </nav>
           )}
-          <h1 className="font-sans text-[48px] sm:text-[56px] md:text-[64px] font-bold tracking-[-0.03em] mb-5 leading-[1.1] text-foreground">
+          <h1 className="font-sans text-[48px] sm:text-[56px] md:text-[64px] font-bold mb-5 leading-[1.1] text-foreground">
             {title}
           </h1>
           <p className="text-[17px] sm:text-[19px] leading-[1.5] max-w-[600px] text-muted-foreground">

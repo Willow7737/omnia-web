@@ -21,6 +21,10 @@ const BENCHMARK_DATA = {
   nodeCount: 1,
 } as const
 
+// Motion durations — Bluesky ALF (DESIGN.md §6).
+const D_FAST = 0.18    // 180ms — sheets closing, chips
+const D_NORMAL = 0.26  // 260ms — page pushes, sheet opening
+const D_SLOW = 0.42    // 420ms — hero / count-up
 const EASE = [0.25, 0.46, 0.45, 0.94] as const
 
 export function HeroSection() {
@@ -51,20 +55,20 @@ export function HeroSection() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: D_SLOW }}
           className="mb-6"
         >
-          <span className="font-mono text-[12px] sm:text-[13px] tracking-wide text-muted-foreground lowercase">
+          <span className="font-mono text-[12px] sm:text-[13px] text-muted-foreground lowercase">
             settlement-agnostic dag consensus
           </span>
         </motion.div>
 
-        {/* Headline */}
+        {/* Headline — tracking is 0 everywhere (DESIGN.md §3) */}
         <motion.h1
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EASE }}
-          className="font-sans text-[56px] sm:text-[80px] md:text-[96px] font-bold tracking-[-0.04em] leading-[1.02] text-foreground mb-6"
+          transition={{ duration: D_SLOW, ease: EASE }}
+          className="font-sans text-[56px] sm:text-[80px] md:text-[96px] font-bold leading-[1.02] text-foreground mb-6"
         >
           Omnia
         </motion.h1>
@@ -73,7 +77,7 @@ export function HeroSection() {
         <motion.p
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
+          transition={{ duration: D_SLOW, delay: 0.1, ease: EASE }}
           className="text-[19px] sm:text-[21px] md:text-[24px] text-muted-foreground leading-[1.35] max-w-[560px] mx-auto mb-10"
         >
           Causal graph consensus.{' '}
@@ -81,23 +85,23 @@ export function HeroSection() {
           Public domain.
         </motion.p>
 
-        {/* CTAs */}
+        {/* CTAs — pills + press interaction (DESIGN.md §4, §6) */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
+          transition={{ duration: D_SLOW, delay: 0.2, ease: EASE }}
           className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-14"
         >
           <Link
             href="/docs"
-            className="group inline-flex items-center gap-2 px-7 py-3 bg-primary text-primary-foreground font-medium text-[14px] tracking-tight rounded-full hover:bg-primary/90 active:translate-y-px transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="pressable active:pressable-active group inline-flex items-center gap-2 px-7 py-3 bg-primary text-primary-foreground font-medium text-[14px] rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             Read the Docs
             <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
           </Link>
           <Link
             href="/architecture"
-            className="group inline-flex items-center gap-2 px-7 py-3 rounded-full font-medium text-[14px] tracking-tight border border-border bg-card text-foreground hover:bg-muted active:translate-y-px transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="pressable active:pressable-active group inline-flex items-center gap-2 px-7 py-3 rounded-full font-medium text-[14px] border border-border bg-card text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             View Architecture
             <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
@@ -108,20 +112,20 @@ export function HeroSection() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          transition={{ duration: D_SLOW, delay: 0.3 }}
           className="mb-14 hidden sm:block"
         >
           <CausalGraphSvg className="w-full max-w-[560px] mx-auto" />
         </motion.div>
 
-        {/* Live status widget */}
+        {/* Live status widget — flat hairline card, no shadow (DESIGN.md §4) */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.35, ease: EASE }}
+          transition={{ duration: D_SLOW, delay: 0.35, ease: EASE }}
           className="inline-block w-full max-w-[480px]"
         >
-          <div className="border border-border rounded-2xl p-5 text-left bg-card shadow-sm">
+          <div className="border border-border rounded-xl p-5 text-left bg-card">
             {isLoading && !data ? (
               <div className="flex items-center justify-center py-8 gap-3">
                 <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
@@ -131,7 +135,7 @@ export function HeroSection() {
               <div className="grid grid-cols-2 gap-x-8 gap-y-4">
                 {/* Throughput */}
                 <div>
-                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1.5">
+                  <div className="text-[11px] text-muted-foreground uppercase mb-1.5">
                     Throughput
                   </div>
                   <div className="font-mono text-[15px] text-foreground">
@@ -142,7 +146,7 @@ export function HeroSection() {
 
                 {/* p50 Latency */}
                 <div>
-                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1.5">
+                  <div className="text-[11px] text-muted-foreground uppercase mb-1.5">
                     Finality p50
                   </div>
                   <div className="font-mono text-[15px] text-foreground">
@@ -152,7 +156,7 @@ export function HeroSection() {
 
                 {/* Active Validators */}
                 <div>
-                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1.5">
+                  <div className="text-[11px] text-muted-foreground uppercase mb-1.5">
                     Active Validators
                   </div>
                   <div className="font-mono text-[15px] text-foreground">
@@ -162,7 +166,7 @@ export function HeroSection() {
 
                 {/* Network Status */}
                 <div>
-                  <div className="text-[11px] text-muted-foreground uppercase tracking-wider mb-1.5">
+                  <div className="text-[11px] text-muted-foreground uppercase mb-1.5">
                     Network Status
                   </div>
                   <div className="flex items-center gap-2">

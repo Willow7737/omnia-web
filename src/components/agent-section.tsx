@@ -34,9 +34,9 @@ export function AgentSection() {
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold tracking-[-0.03em] leading-[1.1] text-foreground mb-6">
+          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold leading-[1.1] text-foreground mb-6">
             Agent coordination.
           </h2>
 
@@ -55,7 +55,7 @@ export function AgentSection() {
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.26, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="flex flex-wrap gap-2 mb-14"
         >
           {capabilities.map((cap) => (
@@ -74,7 +74,7 @@ export function AgentSection() {
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.26, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="space-y-5"
         >
           {principles.map((principle, i) => (

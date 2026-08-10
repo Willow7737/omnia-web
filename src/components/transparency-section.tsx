@@ -42,9 +42,9 @@ export function TransparencySection() {
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold tracking-[-0.03em] leading-[1.1] text-foreground mb-4">
+          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold leading-[1.1] text-foreground mb-4">
             Radical transparency.
           </h2>
           <p className="text-[17px] sm:text-[19px] text-muted-foreground leading-[1.5] mb-12 font-sans">
@@ -56,10 +56,10 @@ export function TransparencySection() {
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.26, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           {/* Header row */}
-          <div className="hidden sm:grid grid-cols-[1fr_60px_100px_80px] gap-4 px-0 py-2 text-[11px] text-muted-foreground uppercase tracking-wider font-sans">
+          <div className="hidden sm:grid grid-cols-[1fr_60px_100px_80px] gap-4 px-0 py-2 text-[11px] text-muted-foreground uppercase font-sans">
             <span>Feature</span>
             <span>Layer</span>
             <span>Status</span>

@@ -65,9 +65,9 @@ export function ArchitecturePreview() {
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold tracking-[-0.03em] leading-[1.1] text-foreground mb-4">
+          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold leading-[1.1] text-foreground mb-4">
             Six layers.
           </h2>
           <p className="text-[17px] sm:text-[19px] text-muted-foreground mb-14 font-sans">
@@ -87,7 +87,7 @@ export function ArchitecturePreview() {
                 initial={{ opacity: 0, x: -12 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: '-20px' }}
-                transition={{ duration: 0.5, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
+                transition={{ duration: 0.26, delay: i * 0.06, ease: [0.25, 0.46, 0.45, 0.94] }}
                 className="group relative"
               >
                 <div className="flex items-start gap-5 py-5 border-b border-border last:border-b-0">

@@ -3,65 +3,65 @@
 import { useEffect, useRef, useState } from 'react'
 
 interface AnimatedNumberProps {
-  value: number
-  duration?: number
-  decimals?: number
-  prefix?: string
-  suffix?: string
-  className?: string
+ value: number
+ duration?: number
+ decimals?: number
+ prefix?: string
+ suffix?: string
+ className?: string
 }
 
 export function AnimatedNumber({
-  value,
-  duration = 2000,
-  decimals = 0,
-  prefix = '',
-  suffix = '',
-  className = '',
+ value,
+ duration = 2000,
+ decimals = 0,
+ prefix = '',
+ suffix = '',
+ className = '',
 }: AnimatedNumberProps) {
-  const [displayValue, setDisplayValue] = useState(0)
-  const valueRef = useRef(value)
-  const startValueRef = useRef(0)
-  const rafRef = useRef<number>(0)
+ const [displayValue, setDisplayValue] = useState(0)
+ const valueRef = useRef(value)
+ const startValueRef = useRef(0)
+ const rafRef = useRef<number>(0)
 
-  useEffect(() => {
-    const previousValue = valueRef.current
-    startValueRef.current = previousValue
-    valueRef.current = value
+ useEffect(() => {
+ const previousValue = valueRef.current
+ startValueRef.current = previousValue
+ valueRef.current = value
 
-    let startTime: number | null = null
+ let startTime: number | null = null
 
-    const step = (timestamp: number) => {
-      if (!startTime) startTime = timestamp
-      const elapsed = timestamp - startTime
-      const progress = Math.min(elapsed / duration, 1)
+ const step = (timestamp: number) => {
+ if (!startTime) startTime = timestamp
+ const elapsed = timestamp - startTime
+ const progress = Math.min(elapsed / duration, 1)
 
-      // Ease-out cubic
-      const eased = 1 - Math.pow(1 - progress, 3)
-      const current = startValueRef.current + (value - startValueRef.current) * eased
+ // Ease-out cubic
+ const eased = 1 - Math.pow(1 - progress, 3)
+ const current = startValueRef.current + (value - startValueRef.current) * eased
 
-      setDisplayValue(current)
+ setDisplayValue(current)
 
-      if (progress < 1) {
-        rafRef.current = requestAnimationFrame(step)
-      }
-    }
+ if (progress < 1) {
+ rafRef.current = requestAnimationFrame(step)
+ }
+ }
 
-    rafRef.current = requestAnimationFrame(step)
+ rafRef.current = requestAnimationFrame(step)
 
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
-    }
-  }, [value, duration])
+ return () => {
+ if (rafRef.current) cancelAnimationFrame(rafRef.current)
+ }
+ }, [value, duration])
 
-  const formatted = displayValue.toLocaleString('en-US', {
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  })
+ const formatted = displayValue.toLocaleString('en-US', {
+ minimumFractionDigits: decimals,
+ maximumFractionDigits: decimals,
+ })
 
-  return (
-    <span className={`font-mono ${className}`}>
-      {prefix}{formatted}{suffix}
-    </span>
-  )
+ return (
+ <span className={`font-mono ${className}`}>
+ {prefix}{formatted}{suffix}
+ </span>
+ )
 }

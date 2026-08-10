@@ -31,9 +31,10 @@ export function CTASection() {
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-sans text-[48px] sm:text-[64px] md:text-[80px] font-bold tracking-[-0.04em] leading-[1.05] text-foreground mb-6">
+          {/* tracking is 0 everywhere (DESIGN.md §3) */}
+          <h2 className="font-sans text-[48px] sm:text-[64px] md:text-[80px] font-bold leading-[1.05] text-foreground mb-6">
             Public domain.
           </h2>
 
@@ -61,7 +62,7 @@ export function CTASection() {
               href="https://github.com/Willow7737/omnia-protocol"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3 bg-primary text-primary-foreground font-medium text-[14px] tracking-tight rounded-full hover:bg-primary/90 active:translate-y-px transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              className="pressable active:pressable-active inline-flex items-center gap-2 px-7 py-3 bg-primary text-primary-foreground font-medium text-[14px] rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
               <GitHubIcon size={15} />
               View on GitHub
@@ -70,7 +71,7 @@ export function CTASection() {
               href="https://discord.gg/qYkpAeSYR"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-full font-medium text-[14px] tracking-tight border border-border bg-card text-foreground hover:bg-muted active:translate-y-px transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              className="pressable active:pressable-active inline-flex items-center gap-2 px-7 py-3 rounded-full font-medium text-[14px] border border-border bg-card text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
               Join Discord
             </a>

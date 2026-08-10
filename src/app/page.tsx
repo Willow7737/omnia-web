@@ -7,6 +7,7 @@ import { AgentSection } from '@/components/agent-section'
 import { TransparencySection } from '@/components/transparency-section'
 import { CTASection } from '@/components/cta-section'
 import { Footer } from '@/components/footer'
+import { ScrollToTop } from '@/components/scroll-to-top'
 import { OmniaProviders } from '@/components/providers'
 
 export default function Home() {
@@ -24,6 +25,7 @@ export default function Home() {
           <CTASection />
         </main>
         <Footer />
+        <ScrollToTop />
       </div>
     </OmniaProviders>
   )

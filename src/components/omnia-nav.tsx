@@ -7,6 +7,7 @@ import { Menu, X, ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { ThemeToggle } from './theme-toggle'
 
 const navSections = [
   {
@@ -42,6 +43,10 @@ const homeLinks = [
   { href: '#performance', label: 'Performance', isAnchor: true },
 ]
 
+// Motion durations — Bluesky ALF (DESIGN.md §6).
+const D_FAST = 0.18   // 180ms — sheets closing, chips
+const D_NORMAL = 0.26 // 260ms — page pushes, sheet opening
+
 export function OmniaNav() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [desktopDropdown, setDesktopDropdown] = useState<string | null>(null)
@@ -69,12 +74,10 @@ export function OmniaNav() {
     }
   }, [mobileOpen])
 
-  // Navigation state resets are handled in click handlers and the Link components
-
   const scrollToSection = useCallback((href: string) => {
     const target = document.querySelector(href)
     if (target) {
-      const navHeight = 64
+      const navHeight = 48 // h-12 — see container below
       const top = target.getBoundingClientRect().top + window.scrollY - navHeight
       window.scrollTo({ top, behavior: 'smooth' })
     }
@@ -84,7 +87,7 @@ export function OmniaNav() {
     if (isAnchor) {
       e.preventDefault()
       setMobileOpen(false)
-      setTimeout(() => scrollToSection(href), 250)
+      setTimeout(() => scrollToSection(href), 180) // D_FAST
     } else {
       setMobileOpen(false)
     }
@@ -103,7 +106,7 @@ export function OmniaNav() {
             className="shrink-0 transition-transform duration-300 group-hover:rotate-90 motion-reduce:group-hover:rotate-0"
             priority
           />
-          <span className="font-mono text-[14px] tracking-wide text-foreground lowercase">
+          <span className="font-mono text-[14px] text-foreground lowercase">
             omnia
             <span className="text-foreground/45"> protocol</span>
           </span>
@@ -118,7 +121,7 @@ export function OmniaNav() {
                   key={link.href}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href, link.isAnchor)}
-                  className="text-[12px] text-muted-foreground hover:text-foreground transition-colors font-sans tracking-tight"
+                  className="text-[12px] text-muted-foreground hover:text-foreground transition-colors font-sans"
                 >
                   {link.label}
                 </a>
@@ -134,9 +137,7 @@ export function OmniaNav() {
               onMouseEnter={() => setDesktopDropdown(section.label)}
               onMouseLeave={() => setDesktopDropdown(null)}
             >
-              <button
-                className="flex items-center gap-0.5 text-[12px] text-muted-foreground hover:text-foreground transition-colors font-sans tracking-tight"
-              >
+              <button className="flex items-center gap-0.5 text-[12px] text-muted-foreground hover:text-foreground transition-colors font-sans">
                 {section.label}
                 <ChevronDown size={10} className={`transition-transform duration-200 ${desktopDropdown === section.label ? 'rotate-180' : ''}`} />
               </button>
@@ -147,7 +148,7 @@ export function OmniaNav() {
                     initial={{ opacity: 0, y: -4 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -4 }}
-                    transition={{ duration: 0.15 }}
+                    transition={{ duration: D_FAST }}
                     className="absolute top-full left-1/2 -translate-x-1/2 mt-3 pt-2 min-w-[180px]"
                   >
                     <div className="bg-popover/95 backdrop-blur-2xl rounded-xl border border-border overflow-hidden py-2 shadow-lg">
@@ -175,21 +176,26 @@ export function OmniaNav() {
             href="https://github.com/Willow7737/omnia-protocol"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[12px] text-muted-foreground hover:text-foreground transition-colors font-sans tracking-tight"
+            className="text-[12px] text-muted-foreground hover:text-foreground transition-colors font-sans"
           >
             GitHub
           </a>
+
+          <ThemeToggle />
         </div>
 
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="md:hidden p-2 text-muted-foreground hover:text-foreground transition-colors touch-manipulation"
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={mobileOpen}
-        >
-          {mobileOpen ? <X size={18} /> : <Menu size={18} />}
-        </button>
+        {/* Mobile hamburger + theme toggle */}
+        <div className="md:hidden flex items-center gap-1">
+          <ThemeToggle />
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="p-2 text-muted-foreground hover:text-foreground transition-colors touch-manipulation"
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu overlay */}
@@ -200,7 +206,7 @@ export function OmniaNav() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: D_FAST }}
               className="md:hidden fixed inset-0 top-12 bg-foreground/10 z-40"
               onClick={() => setMobileOpen(false)}
             />
@@ -208,7 +214,7 @@ export function OmniaNav() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: D_NORMAL }}
               className="md:hidden fixed top-12 left-0 right-0 z-50 overflow-hidden backdrop-blur-2xl bg-background/95 border-b border-border"
             >
               <div className="px-6 py-4 flex flex-col">
@@ -219,7 +225,7 @@ export function OmniaNav() {
                         key={link.href}
                         href={link.href}
                         onClick={(e) => handleNavClick(e, link.href, link.isAnchor)}
-                        className="text-[17px] text-foreground font-sans tracking-tight py-2.5 block"
+                        className="text-[17px] text-foreground font-sans py-2.5 block"
                       >
                         {link.label}
                       </a>
@@ -230,7 +236,7 @@ export function OmniaNav() {
 
                 {navSections.map((section, i) => (
                   <div key={section.label}>
-                    <div className="text-[11px] uppercase tracking-wider text-muted-foreground font-sans mt-3 mb-1 px-0">
+                    <div className="text-[11px] uppercase text-muted-foreground font-sans mt-3 mb-1 px-0">
                       {section.label}
                     </div>
                     {section.items.map((item) => (
@@ -238,7 +244,7 @@ export function OmniaNav() {
                         key={item.href}
                         href={item.href}
                         onClick={() => setMobileOpen(false)}
-                        className={`text-[15px] font-sans tracking-tight py-2 block transition-colors ${
+                        className={`text-[15px] font-sans py-2 block transition-colors ${
                           pathname === item.href ? 'text-foreground font-medium' : 'text-muted-foreground'
                         }`}
                       >
@@ -254,7 +260,7 @@ export function OmniaNav() {
                   href="https://github.com/Willow7737/omnia-protocol"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[15px] text-muted-foreground font-sans tracking-tight py-2 block"
+                  className="text-[15px] text-muted-foreground font-sans py-2 block"
                 >
                   GitHub
                 </a>
