@@ -41,9 +41,9 @@ const buttonVariants = cva(
         // large · 12/24 · gap-6 · 15/medium
         default: "h-10 px-6 gap-1.5 text-[15px] has-[>svg]:px-5",
         // small · 8/14 · gap-5 · 13.1/medium
-        sm: "h-8 px-3.5 gap-1.25 text-[13px] has-[>svg]:px-3",
+        sm: "h-8 px-3.5 gap-1.25 text-[13.1px] has-[>svg]:px-3",
         // tiny · 5/10 · gap-3 · 11.3/semibold
-        xs: "h-7 px-2.5 gap-0.75 text-[11px] font-semibold has-[>svg]:px-2",
+        xs: "h-7 px-2.5 gap-0.75 text-[11.3px] font-semibold has-[>svg]:px-2",
         lg: "h-12 px-8 gap-1.5 text-[15px] has-[>svg]:px-7",
         icon: "size-10",
         "icon-sm": "size-8",

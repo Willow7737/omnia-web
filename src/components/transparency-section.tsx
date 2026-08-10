@@ -44,10 +44,10 @@ export function TransparencySection() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold leading-[1.1] text-foreground mb-4">
+          <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[60px] font-bold leading-[1.1] text-foreground mb-4">
             Radical transparency.
           </h2>
-          <p className="text-[17px] sm:text-[19px] text-muted-foreground leading-[1.5] mb-12 font-sans">
+          <p className="text-[16.9px] sm:text-[18.8px] text-muted-foreground leading-[1.5] mb-12 font-sans">
             No protocol should claim completeness it hasn&apos;t earned. Here&apos;s what&apos;s stubbed, partial, or not yet started.
           </p>
         </motion.div>
@@ -59,7 +59,7 @@ export function TransparencySection() {
           transition={{ duration: 0.26, delay: 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           {/* Header row */}
-          <div className="hidden sm:grid grid-cols-[1fr_60px_100px_80px] gap-4 px-0 py-2 text-[11px] text-muted-foreground uppercase font-sans">
+          <div className="hidden sm:grid grid-cols-[1fr_60px_100px_80px] gap-4 px-0 py-2 text-[11.3px] text-muted-foreground uppercase font-sans">
             <span>Feature</span>
             <span>Layer</span>
             <span>Status</span>
@@ -77,15 +77,15 @@ export function TransparencySection() {
                     i < stubData.length - 1 ? 'border-b border-border' : ''
                   }`}
                 >
-                  <span className="text-[15px] sm:text-[17px] text-foreground font-sans">{row.feature}</span>
-                  <span className="font-mono text-[13px] text-muted-foreground">
+                  <span className="text-[15px] sm:text-[16.9px] text-foreground font-sans">{row.feature}</span>
+                  <span className="font-mono text-[13.1px] text-muted-foreground">
                     {row.layer}
                   </span>
-                  <span className={`flex items-center gap-1.5 text-[13px] font-sans ${s.text}`}>
+                  <span className={`flex items-center gap-1.5 text-[13.1px] font-sans ${s.text}`}>
                     <span className={`inline-block w-1.5 h-1.5 rounded-full ${s.dot}`} />
                     {row.status}
                   </span>
-                  <span className="font-mono text-[13px] text-muted-foreground">
+                  <span className="font-mono text-[13.1px] text-muted-foreground">
                     {row.phase}
                   </span>
                 </div>
@@ -93,7 +93,7 @@ export function TransparencySection() {
             })}
           </div>
 
-          <p className="text-[13px] sm:text-[14px] text-muted-foreground mt-6 leading-relaxed font-sans">
+          <p className="text-[13.1px] sm:text-[15px] text-muted-foreground mt-6 leading-relaxed font-sans">
             The Ethereum settlement adapter is live; Bitcoin, Solana, and Cosmos are stubs, and the Celestia adapter is unverified plumbing that has never run against a real Celestia node. The mobile wallet and web dashboard shipped in July 2026 and have graduated off this list. A standing 3-node geo-distributed validator mesh is now running with Lane 0 finalizing events — but all three nodes are operated by the same party, so the network is not yet trust-distributed. Independent validators remain open.
           </p>
         </motion.div>

@@ -106,7 +106,7 @@ export function OmniaNav() {
             className="shrink-0 transition-transform duration-300 group-hover:rotate-90 motion-reduce:group-hover:rotate-0"
             priority
           />
-          <span className="font-mono text-[14px] text-foreground lowercase">
+          <span className="font-display text-[16.9px] font-bold text-foreground lowercase">
             omnia
             <span className="text-foreground/45"> protocol</span>
           </span>
@@ -121,7 +121,7 @@ export function OmniaNav() {
                   key={link.href}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href, link.isAnchor)}
-                  className="text-[12px] text-muted-foreground hover:text-foreground transition-colors font-sans"
+                  className="text-[13.1px] text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {link.label}
                 </a>
@@ -137,7 +137,7 @@ export function OmniaNav() {
               onMouseEnter={() => setDesktopDropdown(section.label)}
               onMouseLeave={() => setDesktopDropdown(null)}
             >
-              <button className="flex items-center gap-0.5 text-[12px] text-muted-foreground hover:text-foreground transition-colors font-sans">
+              <button className="flex items-center gap-0.5 text-[13.1px] text-muted-foreground hover:text-foreground transition-colors">
                 {section.label}
                 <ChevronDown size={10} className={`transition-transform duration-200 ${desktopDropdown === section.label ? 'rotate-180' : ''}`} />
               </button>
@@ -156,11 +156,11 @@ export function OmniaNav() {
                         <Link
                           key={item.href}
                           href={item.href}
-                          className={`block px-4 py-2 text-[13px] transition-colors ${
+                          className={`block px-4 py-2 text-[13.1px] transition-colors ${
                             pathname === item.href
                               ? 'text-foreground bg-accent font-medium'
                               : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                          } font-sans`}
+                          }`}
                         >
                           {item.label}
                         </Link>
@@ -176,7 +176,7 @@ export function OmniaNav() {
             href="https://github.com/Willow7737/omnia-protocol"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[12px] text-muted-foreground hover:text-foreground transition-colors font-sans"
+            className="text-[13.1px] text-muted-foreground hover:text-foreground transition-colors"
           >
             GitHub
           </a>
@@ -225,7 +225,7 @@ export function OmniaNav() {
                         key={link.href}
                         href={link.href}
                         onClick={(e) => handleNavClick(e, link.href, link.isAnchor)}
-                        className="text-[17px] text-foreground font-sans py-2.5 block"
+                        className="text-[18.8px] text-foreground py-2.5 block"
                       >
                         {link.label}
                       </a>
@@ -236,7 +236,7 @@ export function OmniaNav() {
 
                 {navSections.map((section, i) => (
                   <div key={section.label}>
-                    <div className="text-[11px] uppercase text-muted-foreground font-sans mt-3 mb-1 px-0">
+                    <div className="text-[11.3px] uppercase text-muted-foreground mt-3 mb-1 px-0">
                       {section.label}
                     </div>
                     {section.items.map((item) => (
@@ -244,7 +244,7 @@ export function OmniaNav() {
                         key={item.href}
                         href={item.href}
                         onClick={() => setMobileOpen(false)}
-                        className={`text-[15px] font-sans py-2 block transition-colors ${
+                        className={`text-[15px] py-2 block transition-colors ${
                           pathname === item.href ? 'text-foreground font-medium' : 'text-muted-foreground'
                         }`}
                       >
@@ -260,7 +260,7 @@ export function OmniaNav() {
                   href="https://github.com/Willow7737/omnia-protocol"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[15px] text-muted-foreground font-sans py-2 block"
+                  className="text-[15px] text-muted-foreground py-2 block"
                 >
                   GitHub
                 </a>

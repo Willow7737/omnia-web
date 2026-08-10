@@ -41,10 +41,10 @@ export function FeaturesSection() {
           transition={{ duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="mb-16 sm:mb-20"
         >
-          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold leading-[1.1] text-foreground mb-4">
+          <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[60px] font-bold leading-[1.1] text-foreground mb-4">
             Built different.
           </h2>
-          <p className="text-[17px] sm:text-[19px] text-muted-foreground leading-[1.5] max-w-[520px] font-sans">
+          <p className="text-[16.9px] sm:text-[18.8px] text-muted-foreground leading-[1.5] max-w-[520px] font-sans">
             Six pillars of infrastructure. Every layer built with mathematical guarantees.
           </p>
         </motion.div>
@@ -63,11 +63,11 @@ export function FeaturesSection() {
               }`}
             >
               <div className="sm:w-[320px] md:w-[380px] shrink-0">
-                <h3 className="font-sans text-[17px] sm:text-[19px] font-semibold text-foreground group-hover:text-primary transition-colors">
+                <h3 className="font-display text-[16.9px] sm:text-[18.8px] font-semibold text-foreground group-hover:text-primary transition-colors">
                   {feature.title}
                 </h3>
               </div>
-              <p className="text-[15px] sm:text-[17px] text-muted-foreground leading-[1.6] font-sans">
+              <p className="text-[15px] sm:text-[16.9px] text-muted-foreground leading-[1.6] font-sans">
                 {feature.description}
               </p>
             </motion.div>

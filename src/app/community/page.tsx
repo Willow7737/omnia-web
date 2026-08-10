@@ -77,10 +77,10 @@ export default function CommunityPage() {
  <section className="section-paper section-spacing">
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-normal leading-[1.1] text-foreground mb-4">
+ <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[53px] font-bold leading-[1.1] text-foreground mb-4">
  Join the Conversation
  </h2>
- <p className="text-muted-foreground leading-[1.6] text-[17px] sm:text-[19px] max-w-[680px] mb-12 font-sans">
+ <p className="text-muted-foreground leading-[1.6] text-[16.9px] sm:text-[18.8px] max-w-[680px] mb-12 font-sans">
  Omnia is built in the open. Every discussion, every decision, every line of code happens where everyone can see it and participate.
  </p>
  </motion.div>
@@ -103,10 +103,10 @@ export default function CommunityPage() {
  <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
  <Icon className="w-4.5 h-4.5 text-primary" />
  </div>
- <h3 className="text-foreground font-semibold text-[17px] font-sans">{channel.title}</h3>
+ <h3 className="text-foreground font-semibold text-[16.9px] font-sans">{channel.title}</h3>
  </div>
  <p className="text-muted-foreground text-[15px] font-sans">{channel.description}</p>
- <p className="text-primary text-[13px] font-mono sm:ml-auto shrink-0">{channel.link}</p>
+ <p className="text-primary text-[13.1px] font-mono sm:ml-auto shrink-0">{channel.link}</p>
  </motion.div>
  )
  })}
@@ -118,8 +118,8 @@ export default function CommunityPage() {
  <section className="section-white section-spacing">
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-normal leading-[1.1] text-foreground mb-4">How to Contribute</h2>
- <p className="text-muted-foreground leading-[1.6] text-[17px] sm:text-[19px] max-w-[600px] mb-12 font-sans">
+ <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[53px] font-bold leading-[1.1] text-foreground mb-4">How to Contribute</h2>
+ <p className="text-muted-foreground leading-[1.6] text-[16.9px] sm:text-[18.8px] max-w-[600px] mb-12 font-sans">
  Every contribution matters. Whether you write code, report bugs, or simply share what you have learned — you make the protocol stronger.
  </p>
  </motion.div>
@@ -142,8 +142,8 @@ export default function CommunityPage() {
  <Icon className="w-4.5 h-4.5 text-primary" />
  </div>
  <div>
- <h3 className="text-foreground font-medium text-[15px] sm:text-[17px] font-sans">{way.title}</h3>
- <p className="text-muted-foreground text-[13px] sm:text-[14px] mt-0.5 font-sans">{way.description}</p>
+ <h3 className="text-foreground font-medium text-[15px] sm:text-[16.9px] font-sans">{way.title}</h3>
+ <p className="text-muted-foreground text-[13.1px] sm:text-[15px] mt-0.5 font-sans">{way.description}</p>
  </div>
  </motion.div>
  )
@@ -156,8 +156,8 @@ export default function CommunityPage() {
  <section className="section-paper section-spacing">
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-normal leading-[1.1] text-foreground mb-4">Governance</h2>
- <p className="text-muted-foreground leading-[1.6] text-[17px] sm:text-[19px] max-w-[680px] mb-12 font-sans">
+ <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[53px] font-bold leading-[1.1] text-foreground mb-4">Governance</h2>
+ <p className="text-muted-foreground leading-[1.6] text-[16.9px] sm:text-[18.8px] max-w-[680px] mb-12 font-sans">
  Omnia&apos;s governance is designed to prevent power concentration while enabling efficient decision-making. No whales, no cabals, no permanent majorities.
  </p>
  </motion.div>
@@ -180,9 +180,9 @@ export default function CommunityPage() {
  <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
  <Icon className="w-4.5 h-4.5 text-primary" />
  </div>
- <h3 className="text-foreground font-semibold text-[15px] sm:text-[17px] font-sans">{feature.title}</h3>
+ <h3 className="text-foreground font-semibold text-[15px] sm:text-[16.9px] font-sans">{feature.title}</h3>
  </div>
- <p className="text-muted-foreground text-[14px] sm:text-[15px] leading-[1.6] font-sans">{feature.description}</p>
+ <p className="text-muted-foreground text-[15px] sm:text-[15px] leading-[1.6] font-sans">{feature.description}</p>
  </motion.div>
  )
  })}
@@ -198,20 +198,20 @@ export default function CommunityPage() {
  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
  <ShieldCheck className="w-5 h-5 text-primary" />
  </div>
- <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-normal leading-[1.1] text-foreground">Code of Conduct</h2>
+ <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[53px] font-bold leading-[1.1] text-foreground">Code of Conduct</h2>
  </div>
  </motion.div>
 
  <motion.div {...fadeInUp} className="max-w-[680px]">
  <div className="space-y-5">
- <p className="text-muted-foreground text-[15px] sm:text-[17px] leading-[1.6] font-sans">
+ <p className="text-muted-foreground text-[15px] sm:text-[16.9px] leading-[1.6] font-sans">
  We pledge to make participation in our community a harassment-free experience for everyone, 
  regardless of age, body size, disability, ethnicity, gender identity and expression, level 
  of experience, nationality, personal appearance, race, religion, or sexual identity and orientation.
  </p>
  <div className="flex items-start gap-3">
  <Heart className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
- <p className="text-foreground text-[14px] sm:text-[15px] font-medium font-sans">
+ <p className="text-foreground text-[15px] sm:text-[15px] font-medium font-sans">
  Read the full Code of Conduct on the{' '}
  <Link href="/conduct" className="text-primary hover:underline">
  conduct page
@@ -222,12 +222,12 @@ export default function CommunityPage() {
  <div className="flex items-center gap-3">
  <Mail className="w-4 h-4 text-primary" />
  <div>
- <p className="text-foreground text-[14px] font-medium font-sans">Enforcement</p>
+ <p className="text-foreground text-[15px] font-medium font-sans">Enforcement</p>
  <a
  href="https://github.com/Willow7737/omnia-protocol/security/advisories/new"
  target="_blank"
  rel="noopener noreferrer"
- className="text-primary text-[13px] font-mono hover:text-primary/80 transition-colors"
+ className="text-primary text-[13.1px] font-mono hover:text-primary/80 transition-colors"
  >
  GitHub Security Advisory
  </a>
@@ -242,8 +242,8 @@ export default function CommunityPage() {
  <section className="section-paper section-spacing">
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-normal leading-[1.1] text-foreground mb-4">Community Stats</h2>
- <p className="text-muted-foreground leading-[1.6] text-[17px] sm:text-[19px] max-w-[600px] mb-10 font-sans">
+ <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[53px] font-bold leading-[1.1] text-foreground mb-4">Community Stats</h2>
+ <p className="text-muted-foreground leading-[1.6] text-[16.9px] sm:text-[18.8px] max-w-[600px] mb-10 font-sans">
  Real numbers from the codebase. No vanity metrics, no inflation.
  </p>
  </motion.div>
@@ -263,10 +263,10 @@ export default function CommunityPage() {
  <div className="flex justify-center mb-3">
  <Icon className="w-5 h-5 text-primary" />
  </div>
- <div className="text-[28px] sm:text-[36px] font-bold font-mono text-foreground mb-1">
+ <div className="text-[30px] sm:text-[37.5px] font-bold font-mono text-foreground mb-1">
  {stat.value}
  </div>
- <div className="text-muted-foreground text-[13px] font-sans">{stat.label}</div>
+ <div className="text-muted-foreground text-[13.1px] font-sans">{stat.label}</div>
  </motion.div>
  )
  })}

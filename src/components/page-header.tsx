@@ -20,7 +20,7 @@ export function PageHeader({ title, description, breadcrumbs }: PageHeaderProps)
         <div className="dither absolute top-0 right-0 w-48 h-48 [mask-image:linear-gradient(225deg,black,transparent_70%)] opacity-60 pointer-events-none" aria-hidden />
         <div className="max-w-[980px] mx-auto relative">
           {breadcrumbs && breadcrumbs.length > 0 && (
-            <nav className="flex items-center gap-1.5 text-[12px] mb-6 text-muted-foreground">
+            <nav className="flex items-center gap-1.5 text-[13.1px] mb-6 text-muted-foreground">
               <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
               {breadcrumbs.map((crumb, i) => (
                 <span key={i} className="flex items-center gap-1.5">
@@ -36,10 +36,10 @@ export function PageHeader({ title, description, breadcrumbs }: PageHeaderProps)
               ))}
             </nav>
           )}
-          <h1 className="font-sans text-[48px] sm:text-[56px] md:text-[64px] font-bold mb-5 leading-[1.1] text-foreground">
+          <h1 className="font-display text-[47.5px] sm:text-[53px] md:text-[60px] font-bold mb-5 leading-[1.1] text-foreground">
             {title}
           </h1>
-          <p className="text-[17px] sm:text-[19px] leading-[1.5] max-w-[600px] text-muted-foreground">
+          <p className="text-[16.9px] sm:text-[18.8px] leading-[1.5] max-w-[600px] text-muted-foreground">
             {description}
           </p>
         </div>

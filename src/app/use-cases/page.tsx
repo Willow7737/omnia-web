@@ -121,11 +121,11 @@ export default function UseCasesPage() {
  <div className={`w-9 h-9 rounded-lg ${isDark ? 'bg-primary/10' : 'bg-primary/10'} flex items-center justify-center`}>
  <Icon className="w-4.5 h-4.5 text-primary" />
  </div>
- <h3 className={`font-sans text-[28px] sm:text-[36px] font-bold tracking-normal leading-[1.1] ${isDark ? 'text-foreground' : 'text-foreground'}`}>
+ <h3 className={`font-display text-[30px] sm:text-[37.5px] font-bold leading-[1.1] ${isDark ? 'text-foreground' : 'text-foreground'}`}>
  {useCase.title}
  </h3>
  </div>
- <p className={`text-[15px] sm:text-[17px] ${isDark ? 'text-muted-foreground' : 'text-muted-foreground'} font-sans`}>
+ <p className={`text-[15px] sm:text-[16.9px] ${isDark ? 'text-muted-foreground' : 'text-muted-foreground'} font-sans`}>
  {useCase.description}
  </p>
  </div>
@@ -142,7 +142,7 @@ export default function UseCasesPage() {
  className="flex items-start gap-3"
  >
  <div className={`flex-shrink-0 w-1.5 h-1.5 rounded-full mt-2 ${isDark ? 'bg-primary/60' : 'bg-primary/60'}`} />
- <span className={`text-[15px] sm:text-[17px] leading-[1.6] font-sans ${isDark ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
+ <span className={`text-[15px] sm:text-[16.9px] leading-[1.6] font-sans ${isDark ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
  {item}
  </span>
  </motion.div>
@@ -164,10 +164,10 @@ export default function UseCasesPage() {
  viewport={{ once: true }}
  transition={{ duration: 0.5 }}
  >
- <h3 className="font-sans text-[28px] sm:text-[40px] md:text-[48px] font-bold text-foreground mb-4 tracking-normal leading-[1.1]">
+ <h3 className="font-display text-[30px] sm:text-[37.5px] md:text-[47.5px] font-bold text-foreground mb-4 leading-[1.1]">
  Building something that fits?
  </h3>
- <p className="text-muted-foreground text-[14px] sm:text-[15px] max-w-2xl mx-auto mb-8 leading-[1.6] font-sans">
+ <p className="text-muted-foreground text-[15px] sm:text-[15px] max-w-2xl mx-auto mb-8 leading-[1.6] font-sans">
  Omnia is CC0 public domain — no permissions needed. The protocol is designed to be a 
  fundamental infrastructure layer that any application can build on, without gatekeepers 
  or license fees.
@@ -177,13 +177,13 @@ export default function UseCasesPage() {
  href="https://github.com/Willow7737/omnia-protocol"
  target="_blank"
  rel="noopener noreferrer"
- className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium text-[14px] hover:bg-primary/90 transition-colors font-sans"
+ className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium text-[15px] hover:bg-primary/90 transition-colors font-sans"
  >
  View on GitHub
  </a>
  <Link
  href="/architecture"
- className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card text-foreground text-[14px] hover:bg-muted active:translate-y-px transition-all font-sans"
+ className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-border bg-card text-foreground text-[15px] hover:bg-muted active:translate-y-px transition-all font-sans"
  >
  Explore Architecture
  </Link>

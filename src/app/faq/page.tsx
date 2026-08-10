@@ -87,7 +87,7 @@ function FAQAccordionItem({ item, index, isOpen, onToggle, isDark }: { item: FAQ
 
  <div className="flex-1 min-w-0">
  <span
- className={`text-[15px] sm:text-[17px] font-medium transition-colors duration-300 font-sans ${
+ className={`text-[15px] sm:text-[16.9px] font-medium transition-colors duration-300 font-sans ${
  isOpen ? (isDark ? 'text-foreground' : 'text-foreground') : (isDark ? 'text-muted-foreground' : 'text-muted-foreground')
  }`}
  >
@@ -117,7 +117,7 @@ function FAQAccordionItem({ item, index, isOpen, onToggle, isDark }: { item: FAQ
  transition={{ duration: 0.3, ease: 'easeInOut' }}
  >
  <div className="pb-5 sm:pb-6 pl-7 sm:pl-9">
- <p className={`${isDark ? 'text-muted-foreground' : 'text-muted-foreground'} text-[14px] sm:text-[15px] leading-[1.6] font-sans`}>
+ <p className={`${isDark ? 'text-muted-foreground' : 'text-muted-foreground'} text-[15px] sm:text-[15px] leading-[1.6] font-sans`}>
  {item.answer}
  </p>
  </div>
@@ -190,10 +190,10 @@ export default function FAQPage() {
  transition={{ duration: 0.5 }}
  className="text-center"
  >
- <h3 className="font-sans text-[24px] sm:text-[32px] font-bold text-foreground mb-3 tracking-normal">
+ <h3 className="font-display text-[24.3px] sm:text-[30px] font-bold text-foreground mb-3">
  Still have questions?
  </h3>
- <p className="text-muted-foreground text-[14px] sm:text-[15px] max-w-[420px] mx-auto mb-6 font-sans">
+ <p className="text-muted-foreground text-[15px] sm:text-[15px] max-w-[420px] mx-auto mb-6 font-sans">
  Join the community on Discord or explore the codebase directly.
  </p>
  <div className="flex flex-wrap gap-3 justify-center">
@@ -201,7 +201,7 @@ export default function FAQPage() {
  href="https://discord.gg/qYkpAeSYR"
  target="_blank"
  rel="noopener noreferrer"
- className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-medium text-[14px] hover:bg-primary/90 transition-colors font-sans"
+ className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary text-primary-foreground font-medium text-[15px] hover:bg-primary/90 transition-colors font-sans"
  >
  Join Discord
  </a>
@@ -209,7 +209,7 @@ export default function FAQPage() {
  href="https://github.com/Willow7737/omnia-protocol"
  target="_blank"
  rel="noopener noreferrer"
- className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-border text-foreground text-[14px] hover:bg-muted transition-colors font-sans"
+ className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full border border-border text-foreground text-[15px] hover:bg-muted transition-colors font-sans"
  >
  Read the Code
  </a>

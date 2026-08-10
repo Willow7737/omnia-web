@@ -36,13 +36,13 @@ export function AgentSection() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold leading-[1.1] text-foreground mb-6">
+          <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[60px] font-bold leading-[1.1] text-foreground mb-6">
             Agent coordination.
           </h2>
 
-          <div className="space-y-5 text-muted-foreground leading-[1.6] mb-12 font-sans text-[17px] sm:text-[19px]">
+          <div className="space-y-5 text-muted-foreground leading-[1.6] mb-12 text-[16.9px] sm:text-[18.8px]">
             <p>
-              Every AI agent receives a <code className="font-mono text-[14px] text-primary bg-primary/10 px-1.5 py-0.5 rounded-md">did:omnia:</code> identifier linked to a human or organizational owner. Identity is delegated, auditable, and revocable.
+              Every AI agent receives a <code className="font-mono text-[15px] text-primary bg-primary/10 px-1.5 py-0.5 rounded-md">did:omnia:</code> identifier linked to a human or organizational owner. Identity is delegated, auditable, and revocable.
             </p>
             <p>
               Agents operate under 5 narrowly-scoped capability types. Least privilege enforced by construction, not convention.
@@ -61,7 +61,7 @@ export function AgentSection() {
           {capabilities.map((cap) => (
             <div
               key={cap.name}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[13px] font-mono text-muted-foreground border border-border hover:border-foreground/25 hover:text-foreground transition-colors"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-[13.1px] font-mono text-muted-foreground border border-border hover:border-foreground/25 hover:text-foreground transition-colors"
             >
               <cap.icon size={13} />
               {cap.name}
@@ -80,7 +80,7 @@ export function AgentSection() {
           {principles.map((principle, i) => (
             <div key={i} className="flex items-start gap-3">
               <div className="mt-2.5 w-1.5 h-1.5 rounded-full bg-foreground shrink-0" />
-              <p className="text-[15px] sm:text-[17px] text-muted-foreground leading-[1.6] font-sans">
+              <p className="text-[15px] sm:text-[16.9px] text-muted-foreground leading-[1.6] font-sans">
                 <span className="text-foreground font-medium">{principle.title}</span>{' '}
                 {principle.description}
               </p>

@@ -208,7 +208,7 @@ export default function ArchitecturePage() {
  <a
  key={layer.number}
  href={`#layer-${layer.number}`}
- className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-card border border-border hover:border-foreground/25 hover:bg-muted transition-colors text-[14px] text-muted-foreground hover:text-foreground font-sans"
+ className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-card border border-border hover:border-foreground/25 hover:bg-muted transition-colors text-[15px] text-muted-foreground hover:text-foreground font-sans"
  >
  <Icon className="w-4 h-4 text-primary" />
  <span className="font-mono">L{layer.number}</span>
@@ -241,7 +241,7 @@ export default function ArchitecturePage() {
  <LayerIndicator number={layer.number} />
  <div className="flex-1 min-w-0">
  <div className="flex flex-wrap items-center gap-3 mb-2">
- <h3 className={`text-[28px] sm:text-[40px] md:text-[48px] font-bold tracking-normal font-sans ${isDark ? 'text-foreground' : 'text-foreground'}`}>
+ <h3 className={`text-[30px] sm:text-[37.5px] md:text-[47.5px] font-bold font-display ${isDark ? 'text-foreground' : 'text-foreground'}`}>
  {layer.title}
  </h3>
  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-xs font-medium border bg-success/10 border-success/20 text-success">
@@ -257,7 +257,7 @@ export default function ArchitecturePage() {
  {layer.description.map((paragraph, pi) => (
  <p
  key={pi}
- className={`text-[14px] sm:text-[17px] leading-[1.6] font-sans ${isDark ? 'text-muted-foreground' : 'text-muted-foreground'}`}
+ className={`text-[15px] sm:text-[16.9px] leading-[1.6] font-sans ${isDark ? 'text-muted-foreground' : 'text-muted-foreground'}`}
  >
  {paragraph}
  </p>
@@ -266,7 +266,7 @@ export default function ArchitecturePage() {
 
  {/* Key components */}
  <div className="ml-0 sm:ml-20">
- <h4 className="text-[12px] font-semibold text-primary uppercase tracking-normal mb-5 font-sans">
+ <h4 className="text-[13.1px] font-semibold text-primary uppercase mb-5 font-sans">
  Key Components
  </h4>
  <div className={`space-y-0 rounded-xl overflow-hidden border ${isDark ? 'border-border' : 'border-border'}`}>
@@ -285,7 +285,7 @@ export default function ArchitecturePage() {
  <div>
  <p className={`text-[15px] font-medium font-sans ${isDark ? 'text-foreground' : 'text-foreground'}`}>{comp.name}</p>
  {comp.description && (
- <p className={`text-[12px] mt-0.5 font-sans ${isDark ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
+ <p className={`text-[13.1px] mt-0.5 font-sans ${isDark ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
  {comp.description}
  </p>
  )}
@@ -298,7 +298,7 @@ export default function ArchitecturePage() {
  {/* Stubs / Limitations */}
  {layer.stubs.length > 0 && (
  <div className="ml-0 sm:ml-20 mt-8">
- <h4 className="text-[12px] font-semibold text-warning uppercase tracking-normal mb-4 flex items-center gap-2 font-sans">
+ <h4 className="text-[13.1px] font-semibold text-warning uppercase mb-4 flex items-center gap-2 font-sans">
  <AlertTriangle className="w-4 h-4" />
  Stubs &amp; Limitations
  </h4>
@@ -311,7 +311,7 @@ export default function ArchitecturePage() {
  <AlertTriangle className="w-4 h-4 text-warning flex-shrink-0 mt-0.5" />
  <div>
  <p className={`text-[15px] font-medium font-sans ${isDark ? 'text-foreground' : 'text-foreground'}`}>{stub.name}</p>
- <p className="text-warning/80 text-[12px] mt-0.5">{stub.note}</p>
+ <p className="text-warning/80 text-[13.1px] mt-0.5">{stub.note}</p>
  </div>
  </div>
  ))}

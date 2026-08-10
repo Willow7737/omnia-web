@@ -50,7 +50,7 @@ const sections = [
  and preferences from the device.
  </li>
  </ul>
- <p className="text-[14px]">
+ <p className="text-[15px]">
  This is irreversible without your recovery phrase — make sure it is
  backed up if you want to restore later.
  </p>
@@ -78,7 +78,7 @@ const sections = [
  privacy@omnia-protocol.org
  </a>
  </p>
- <p className="text-[14px]">
+ <p className="text-[15px]">
  Use the subject line &ldquo;Omnia Wallet account deletion&rdquo; so we
  can action it quickly. We may ask you to confirm ownership of the
  account before deleting.
@@ -156,7 +156,7 @@ export default function WalletDeleteAccountPage() {
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div
  {...fadeInUp}
- className="flex items-center gap-3 text-[14px] text-muted-foreground"
+ className="flex items-center gap-3 text-[15px] text-muted-foreground"
  >
  <div className="w-2 h-2 rounded-full bg-success" />
  <span className="font-sans">Last Updated: July 2026</span>
@@ -181,15 +181,15 @@ export default function WalletDeleteAccountPage() {
  <Icon className="w-5 h-5 text-primary" />
  </div>
  <div>
- <span className="text-[12px] tracking-normal uppercase mb-1 block font-mono text-success">
+ <span className="text-[13.1px] uppercase mb-1 block font-mono text-success">
  Step {section.number}
  </span>
- <h2 className="font-sans text-[32px] sm:text-[40px] md:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground">
+ <h2 className="font-display text-[30px] sm:text-[37.5px] md:text-[47.5px] font-bold leading-[1.1] text-foreground">
  {section.title}
  </h2>
  </div>
  </div>
- <div className="ml-14 leading-[1.6] text-[15px] sm:text-[17px] font-sans text-muted-foreground">
+ <div className="ml-14 leading-[1.6] text-[15px] sm:text-[16.9px] font-sans text-muted-foreground">
  {section.content}
  </div>
  </div>

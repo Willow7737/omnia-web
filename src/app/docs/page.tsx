@@ -57,11 +57,11 @@ function CopyButton({ text, isLight }: { text: string; isLight?: boolean }) {
 function CodeBlock({ code, lang, isLight }: { code: string; lang?: string; isLight?: boolean }) {
  return (
  <div className="relative group">
- <div className="absolute top-2.5 left-4 text-[10px] uppercase tracking-normal font-mono text-background/40">
+ <div className="absolute top-2.5 left-4 text-[10px] uppercase font-mono text-background/40">
  {lang || 'bash'}
  </div>
  <CopyButton text={code} isLight={isLight} />
- <pre className="rounded-xl p-4 pt-8 overflow-x-auto text-[14px] sm:text-[15px] bg-foreground shadow-sm">
+ <pre className="rounded-xl p-4 pt-8 overflow-x-auto text-[15px] sm:text-[15px] bg-foreground shadow-sm">
  <code className="font-mono leading-[1.6] whitespace-pre text-background/90">
  {code}
  </code>
@@ -72,7 +72,7 @@ function CodeBlock({ code, lang, isLight }: { code: string; lang?: string; isLig
 
 function InlineCode({ children, isLight }: { children: React.ReactNode; isLight?: boolean }) {
  return (
- <code className={`font-mono text-[14px] text-primary px-1.5 py-0.5 rounded ${isLight ? 'bg-primary/10' : 'bg-primary/10'}`}>
+ <code className={`font-mono text-[15px] text-primary px-1.5 py-0.5 rounded ${isLight ? 'bg-primary/10' : 'bg-primary/10'}`}>
  {children}
  </code>
  )
@@ -97,7 +97,7 @@ function DocTable({
 }) {
  return (
  <div className={`overflow-x-auto rounded-xl border ${isLight ? 'border-border' : 'border-border'}`}>
- <table className="w-full text-[14px]">
+ <table className="w-full text-[15px]">
  <thead>
  <tr className={`border-b bg-muted border-border`}>
  <th className={`text-left px-4 py-3 font-medium font-sans ${isLight ? 'text-foreground' : 'text-foreground'}`}>{headers[0]}</th>
@@ -119,12 +119,12 @@ function DocTable({
  : 'border-border hover:bg-muted'
  }`}
  >
- <td className="px-4 py-3 text-primary font-mono text-[12px] sm:text-[14px] align-top">
+ <td className="px-4 py-3 text-primary font-mono text-[13.1px] sm:text-[15px] align-top">
  {row.col1}
  </td>
  <td className={`px-4 py-3 align-top font-sans ${isLight ? 'text-muted-foreground' : 'text-muted-foreground'}`}>{row.col2}</td>
  {col3Label && row.col3 && (
- <td className={`px-4 py-3 text-[12px] sm:text-[14px] align-top hidden sm:table-cell font-sans ${isLight ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
+ <td className={`px-4 py-3 text-[13.1px] sm:text-[15px] align-top hidden sm:table-cell font-sans ${isLight ? 'text-muted-foreground' : 'text-muted-foreground'}`}>
  {row.col3}
  </td>
  )}
@@ -188,7 +188,7 @@ export default function DocsPage() {
  <section className="section-paper section-spacing">
  <div className="max-w-[980px] mx-auto px-6 space-y-16">
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-normal leading-[1.1] text-foreground mb-6">Quick Start</h2>
+ <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[53px] font-bold leading-[1.1] text-foreground mb-6">Quick Start</h2>
  <CodeBlock
  lang="bash"
  code={`git clone https://github.com/Willow7737/omnia-protocol.git
@@ -199,7 +199,7 @@ cargo bench --no-run`}
  </motion.div>
 
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground mb-6">Running a Node</h2>
+ <h2 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground mb-6">Running a Node</h2>
  <CodeBlock
  lang="bash"
  code={`# Build the node binary
@@ -217,7 +217,7 @@ cargo build --release -p omnia-node --features ethereum-live`}
  </motion.div>
 
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground mb-6">Docker Deployment</h2>
+ <h2 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground mb-6">Docker Deployment</h2>
  <CodeBlock
  lang="bash"
  code={`# Start 5-node testnet with monitoring
@@ -234,28 +234,28 @@ docker compose -f docker/docker-compose.testnet.yml up -d`}
  <section className="section-white section-spacing">
  <div className="max-w-[980px] mx-auto px-6 space-y-16">
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground mb-6">
+ <h2 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground mb-6">
  API Endpoints Reference
  </h2>
  <DocTable headers={['Endpoint', 'Description']} rows={apiEndpoints} isLight />
  </motion.div>
 
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground mb-6">Feature Flags</h2>
+ <h2 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground mb-6">Feature Flags</h2>
  <DocTable headers={['Flag', 'Description']} rows={featureFlags} isLight />
- <p className="mt-3 text-muted-foreground text-[14px] font-sans">
+ <p className="mt-3 text-muted-foreground text-[15px] font-sans">
  Enable features with <InlineCode isLight>--features &lt;flag&gt;</InlineCode> when building with
  Cargo.
  </p>
  </motion.div>
 
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground mb-6">Environment Variables</h2>
+ <h2 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground mb-6">Environment Variables</h2>
  <DocTable headers={['Variable', 'Description']} rows={envVars} col3Label="Default" isLight />
  </motion.div>
 
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground mb-6">Development Commands</h2>
+ <h2 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground mb-6">Development Commands</h2>
  <DocTable headers={['Command', 'Description']} rows={devCommands} isLight />
  </motion.div>
  </div>
@@ -265,7 +265,7 @@ docker compose -f docker/docker-compose.testnet.yml up -d`}
  <section className="section-paper section-spacing">
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground mb-10">Documentation Links</h2>
+ <h2 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground mb-10">Documentation Links</h2>
  </motion.div>
  <div className="space-y-0">
  {docLinks.map((link, i) => {
@@ -287,12 +287,12 @@ docker compose -f docker/docker-compose.testnet.yml up -d`}
  </div>
  <div className="flex-1 min-w-0">
  <div className="flex items-center gap-2">
- <h3 className="font-semibold text-foreground text-[15px] sm:text-[17px] font-sans group-hover:text-primary transition-colors">
+ <h3 className="font-semibold text-foreground text-[15px] sm:text-[16.9px] font-sans group-hover:text-primary transition-colors">
  {link.title}
  </h3>
  <ExternalLink className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
  </div>
- <p className="text-muted-foreground text-[14px] mt-0.5 font-sans">{link.description}</p>
+ <p className="text-muted-foreground text-[15px] mt-0.5 font-sans">{link.description}</p>
  </div>
  <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0 opacity-0 group-hover:opacity-100" />
  </motion.a>

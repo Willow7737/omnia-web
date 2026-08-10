@@ -36,7 +36,7 @@ export default function NotFound() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: EASE }}
         >
-          <span className="font-mono text-[96px] sm:text-[128px] font-bold leading-none text-foreground block">
+          <span className="font-display text-[96px] sm:text-[120px] font-bold leading-none text-foreground block">
             404
           </span>
         </motion.div>
@@ -45,7 +45,7 @@ export default function NotFound() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.15, ease: EASE }}
-          className="text-[17px] sm:text-[19px] text-muted-foreground leading-[1.5] mt-5 mb-10"
+          className="text-[16.9px] sm:text-[18.8px] text-muted-foreground leading-[1.5] mt-5 mb-10"
         >
           This page drifted off the causal graph. It either never existed,
           was pruned, or moved somewhere we can no longer reach it.
@@ -59,17 +59,17 @@ export default function NotFound() {
         >
           <Link
             href="/"
-            className="pressable active:pressable-active group inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full text-[14px] font-medium hover:bg-primary/90 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="pressable active:pressable-active group inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full text-[15px] font-medium hover:bg-primary/90 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
-            <Home size={14} />
+            <Home size={15} />
             Back to safety
           </Link>
           <Link
             href="/docs"
-            className="pressable active:pressable-active group inline-flex items-center gap-2 px-6 py-3 rounded-full text-[14px] font-medium border border-border bg-card text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="pressable active:pressable-active group inline-flex items-center gap-2 px-6 py-3 rounded-full text-[15px] font-medium border border-border bg-card text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             Read the Docs
-            <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+            <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
           </Link>
         </motion.div>
 
@@ -77,7 +77,7 @@ export default function NotFound() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="font-mono text-[11px] text-muted-foreground/70 lowercase mt-12"
+          className="font-mono text-[11.3px] text-muted-foreground/70 lowercase mt-12"
         >
           error: event not found in any finalized round
         </motion.p>

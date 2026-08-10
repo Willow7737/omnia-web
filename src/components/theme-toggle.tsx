@@ -52,7 +52,7 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
         // Block interaction until hydrated.
         disabled
       >
-        <Sun size={15} className="opacity-0" aria-hidden />
+        <Sun size={14} className="opacity-0" aria-hidden />
       </button>
     )
   }
@@ -69,7 +69,7 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
       title={LABELS[current]}
       className={`pressable inline-flex items-center justify-center size-8 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted active:pressable-active transition-colors ${className}`}
     >
-      <Icon size={15} aria-hidden />
+      <Icon size={14} aria-hidden />
     </button>
   )
 }

@@ -3,29 +3,30 @@
 
 @custom-variant dark (&:is(.dark *));
 @custom-variant dim (&:is(.dim *));
+@custom-variant light (&:is(.light *));
 
 /*
- * Omnia design language — ALF (Application Layout Framework), transcribed
- * from @bsky.app/alf@0.1.15 — see DESIGN.md §1–§4.
+ * Omnia design language — ALF (Application Layout Framework).
+ * See DESIGN.md for the full transcription from @bsky.app/alf@0.1.15.
  *
- * Three themes ship, exactly as Bluesky does (DESIGN.md §2):
+ * Three themes (DESIGN.md §2):
  *   light  — DEFAULT_PALETTE,         background #FFFFFF
- *   dim    — invertPalette(subdued),  background #151D28
+ *   dim    — invertPalette(subdued),  background #151D28   ← DEFAULT
  *   dark   — invertPalette(default),  background #000000 (OLED true black)
  *
- * `dim` is the default dark theme. Pure black is reserved for people who
- * ask for it. The light theme remains the site default.
+ * The site loads in `dim` — the same default Bluesky ships. Pure black is
+ * opt-in. Light is one click away via the toggle in the nav.
  *
- * Color tokens use the four ALF ramps (contrast / primary / positive /
- * negative) so light and dark stay in lockstep without a second
- * hand-tuned palette.
+ * Colors use the actual ALF hex values, not OKLCH approximations, so the
+ * brand blue reads as #006AFF (not "close to #006AFF").
  */
 
 @theme inline {
-  /* Typography — Geist Sans for body/UI, Geist Mono for the wordmark and code. */
-  --font-heading: var(--font-sans);
-  --font-sans: var(--font-geist-sans), 'Geist Fallback', system-ui, sans-serif;
+  /* Three font families, each with a clear role. */
+  --font-display: var(--font-space-grotesk), 'Space Grotesk Fallback', system-ui, sans-serif;
+  --font-sans: var(--font-inter), 'Inter Fallback', system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), 'Geist Mono Fallback', ui-monospace, monospace;
+  --font-heading: var(--font-display);
 
   /* Color slots (filled per-theme below). */
   --color-background: var(--background);
@@ -65,69 +66,44 @@
   /*
    * Radius scale — Bluesky ALF tokens (DESIGN.md §3):
    *   2 · 4 · 8 · 12 · 16 · 20 · 999
-   * `--radius` is the base (12px = md); the others step from it so shadcn
-   * primitives keep their existing `rounded-md` / `rounded-xl` mapping.
    */
   --radius-xs: 0.125rem;   /* 2  */
   --radius-sm: 0.25rem;    /* 4  */
   --radius-md: 0.5rem;     /* 8  */
   --radius-lg: 0.75rem;    /* 12 — primary card / input radius */
-  --radius-xl: 0.75rem;    /* 12 — alias; pages use rounded-xl for cards */
+  --radius-xl: 0.75rem;    /* 12 — alias */
   --radius-2xl: 1rem;      /* 16 */
-  --radius-3xl: 1.25rem;   /* 20 — bottom-sheet top corners (DESIGN.md §4) */
+  --radius-3xl: 1.25rem;   /* 20 — bottom-sheet top corners */
   --radius-4xl: 1.5rem;
-}
 
-/* ────────────────────────────────────────────────────────────────────────
- * Light theme — DEFAULT_PALETTE (DESIGN.md §2).
- * Paper-white surfaces, near-black ink, one restrained blue (#006AFF).
- * ──────────────────────────────────────────────────────────────────────── */
-:root {
-  color-scheme: light;
-  /* contrast ramp */
-  --background:        oklch(1 0 0);            /* contrast_0 */
-  --foreground:        oklch(0.21 0.006 255);   /* contrast_1000 */
-  --card:              oklch(1 0 0);
-  --card-foreground:   oklch(0.21 0.006 255);
-  --popover:           oklch(1 0 0);
-  --popover-foreground: oklch(0.21 0.006 255);
-  --secondary:         oklch(0.965 0.003 250);  /* contrast_50 */
-  --secondary-foreground: oklch(0.25 0.006 255);
-  --muted:             oklch(0.965 0.003 250);
-  --muted-foreground:  oklch(0.5 0.008 255);    /* contrast_700 */
-  --accent:            oklch(0.945 0.012 255);  /* contrast_100 */
-  --accent-foreground: oklch(0.25 0.006 255);
-  --border:            oklch(0.915 0.004 250);  /* contrast_100, hairline */
-  --input:             oklch(0.915 0.004 250);
-  --ring:              oklch(0.55 0.18 255);    /* primary_500 */
-  /* primary ramp */
-  --primary:           oklch(0.55 0.18 255);    /* primary_500 = #006AFF */
-  --primary-foreground: oklch(0.99 0 0);
-  /* negative ramp */
-  --destructive:       oklch(0.55 0.22 27);     /* negative_500 */
-  /* positive ramp (success) */
-  --success:           oklch(0.55 0.13 150);
-  --warning:           oklch(0.62 0.13 75);
-  --chart-1: oklch(0.55 0.18 255);
-  --chart-2: oklch(0.55 0.13 150);
-  --chart-3: oklch(0.62 0.13 75);
-  --chart-4: oklch(0.55 0.22 27);
-  --chart-5: oklch(0.55 0.10 200);
-  /* sidebar mirrors card */
-  --sidebar:                    oklch(1 0 0);
-  --sidebar-foreground:         oklch(0.21 0.006 255);
-  --sidebar-primary:            oklch(0.55 0.18 255);
-  --sidebar-primary-foreground: oklch(0.99 0 0);
-  --sidebar-accent:             oklch(0.965 0.003 250);
-  --sidebar-accent-foreground:  oklch(0.21 0.006 255);
-  --sidebar-border:             oklch(0.915 0.004 250);
-  --sidebar-ring:               oklch(0.55 0.18 255);
+  /*
+   * ALF font scale — 1.125 modular scale from a 15px base (DESIGN.md §3).
+   * "Font sizes are fractional. Rounding them to 14/16/18 measurably
+   *  changes the feel." We use the exact values.
+   *
+   *   9.4 · 11.3 · 13.1 · 15 · 16.9 · 18.8 · 20.6 · 24.3 · 30 · 37.5
+   *   … × 1.125 continues: 42.2 · 47.5 · 53.4 · 60.1 · 67.6 · 76.1 · 85.6 · 96.3
+   */
+  --text-2xs: 9.4px;
+  --text-xs: 11.3px;
+  --text-sm: 13.1px;
+  --text-base: 15px;
+  --text-lg: 16.9px;
+  --text-xl: 18.8px;
+  --text-2xl: 20.6px;
+  --text-3xl: 24.3px;
+  --text-4xl: 30px;
+  --text-5xl: 37.5px;
+  --text-6xl: 47.5px;
+  --text-7xl: 60px;
+  --text-8xl: 76px;
+  --text-9xl: 96px;
 
-  /* Motion — Bluesky durations (DESIGN.md §6). */
-  --motion-micro:  90ms;   /* press-state changes */
-  --motion-fast:   180ms;  /* sheets closing, chips */
-  --motion-normal: 260ms;  /* page pushes, sheet opening */
-  --motion-slow:   420ms;  /* hero / count-up */
+  /* Motion — Bluesky ALF durations (DESIGN.md §6). */
+  --motion-micro: 90ms;
+  --motion-fast: 180ms;
+  --motion-normal: 260ms;
+  --motion-slow: 420ms;
 
   /* Press interaction (DESIGN.md §6) — scale + opacity, no ripple. */
   --press-scale: 0.97;
@@ -135,85 +111,184 @@
 }
 
 /* ────────────────────────────────────────────────────────────────────────
+ * Light theme — DEFAULT_PALETTE (DESIGN.md §2).
+ * ──────────────────────────────────────────────────────────────────────── */
+:root {
+  color-scheme: light;
+  --background:        #FFFFFF;
+  --foreground:        #001726;   /* contrast_1000 — near-black, blue tint */
+  --card:              #FFFFFF;
+  --card-foreground:   #001726;
+  --popover:           #FFFFFF;
+  --popover-foreground: #001726;
+  --secondary:         #F5F5F5;   /* contrast_50 */
+  --secondary-foreground: #001726;
+  --muted:             #F5F5F5;
+  --muted-foreground:  #6B7280;   /* contrast_700 */
+  --accent:            #EBEBEB;   /* contrast_100 */
+  --accent-foreground: #001726;
+  --border:            #E6E6E6;   /* contrast_100 — hairline */
+  --input:             #E6E6E6;
+  --ring:              #006AFF;   /* primary_500 */
+  --primary:           #006AFF;   /* primary_500 = #006AFF */
+  --primary-foreground: #FFFFFF;
+  --destructive:       #BA1A1A;   /* negative_500 */
+  --success:           #00A558;
+  --warning:           #B45309;
+  --chart-1: #006AFF;
+  --chart-2: #00A558;
+  --chart-3: #B45309;
+  --chart-4: #BA1A1A;
+  --chart-5: #7C3AED;
+  --sidebar:                    #FFFFFF;
+  --sidebar-foreground:         #001726;
+  --sidebar-primary:            #006AFF;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent:             #F5F5F5;
+  --sidebar-accent-foreground:  #001726;
+  --sidebar-border:             #E6E6E6;
+  --sidebar-ring:               #006AFF;
+}
+
+/*
+ * Pre-hydration fallback. The site defaults to `dim` (see providers.tsx),
+ * but before next-themes' inline script runs, <html> has no theme class.
+ * To avoid a flash of the light theme on every page load, we set the dim
+ * palette on :root as well — next-themes will overwrite it by adding either
+ * `.dim` (stays), `.dark` (overrides), or `.light` (overrides) to <html>.
+ *
+ * If the user has previously chosen `light`, next-themes writes `.light`
+ * on <html> before paint, which overrides these dim defaults via the
+ * `.light` rules below. (We add `.light` as an alias of `:root`.)
+ */
+html:not(.light):not(.dim):not(.dark) {
+  color-scheme: dark;
+  --background:        #151D28;
+  --foreground:        #F4F4F5;
+  --card:              #1C2638;
+  --card-foreground:   #F4F4F5;
+  --popover:           #1C2638;
+  --popover-foreground: #F4F4F5;
+  --secondary:         #243044;
+  --secondary-foreground: #F4F4F5;
+  --muted:             #243044;
+  --muted-foreground:  #9BA1A8;
+  --accent:            #2D3A50;
+  --accent-foreground: #F4F4F5;
+  --border:            #2A3548;
+  --input:             #2A3548;
+  --ring:              #2B7FFF;
+  --primary:           #2B7FFF;
+  --primary-foreground: #001726;
+  --destructive:       #FF5449;
+  --success:           #1FCB6B;
+  --warning:           #F0A035;
+}
+
+/* `.light` is the opt-in light theme (overrides the dim :root fallback). */
+.light {
+  color-scheme: light;
+  --background:        #FFFFFF;
+  --foreground:        #001726;
+  --card:              #FFFFFF;
+  --card-foreground:   #001726;
+  --popover:           #FFFFFF;
+  --popover-foreground: #001726;
+  --secondary:         #F5F5F5;
+  --secondary-foreground: #001726;
+  --muted:             #F5F5F5;
+  --muted-foreground:  #6B7280;
+  --accent:            #EBEBEB;
+  --accent-foreground: #001726;
+  --border:            #E6E6E6;
+  --input:             #E6E6E6;
+  --ring:              #006AFF;
+  --primary:           #006AFF;
+  --primary-foreground: #FFFFFF;
+  --destructive:       #BA1A1A;
+  --success:           #00A558;
+  --warning:           #B45309;
+}
+
+/* ────────────────────────────────────────────────────────────────────────
  * Dim theme — invertPalette(DEFAULT_SUBDUED_PALETTE), background #151D28.
- * The default dark theme; pure black is reserved for `dark` (DESIGN.md §2).
+ * This is the DEFAULT theme (DESIGN.md §2: "dim is the default dark theme").
  * ──────────────────────────────────────────────────────────────────────── */
 .dim {
   color-scheme: dark;
-  --background:        oklch(0.21 0.018 255);   /* #151D28 */
-  --foreground:        oklch(0.96 0.003 250);   /* inverted contrast_1000 */
-  --card:              oklch(0.245 0.020 255);
-  --card-foreground:   oklch(0.96 0.003 250);
-  --popover:           oklch(0.245 0.020 255);
-  --popover-foreground: oklch(0.96 0.003 250);
-  --secondary:         oklch(0.30 0.022 255);   /* contrast_50 inverted */
-  --secondary-foreground: oklch(0.93 0.003 250);
-  --muted:             oklch(0.30 0.022 255);
-  --muted-foreground:  oklch(0.70 0.012 255);   /* contrast_700 inverted */
-  --accent:            oklch(0.35 0.025 255);
-  --accent-foreground: oklch(0.93 0.003 250);
-  --border:            oklch(0.34 0.018 255);   /* hairline, inverted */
-  --input:             oklch(0.34 0.018 255);
-  --ring:              oklch(0.68 0.16 255);    /* primary_600 — lighter on dark */
-  --primary:           oklch(0.68 0.16 255);    /* primary_600 (inverted) */
-  --primary-foreground: oklch(0.12 0.02 255);
-  --destructive:       oklch(0.65 0.20 27);     /* negative_600 */
-  --success:           oklch(0.70 0.13 150);
-  --warning:           oklch(0.75 0.13 75);
-  --chart-1: oklch(0.68 0.16 255);
-  --chart-2: oklch(0.70 0.13 150);
-  --chart-3: oklch(0.75 0.13 75);
-  --chart-4: oklch(0.65 0.20 27);
-  --chart-5: oklch(0.70 0.10 200);
-  --sidebar:                    oklch(0.245 0.020 255);
-  --sidebar-foreground:         oklch(0.96 0.003 250);
-  --sidebar-primary:            oklch(0.68 0.16 255);
-  --sidebar-primary-foreground: oklch(0.12 0.02 255);
-  --sidebar-accent:             oklch(0.30 0.022 255);
-  --sidebar-accent-foreground:  oklch(0.93 0.003 250);
-  --sidebar-border:             oklch(0.34 0.018 255);
-  --sidebar-ring:               oklch(0.68 0.16 255);
+  --background:        #151D28;
+  --foreground:        #F4F4F5;   /* contrast_1000 inverted */
+  --card:              #1C2638;   /* one step lighter than bg */
+  --card-foreground:   #F4F4F5;
+  --popover:           #1C2638;
+  --popover-foreground: #F4F4F5;
+  --secondary:         #243044;   /* contrast_50 inverted */
+  --secondary-foreground: #F4F4F5;
+  --muted:             #243044;
+  --muted-foreground:  #9BA1A8;   /* contrast_700 inverted */
+  --accent:            #2D3A50;   /* contrast_100 inverted */
+  --accent-foreground: #F4F4F5;
+  --border:            #2A3548;   /* hairline, inverted */
+  --input:             #2A3548;
+  --ring:              #2B7FFF;   /* primary_600 — lighter on dark */
+  --primary:           #2B7FFF;   /* primary_600 */
+  --primary-foreground: #001726;
+  --destructive:       #FF5449;   /* negative_500 inverted */
+  --success:           #1FCB6B;
+  --warning:           #F0A035;
+  --chart-1: #2B7FFF;
+  --chart-2: #1FCB6B;
+  --chart-3: #F0A035;
+  --chart-4: #FF5449;
+  --chart-5: #A78BFA;
+  --sidebar:                    #1C2638;
+  --sidebar-foreground:         #F4F4F5;
+  --sidebar-primary:            #2B7FFF;
+  --sidebar-primary-foreground: #001726;
+  --sidebar-accent:             #243044;
+  --sidebar-accent-foreground:  #F4F4F5;
+  --sidebar-border:             #2A3548;
+  --sidebar-ring:               #2B7FFF;
 }
 
 /* ────────────────────────────────────────────────────────────────────────
  * Dark theme — invertPalette(DEFAULT_PALETTE), background #000000 (OLED).
- * True black; opt-in only (DESIGN.md §2).
  * ──────────────────────────────────────────────────────────────────────── */
 .dark {
   color-scheme: dark;
-  --background:        oklch(0 0 0);            /* #000000 */
-  --foreground:        oklch(0.98 0.002 250);
-  --card:              oklch(0.08 0.005 255);
-  --card-foreground:   oklch(0.98 0.002 250);
-  --popover:           oklch(0.08 0.005 255);
-  --popover-foreground: oklch(0.98 0.002 250);
-  --secondary:         oklch(0.16 0.008 255);
-  --secondary-foreground: oklch(0.94 0.003 250);
-  --muted:             oklch(0.16 0.008 255);
-  --muted-foreground:  oklch(0.66 0.010 255);
-  --accent:            oklch(0.20 0.010 255);
-  --accent-foreground: oklch(0.94 0.003 250);
-  --border:            oklch(0.22 0.008 255);
-  --input:             oklch(0.22 0.008 255);
-  --ring:              oklch(0.68 0.16 255);
-  --primary:           oklch(0.68 0.16 255);
-  --primary-foreground: oklch(0.08 0.005 255);
-  --destructive:       oklch(0.65 0.20 27);
-  --success:           oklch(0.70 0.13 150);
-  --warning:           oklch(0.75 0.13 75);
-  --chart-1: oklch(0.68 0.16 255);
-  --chart-2: oklch(0.70 0.13 150);
-  --chart-3: oklch(0.75 0.13 75);
-  --chart-4: oklch(0.65 0.20 27);
-  --chart-5: oklch(0.70 0.10 200);
-  --sidebar:                    oklch(0.08 0.005 255);
-  --sidebar-foreground:         oklch(0.98 0.002 250);
-  --sidebar-primary:            oklch(0.68 0.16 255);
-  --sidebar-primary-foreground: oklch(0.08 0.005 255);
-  --sidebar-accent:             oklch(0.16 0.008 255);
-  --sidebar-accent-foreground:  oklch(0.94 0.003 250);
-  --sidebar-border:             oklch(0.22 0.008 255);
-  --sidebar-ring:               oklch(0.68 0.16 255);
+  --background:        #000000;
+  --foreground:        #FFFFFF;
+  --card:              #0A0A0A;
+  --card-foreground:   #FFFFFF;
+  --popover:           #0A0A0A;
+  --popover-foreground: #FFFFFF;
+  --secondary:         #161616;
+  --secondary-foreground: #FFFFFF;
+  --muted:             #161616;
+  --muted-foreground:  #8B8B8B;
+  --accent:            #1C1C1C;
+  --accent-foreground: #FFFFFF;
+  --border:            #1F1F1F;
+  --input:             #1F1F1F;
+  --ring:              #2B7FFF;
+  --primary:           #2B7FFF;
+  --primary-foreground: #000000;
+  --destructive:       #FF5449;
+  --success:           #1FCB6B;
+  --warning:           #F0A035;
+  --chart-1: #2B7FFF;
+  --chart-2: #1FCB6B;
+  --chart-3: #F0A035;
+  --chart-4: #FF5449;
+  --chart-5: #A78BFA;
+  --sidebar:                    #0A0A0A;
+  --sidebar-foreground:         #FFFFFF;
+  --sidebar-primary:            #2B7FFF;
+  --sidebar-primary-foreground: #000000;
+  --sidebar-accent:             #161616;
+  --sidebar-accent-foreground:  #FFFFFF;
+  --sidebar-border:             #1F1F1F;
+  --sidebar-ring:               #2B7FFF;
 }
 
 @layer base {
@@ -224,29 +299,34 @@
     @apply bg-background text-foreground;
     /* Tracking is zero everywhere (DESIGN.md §3). */
     letter-spacing: 0;
+    /* Use Inter by default; headlines opt into Space Grotesk via .font-display. */
+    font-family: var(--font-sans);
   }
   html {
-    @apply font-sans;
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
     -webkit-tap-highlight-color: transparent;
+  }
+  /* Headings default to the display face. Components can still override. */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
   }
 }
 
 /* ────────────────────────────────────────────────────────────────────────
  * Press interaction — Bluesky uses scale + opacity, not a Material ripple
- * (DESIGN.md §6). Apply with the `.pressable` utility on any tappable.
+ * (DESIGN.md §6). Apply with `.pressable` on any tappable.
  * ──────────────────────────────────────────────────────────────────────── */
 @utility pressable {
   transition:
     transform var(--motion-micro) ease-out,
     opacity var(--motion-micro) ease-out,
     background-color var(--motion-micro) ease-out,
-    color var(--motion-micro) ease-out;
+    color var(--motion-micro) ease-out,
+    border-color var(--motion-micro) ease-out;
   will-change: transform, opacity;
 }
 @utility pressable-active {
-  /* fired on touch-down for snappy perceived latency (DESIGN.md §5 rule 2) */
   transform: scale(var(--press-scale));
   opacity: var(--press-opacity);
 }
@@ -254,17 +334,11 @@
 /* Halftone texture lifted from the logo. Use sparingly. */
 @utility dither {
   background-image: radial-gradient(
-    oklch(0.21 0.006 255 / 0.13) 1px,
+    var(--foreground) 1px,
     transparent 1px
   );
   background-size: 7px 7px;
-}
-.dim .dither,
-.dark .dither {
-  background-image: radial-gradient(
-    oklch(0.98 0.002 250 / 0.10) 1px,
-    transparent 1px
-  );
+  opacity: 0.06;
 }
 
 /* Scrollbar */
@@ -284,8 +358,8 @@
 }
 
 /*
- * Section rhythm. The light system alternates paper and plain white;
- * dim/dark inherit the page background and use card surface for contrast.
+ * Section rhythm. The dim/dark themes use the card surface for contrast
+ * sections; light alternates paper-white and pure white.
  */
 .section-paper {
   background-color: var(--background);
@@ -313,28 +387,15 @@
 .page-hero-gradient {
   background-image: linear-gradient(
     180deg,
-    oklch(0.55 0.18 255 / 0.045) 0%,
-    transparent 60%
-  );
-}
-.dim .page-hero-gradient,
-.dark .page-hero-gradient {
-  background-image: linear-gradient(
-    180deg,
-    oklch(0.68 0.16 255 / 0.060) 0%,
+    color-mix(in srgb, var(--primary) 8%, transparent) 0%,
     transparent 60%
   );
 }
 
 /* Live indicator: a quiet breathing dot, no glow */
 @keyframes soft-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.45;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
 }
 
 .pulse-dot {
@@ -343,14 +404,8 @@
 
 /* Fade-in for freshly loaded content — `--motion-normal` (260ms) per §6 */
 @keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .animate-in {
@@ -359,12 +414,8 @@
 
 /* Copy-to-clipboard confirmation flash */
 @keyframes copy-flash {
-  0% {
-    background-color: oklch(0.55 0.18 255 / 0.12);
-  }
-  100% {
-    background-color: transparent;
-  }
+  0%   { background-color: color-mix(in srgb, var(--primary) 15%, transparent); }
+  100% { background-color: transparent; }
 }
 
 .animate-copy-flash {
@@ -393,16 +444,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  .animate-in,
-  .pulse-dot,
-  .animate-copy-flash,
-  .scroll-top-in {
+  html { scroll-behavior: auto; }
+  .animate-in, .pulse-dot, .animate-copy-flash, .scroll-top-in {
     animation: none;
   }
-  * {
-    transition-duration: 0.01ms !important;
-  }
+  * { transition-duration: 0.01ms !important; }
 }

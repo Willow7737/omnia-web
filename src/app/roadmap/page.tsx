@@ -228,7 +228,7 @@ function PhaseCard({ phase, index, isDark }: { phase: Phase; index: number; isDa
  <div className="flex items-start justify-between gap-3">
  <div className="min-w-0">
  <div className="flex flex-wrap items-center gap-2 mb-1">
- <span className={`font-mono text-[12px] font-medium ${
+ <span className={`font-mono text-[13.1px] font-medium ${
  phase.status === 'completed' ? 'text-success' : phase.status === 'in-progress' ? 'text-primary' : 'text-muted-foreground'
  }`}>
  {phase.number === '∞' ? 'Post-Phase 5' : `Phase ${phase.number}`}
@@ -241,7 +241,7 @@ function PhaseCard({ phase, index, isDark }: { phase: Phase; index: number; isDa
  {phase.status === 'completed' ? 'Complete' : phase.status === 'in-progress' ? 'In Progress' : 'Upcoming'}
  </span>
  </div>
- <h3 className={`text-[17px] sm:text-[19px] font-semibold tracking-normal font-sans ${
+ <h3 className={`text-[16.9px] sm:text-[18.8px] font-semibold font-sans ${
  phase.status === 'future' ? 'text-muted-foreground' : isDark ? 'text-foreground' : 'text-foreground'
  }`}>
  {phase.title}
@@ -272,7 +272,7 @@ function PhaseCard({ phase, index, isDark }: { phase: Phase; index: number; isDa
  initial={{ opacity: 0, x: -10 }}
  animate={{ opacity: 1, x: 0 }}
  transition={{ duration: 0.3, delay: i * 0.04 }}
- className="flex items-start gap-2.5 text-[14px] font-sans"
+ className="flex items-start gap-2.5 text-[15px] font-sans"
  >
  <div className={`flex-shrink-0 w-1.5 h-1.5 rounded-full mt-1.5 ${circleColor}`} />
  <span className={isDark ? 'text-muted-foreground' : 'text-muted-foreground'}>
@@ -314,15 +314,15 @@ export default function RoadmapPage() {
  >
  <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-success/10 border border-success/20">
  <CheckCircle2 className="w-4 h-4 text-success" />
- <span className="text-[14px] text-foreground font-sans">{completedCount} phases complete</span>
+ <span className="text-[15px] text-foreground font-sans">{completedCount} phases complete</span>
  </div>
  <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/10 border border-primary/20">
  <Loader2 className="w-4 h-4 text-primary" />
- <span className="text-[14px] text-foreground font-sans">{inProgressCount} in progress</span>
+ <span className="text-[15px] text-foreground font-sans">{inProgressCount} in progress</span>
  </div>
  <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-card border border-border">
  <Circle className="w-4 h-4 text-muted-foreground/40" />
- <span className="text-[14px] text-muted-foreground font-sans">4 phases ahead</span>
+ <span className="text-[15px] text-muted-foreground font-sans">4 phases ahead</span>
  </div>
  </motion.div>
  </div>

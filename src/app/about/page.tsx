@@ -122,10 +122,10 @@ export default function AboutPage() {
  <Image src={withBasePath("/omnia-lockup.png")} alt="" width={180} height={308} className="opacity-90" />
  </motion.div>
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-normal leading-[1.1] text-foreground mb-8">
+ <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[53px] font-bold leading-[1.1] text-foreground mb-8">
  What is Omnia?
  </h2>
- <div className="space-y-6 text-muted-foreground leading-[1.6] text-[17px] sm:text-[19px] max-w-[680px] font-sans">
+ <div className="space-y-6 text-muted-foreground leading-[1.6] text-[16.9px] sm:text-[18.8px] max-w-[680px] font-sans">
  <p>
  Omnia is not a company, a coin, or an app. It is a <span className="text-foreground font-medium">protocol</span> — a
  fundamental set of rules that any computer can follow to participate in a shared,
@@ -152,10 +152,10 @@ export default function AboutPage() {
  <section className="section-white section-spacing">
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-normal leading-[1.1] text-foreground mb-4">
+ <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[53px] font-bold leading-[1.1] text-foreground mb-4">
  The Problem We Solve
  </h2>
- <p className="text-muted-foreground mb-14 text-[17px] sm:text-[19px] max-w-[600px] font-sans">
+ <p className="text-muted-foreground mb-14 text-[16.9px] sm:text-[18.8px] max-w-[600px] font-sans">
  The current infrastructure of the internet and financial systems is fundamentally broken.
  Here are the problems and how Omnia addresses each one.
  </p>
@@ -180,13 +180,13 @@ export default function AboutPage() {
  <Icon className="w-4.5 h-4.5 text-primary" />
  </div>
  <div>
- <h3 className="font-semibold text-foreground text-[15px] sm:text-[17px] font-sans">
+ <h3 className="font-semibold text-foreground text-[15px] sm:text-[16.9px] font-sans">
  {item.problem}
  </h3>
- <p className="text-muted-foreground text-[13px] mt-0.5 font-sans">{item.consequence}</p>
+ <p className="text-muted-foreground text-[13.1px] mt-0.5 font-sans">{item.consequence}</p>
  </div>
  </div>
- <div className="flex items-center gap-2 text-primary text-[14px] sm:text-[15px] font-medium font-sans">
+ <div className="flex items-center gap-2 text-primary text-[15px] sm:text-[15px] font-medium font-sans">
  <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
  <span>{item.solution}</span>
  </div>
@@ -201,10 +201,10 @@ export default function AboutPage() {
  <section className="section-paper section-spacing">
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-normal leading-[1.1] text-foreground mb-4">
+ <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[53px] font-bold leading-[1.1] text-foreground mb-4">
  Our Philosophy
  </h2>
- <p className="text-muted-foreground mb-14 text-[17px] sm:text-[19px] max-w-[600px] font-sans">
+ <p className="text-muted-foreground mb-14 text-[16.9px] sm:text-[18.8px] max-w-[600px] font-sans">
  Three principles guide every decision in the Omnia Protocol.
  </p>
  </motion.div>
@@ -226,10 +226,10 @@ export default function AboutPage() {
  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
  <Icon className="w-5 h-5 text-primary" />
  </div>
- <h3 className="text-[19px] sm:text-[21px] font-semibold text-foreground font-sans">{item.title}</h3>
+ <h3 className="text-[18.8px] sm:text-[20.6px] font-semibold text-foreground font-sans">{item.title}</h3>
  </div>
  </div>
- <p className="text-muted-foreground text-[15px] sm:text-[17px] leading-[1.6] font-sans">
+ <p className="text-muted-foreground text-[15px] sm:text-[16.9px] leading-[1.6] font-sans">
  {item.description}
  </p>
  </motion.div>
@@ -243,10 +243,10 @@ export default function AboutPage() {
  <section className="section-white section-spacing">
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-normal leading-[1.1] text-foreground mb-4">
+ <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[53px] font-bold leading-[1.1] text-foreground mb-4">
  By The Numbers
  </h2>
- <p className="text-muted-foreground mb-14 text-[17px] sm:text-[19px] max-w-[600px] font-sans">
+ <p className="text-muted-foreground mb-14 text-[16.9px] sm:text-[18.8px] max-w-[600px] font-sans">
  Real metrics from the codebase. No vanity numbers, no marketing spin.
  </p>
  </motion.div>
@@ -266,10 +266,10 @@ export default function AboutPage() {
  <div className="flex justify-center mb-3">
  <Icon className="w-5 h-5 text-primary" />
  </div>
- <div className="text-[28px] sm:text-[36px] font-bold text-foreground mb-1 font-sans">
+ <div className="text-[30px] sm:text-[37.5px] font-bold text-foreground mb-1 font-display">
  {stat.value}
  </div>
- <div className="text-muted-foreground text-[13px] sm:text-[14px] font-sans">{stat.label}</div>
+ <div className="text-muted-foreground text-[13.1px] sm:text-[15px] font-sans">{stat.label}</div>
  </motion.div>
  )
  })}

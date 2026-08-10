@@ -34,11 +34,11 @@ export function CTASection() {
           transition={{ duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
           {/* tracking is 0 everywhere (DESIGN.md §3) */}
-          <h2 className="font-sans text-[48px] sm:text-[64px] md:text-[80px] font-bold leading-[1.05] text-foreground mb-6">
+          <h2 className="font-display text-[47.5px] sm:text-[60px] md:text-[76px] font-bold leading-[1.05] text-foreground mb-6">
             Public domain.
           </h2>
 
-          <p className="text-[17px] sm:text-[19px] text-muted-foreground leading-[1.5] mb-10 max-w-[480px] mx-auto">
+          <p className="text-[16.9px] sm:text-[18.8px] text-muted-foreground leading-[1.5] mb-10 max-w-[480px] mx-auto">
             CC0. No entity owns it. Every line of code is public, every benchmark is reproducible.
           </p>
 
@@ -46,10 +46,10 @@ export function CTASection() {
           <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 mb-12">
             {repoStats.map((stat) => (
               <div key={stat.label} className="flex items-baseline gap-1.5">
-                <span className="font-mono text-[17px] sm:text-[19px] text-foreground">
+                <span className="font-mono text-[16.9px] sm:text-[18.8px] text-foreground">
                   {stat.value}
                 </span>
-                <span className="text-[12px] sm:text-[13px] text-muted-foreground">
+                <span className="text-[13.1px] sm:text-[13.1px] text-muted-foreground">
                   {stat.label}
                 </span>
               </div>
@@ -62,7 +62,7 @@ export function CTASection() {
               href="https://github.com/Willow7737/omnia-protocol"
               target="_blank"
               rel="noopener noreferrer"
-              className="pressable active:pressable-active inline-flex items-center gap-2 px-7 py-3 bg-primary text-primary-foreground font-medium text-[14px] rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              className="pressable active:pressable-active inline-flex items-center gap-2 px-7 py-3 bg-primary text-primary-foreground font-medium text-[15px] rounded-full hover:bg-primary/90 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
               <GitHubIcon size={15} />
               View on GitHub
@@ -71,7 +71,7 @@ export function CTASection() {
               href="https://discord.gg/qYkpAeSYR"
               target="_blank"
               rel="noopener noreferrer"
-              className="pressable active:pressable-active inline-flex items-center gap-2 px-7 py-3 rounded-full font-medium text-[14px] border border-border bg-card text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              className="pressable active:pressable-active inline-flex items-center gap-2 px-7 py-3 rounded-full font-medium text-[15px] border border-border bg-card text-foreground hover:bg-muted transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
               Join Discord
             </a>
@@ -80,7 +80,7 @@ export function CTASection() {
           {/* Support link */}
           <Link
             href="/donate"
-            className="inline-flex items-center gap-1.5 text-[14px] text-muted-foreground hover:text-primary transition-colors"
+            className="inline-flex items-center gap-1.5 text-[15px] text-muted-foreground hover:text-primary transition-colors"
           >
             <Heart size={13} />
             Support the Protocol

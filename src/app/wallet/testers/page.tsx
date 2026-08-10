@@ -66,7 +66,7 @@ const sections = [
  The first time you open the app, your phone generates a private key
  and stores it in its secure hardware (the same vault that holds your
  fingerprint data). From that key you get a public ID — a{' '}
- <span className="font-mono text-[14px] text-foreground">
+ <span className="font-mono text-[15px] text-foreground">
  did:omnia:04f5…
  </span>{' '}
  — which is yours to share.
@@ -275,7 +275,7 @@ const sections = [
  </span>
  </li>
  </ul>
- <p className="text-[14px]">
+ <p className="text-[15px]">
  You will not hurt our feelings. An early tester saying &ldquo;this
  screen confused me&rdquo; is worth more than a hundred downloads.
  </p>
@@ -333,7 +333,7 @@ export default function WalletTestersPage() {
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div
  {...fadeInUp}
- className="flex items-center gap-3 text-[14px] text-muted-foreground"
+ className="flex items-center gap-3 text-[15px] text-muted-foreground"
  >
  <div className="w-2 h-2 rounded-full bg-success" />
  <span className="font-sans">Early access &middot; July 2026</span>
@@ -358,15 +358,15 @@ export default function WalletTestersPage() {
  <Icon className="w-5 h-5 text-primary" />
  </div>
  <div>
- <span className="text-[12px] tracking-normal uppercase mb-1 block font-mono text-success">
+ <span className="text-[13.1px] uppercase mb-1 block font-mono text-success">
  {section.number}
  </span>
- <h2 className="font-sans text-[28px] sm:text-[36px] md:text-[42px] font-bold tracking-normal leading-[1.1] text-foreground">
+ <h2 className="font-display text-[30px] sm:text-[37.5px] md:text-[42px] font-bold leading-[1.1] text-foreground">
  {section.title}
  </h2>
  </div>
  </div>
- <div className="ml-14 leading-[1.6] text-[15px] sm:text-[17px] font-sans text-muted-foreground">
+ <div className="ml-14 leading-[1.6] text-[15px] sm:text-[16.9px] font-sans text-muted-foreground">
  {section.content}
  </div>
  </div>

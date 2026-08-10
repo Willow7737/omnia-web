@@ -41,7 +41,7 @@ function MetricTable({ metrics, title, liveMetrics }: { metrics: MetricRow[]; ti
   return (
     <div>
       {title && (
-        <h3 className="text-[12px] font-medium text-muted-foreground mb-4 uppercase">
+        <h3 className="text-[13.1px] font-medium text-muted-foreground mb-4 uppercase">
           {title}
         </h3>
       )}
@@ -74,16 +74,16 @@ function MetricTable({ metrics, title, liveMetrics }: { metrics: MetricRow[]; ti
                 i < metrics.length - 1 ? 'border-b border-border' : ''
               }`}
             >
-              <span className="text-[15px] sm:text-[17px] text-muted-foreground leading-relaxed">
+              <span className="text-[15px] sm:text-[16.9px] text-muted-foreground leading-relaxed">
                 {row.metric}
                 {row.note && (
-                  <span className="hidden sm:inline text-[12px] text-muted-foreground/70"> · {row.note}</span>
+                  <span className="hidden sm:inline text-[13.1px] text-muted-foreground/70"> · {row.note}</span>
                 )}
               </span>
-              <span className="font-mono text-[15px] sm:text-[17px] text-foreground shrink-0">
+              <span className="font-mono text-[15px] sm:text-[16.9px] text-foreground shrink-0">
                 {!isLive && row.approx && <span className="text-muted-foreground">~</span>}
                 <AnimatedNumber value={displayValue} decimals={row.decimals ?? 0} duration={isLive ? 1000 : 2500} />{' '}
-                <span className="text-muted-foreground text-[13px]">{displayUnit}</span>
+                <span className="text-muted-foreground text-[13.1px]">{displayUnit}</span>
                 {isLive && <span className="pulse-dot ml-2 inline-block w-1.5 h-1.5 rounded-full bg-success" />}
               </span>
             </div>
@@ -118,12 +118,12 @@ export function PerformanceSection() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.26, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <h2 className="font-sans text-[40px] sm:text-[56px] md:text-[64px] font-bold leading-[1.1] text-foreground mb-4">
+          <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[60px] font-bold leading-[1.1] text-foreground mb-4">
             The numbers.
           </h2>
-          <p className="text-[17px] sm:text-[19px] text-muted-foreground mb-12">
+          <p className="text-[16.9px] sm:text-[18.8px] text-muted-foreground mb-12">
             From the protocol&apos;s Honest Performance table, v0.1.68+ baselines. Single-node,
-            synchronous, reproducible with <code className="font-mono text-[14px] text-foreground bg-muted px-1.5 py-0.5 rounded-md">cargo bench</code>.
+            synchronous, reproducible with <code className="font-mono text-[15px] text-foreground bg-muted px-1.5 py-0.5 rounded-md">cargo bench</code>.
             {hasLiveData && <span className="text-success"> Live metrics shown with <span className="pulse-dot inline-block w-1.5 h-1.5 rounded-full bg-success align-middle" /> dot.</span>}
           </p>
         </motion.div>
@@ -139,7 +139,7 @@ export function PerformanceSection() {
           <MetricTable metrics={zkMetrics} title="ZK Settlement — Groth16 on BN254" liveMetrics={liveDataMap} />
 
           <div className="border border-border rounded-xl p-5 bg-background">
-            <p className="text-[13px] sm:text-[14px] text-muted-foreground leading-relaxed">
+            <p className="text-[13.1px] sm:text-[15px] text-muted-foreground leading-relaxed">
               <span className="text-foreground font-medium">Read the fine print.</span>{' '}
               Measured on AMD Ryzen 9 7950X, 64&thinsp;GB DDR5-6000, Linux 6.8, rustc 1.91.
               These are single-node synthetic baselines for regression tracking — real multi-node

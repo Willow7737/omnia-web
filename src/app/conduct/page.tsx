@@ -91,12 +91,12 @@ export default function ConductPage() {
  <Heart className="w-5 h-5 text-primary" />
  </div>
  <div>
- <h2 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground">
+ <h2 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground">
  Our Pledge
  </h2>
  </div>
  </div>
- <div className="ml-14 text-muted-foreground leading-[1.6] text-[17px] font-sans">
+ <div className="ml-14 text-muted-foreground leading-[1.6] text-[16.9px] font-sans">
  <p>
  We as members, contributors, and leaders pledge to make participation in our community
  a <span className="text-primary font-medium">harassment-free experience for everyone</span>,
@@ -123,7 +123,7 @@ export default function ConductPage() {
  <Scale className="w-5 h-5 text-success" />
  </div>
  <div>
- <h2 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground">
+ <h2 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground">
  Our Standards
  </h2>
  </div>
@@ -132,7 +132,7 @@ export default function ConductPage() {
  <div className="ml-14 space-y-10">
  {/* Positive behaviors */}
  <div>
- <h3 className="text-[12px] font-semibold text-success uppercase tracking-normal mb-5 flex items-center gap-2 font-sans">
+ <h3 className="text-[13.1px] font-semibold text-success uppercase mb-5 flex items-center gap-2 font-sans">
  <Star className="w-4 h-4" />
  Examples of Positive Behavior
  </h3>
@@ -140,7 +140,7 @@ export default function ConductPage() {
  {positiveBehaviors.map((behavior, i) => (
  <div key={i} className="flex items-start gap-3">
  <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-success mt-2.5" />
- <span className="text-muted-foreground leading-[1.6] text-[15px] sm:text-[17px] font-sans">{behavior}</span>
+ <span className="text-muted-foreground leading-[1.6] text-[15px] sm:text-[16.9px] font-sans">{behavior}</span>
  </div>
  ))}
  </div>
@@ -148,7 +148,7 @@ export default function ConductPage() {
 
  {/* Unacceptable behaviors */}
  <div>
- <h3 className="text-[12px] font-semibold text-destructive/80 uppercase tracking-normal mb-5 flex items-center gap-2 font-sans">
+ <h3 className="text-[13.1px] font-semibold text-destructive/80 uppercase mb-5 flex items-center gap-2 font-sans">
  <XCircle className="w-4 h-4" />
  Examples of Unacceptable Behavior
  </h3>
@@ -156,7 +156,7 @@ export default function ConductPage() {
  {unacceptableBehaviors.map((behavior, i) => (
  <div key={i} className="flex items-start gap-3">
  <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-destructive/60 mt-2.5" />
- <span className="text-muted-foreground leading-[1.6] text-[15px] sm:text-[17px] font-sans">{behavior}</span>
+ <span className="text-muted-foreground leading-[1.6] text-[15px] sm:text-[16.9px] font-sans">{behavior}</span>
  </div>
  ))}
  </div>
@@ -175,12 +175,12 @@ export default function ConductPage() {
  <ShieldCheck className="w-5 h-5 text-primary" />
  </div>
  <div>
- <h2 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground">
+ <h2 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground">
  Enforcement Responsibilities
  </h2>
  </div>
  </div>
- <div className="ml-14 text-muted-foreground leading-[1.6] text-[17px] font-sans">
+ <div className="ml-14 text-muted-foreground leading-[1.6] text-[16.9px] font-sans">
  <p>
  Community leaders are responsible for clarifying and enforcing our standards of
  acceptable behavior and will take appropriate and fair corrective action in response to
@@ -206,7 +206,7 @@ export default function ConductPage() {
  <AlertOctagon className="w-5 h-5 text-primary" />
  </div>
  <div>
- <h2 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground">
+ <h2 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground">
  Enforcement Guidelines
  </h2>
  </div>
@@ -223,14 +223,14 @@ export default function ConductPage() {
  className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-6 py-5 border-b border-border last:border-b-0"
  >
  <div className="flex items-center gap-3 sm:w-[200px] shrink-0">
- <span className={`text-[12px] font-bold px-2.5 py-1 rounded-md font-mono ${level.badge}`}>
+ <span className={`text-[13.1px] font-bold px-2.5 py-1 rounded-md font-mono ${level.badge}`}>
  {i + 1}
  </span>
- <h3 className={`font-semibold font-sans tracking-normal ${level.text}`}>
+ <h3 className={`font-semibold font-sans ${level.text}`}>
  {level.level}
  </h3>
  </div>
- <p className="text-muted-foreground text-[14px] sm:text-[15px] leading-[1.6] font-sans">{level.description}</p>
+ <p className="text-muted-foreground text-[15px] sm:text-[15px] leading-[1.6] font-sans">{level.description}</p>
  </motion.div>
  ))}
  </div>
@@ -247,12 +247,12 @@ export default function ConductPage() {
  <Globe className="w-5 h-5 text-success" />
  </div>
  <div>
- <h2 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground">
+ <h2 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground">
  Scope
  </h2>
  </div>
  </div>
- <div className="ml-14 text-muted-foreground leading-[1.6] text-[17px] font-sans">
+ <div className="ml-14 text-muted-foreground leading-[1.6] text-[16.9px] font-sans">
  <p>
  This Code of Conduct applies within all community spaces, and also applies when an
  individual is officially representing the community in public spaces. Examples of
@@ -274,12 +274,12 @@ export default function ConductPage() {
  <Mail className="w-5 h-5 text-primary" />
  </div>
  <div>
- <h2 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground">
+ <h2 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground">
  Enforcement
  </h2>
  </div>
  </div>
- <div className="ml-14 text-muted-foreground leading-[1.6] text-[17px] font-sans">
+ <div className="ml-14 text-muted-foreground leading-[1.6] text-[16.9px] font-sans">
  <p>
  Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to
  the community leaders responsible for enforcement at:{' '}
@@ -304,12 +304,12 @@ export default function ConductPage() {
  <BookOpen className="w-5 h-5 text-success" />
  </div>
  <div>
- <h2 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground">
+ <h2 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground">
  Attribution
  </h2>
  </div>
  </div>
- <div className="ml-14 text-muted-foreground leading-[1.6] text-[17px] font-sans">
+ <div className="ml-14 text-muted-foreground leading-[1.6] text-[16.9px] font-sans">
  <p>
  This Code of Conduct is adapted from the{' '}
  <span className="text-primary font-medium">Contributor Covenant</span>, version 2.1,

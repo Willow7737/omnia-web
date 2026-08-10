@@ -127,8 +127,8 @@ export default function SecurityPage() {
  <section className="section-paper section-spacing">
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-normal leading-[1.1] text-foreground mb-4">Bug Bounty Program</h2>
- <p className="text-muted-foreground leading-[1.6] text-[17px] sm:text-[19px] max-w-4xl mb-12 font-sans">
+ <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[53px] font-bold leading-[1.1] text-foreground mb-4">Bug Bounty Program</h2>
+ <p className="text-muted-foreground leading-[1.6] text-[16.9px] sm:text-[18.8px] max-w-4xl mb-12 font-sans">
  The Omnia Protocol bug bounty program rewards security researchers who discover and responsibly disclose vulnerabilities. 
  We believe that public scrutiny makes systems stronger, not weaker.
  </p>
@@ -136,7 +136,7 @@ export default function SecurityPage() {
 
  {/* Scope */}
  <motion.div {...fadeInUp} className="mb-16">
- <h3 className="font-sans text-[28px] sm:text-[32px] font-semibold text-foreground mb-8 tracking-normal">Scope</h3>
+ <h3 className="font-display text-[30px] sm:text-[30px] font-semibold text-foreground mb-8">Scope</h3>
  <div className="space-y-0 mb-8">
  {scopeItems.map((item, i) => {
  const Icon = item.icon
@@ -153,20 +153,20 @@ export default function SecurityPage() {
  <Icon className="w-4.5 h-4.5 text-primary" />
  </div>
  <div className="flex-1 min-w-0">
- <p className="text-foreground text-[15px] sm:text-[17px] font-medium font-sans">{item.label}</p>
- <p className="text-muted-foreground text-[12px] sm:text-[13px] mt-0.5 font-mono">{item.detail}</p>
+ <p className="text-foreground text-[15px] sm:text-[16.9px] font-medium font-sans">{item.label}</p>
+ <p className="text-muted-foreground text-[13.1px] sm:text-[13.1px] mt-0.5 font-mono">{item.detail}</p>
  </div>
  </motion.div>
  )
  })}
  </div>
 
- <h3 className="font-sans text-[28px] sm:text-[32px] font-semibold text-foreground mb-5 tracking-normal">Out of Scope</h3>
+ <h3 className="font-display text-[30px] sm:text-[30px] font-semibold text-foreground mb-5">Out of Scope</h3>
  <div className="space-y-3">
  {outOfScopeItems.map((item, i) => (
  <div key={i} className="flex items-start gap-3">
  <XCircle className="w-4 h-4 text-muted-foreground/60 flex-shrink-0 mt-0.5" />
- <span className="text-muted-foreground text-[14px] sm:text-[15px] font-sans">{item}</span>
+ <span className="text-muted-foreground text-[15px] sm:text-[15px] font-sans">{item}</span>
  </div>
  ))}
  </div>
@@ -178,7 +178,7 @@ export default function SecurityPage() {
  <section className="section-white section-spacing">
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div {...fadeInUp}>
- <h3 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground mb-8">Reward Tiers</h3>
+ <h3 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground mb-8">Reward Tiers</h3>
  </motion.div>
 
  <div className="space-y-0">
@@ -197,12 +197,12 @@ export default function SecurityPage() {
  <div className={`w-9 h-9 rounded-lg ${tier.bgColor} flex items-center justify-center`}>
  <Icon className={`w-4.5 h-4.5 ${tier.color}`} />
  </div>
- <h4 className={`font-semibold text-[17px] font-sans ${tier.color}`}>{tier.severity}</h4>
+ <h4 className={`font-semibold text-[16.9px] font-sans ${tier.color}`}>{tier.severity}</h4>
  </div>
- <p className="text-muted-foreground text-[14px] sm:text-[15px] leading-[1.6] font-sans flex-1">
+ <p className="text-muted-foreground text-[15px] sm:text-[15px] leading-[1.6] font-sans flex-1">
  {tier.examples}
  </p>
- <span className={`font-mono font-bold text-[17px] ${tier.color} shrink-0`}>
+ <span className={`font-mono font-bold text-[16.9px] ${tier.color} shrink-0`}>
  {tier.reward}
  </span>
  </motion.div>
@@ -216,7 +216,7 @@ export default function SecurityPage() {
  <section className="section-paper section-spacing">
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div {...fadeInUp}>
- <h3 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground mb-8">Reporting a Vulnerability</h3>
+ <h3 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground mb-8">Reporting a Vulnerability</h3>
  </motion.div>
 
  <div className="max-w-[680px] space-y-5">
@@ -224,14 +224,14 @@ export default function SecurityPage() {
  <Mail className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
  <div>
  <p className="text-foreground text-[15px] font-medium font-sans">Email</p>
- <p className="text-muted-foreground text-[14px] font-mono">security@omnia-protocol.org</p>
+ <p className="text-muted-foreground text-[15px] font-mono">security@omnia-protocol.org</p>
  </div>
  </div>
  <div className="flex items-start gap-3">
  <Lock className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
  <div>
  <p className="text-foreground text-[15px] font-sans">PGP Encryption</p>
- <p className="text-muted-foreground text-[14px] font-sans">Please encrypt your report using our PGP key</p>
+ <p className="text-muted-foreground text-[15px] font-sans">Please encrypt your report using our PGP key</p>
  </div>
  </div>
  <div className="h-px bg-accent" />
@@ -244,7 +244,7 @@ export default function SecurityPage() {
  'Impact assessment',
  'Proof-of-concept (if available)',
  ].map((item, i) => (
- <li key={i} className="flex items-center gap-2 text-muted-foreground text-[14px] font-sans">
+ <li key={i} className="flex items-center gap-2 text-muted-foreground text-[15px] font-sans">
  <ArrowRight className="w-3.5 h-3.5 text-primary flex-shrink-0" />
  {item}
  </li>
@@ -259,7 +259,7 @@ export default function SecurityPage() {
  <section className="section-white section-spacing">
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div {...fadeInUp}>
- <h3 className="font-sans text-[40px] sm:text-[48px] font-bold tracking-normal leading-[1.1] text-foreground mb-8">Response Timeline</h3>
+ <h3 className="font-sans text-[37.5px] sm:text-[47.5px] font-bold leading-[1.1] text-foreground mb-8">Response Timeline</h3>
  </motion.div>
 
  <div className="space-y-0 mb-12">
@@ -277,22 +277,22 @@ export default function SecurityPage() {
  <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
  <Icon className="w-4.5 h-4.5 text-primary" />
  </div>
- <p className="text-foreground font-medium text-[15px] sm:text-[17px] font-sans">{item.phase}</p>
- <p className="text-primary font-mono text-[14px] sm:ml-auto">{item.time}</p>
+ <p className="text-foreground font-medium text-[15px] sm:text-[16.9px] font-sans">{item.phase}</p>
+ <p className="text-primary font-mono text-[15px] sm:ml-auto">{item.time}</p>
  </motion.div>
  )
  })}
  </div>
 
- <h4 className="font-sans text-[24px] sm:text-[28px] font-semibold text-foreground mb-6 tracking-normal">Patch Release Timeline</h4>
+ <h4 className="font-display text-[24.3px] sm:text-[30px] font-semibold text-foreground mb-6">Patch Release Timeline</h4>
  <div className="space-y-0">
  {patchReleaseTimeline.map((item, i) => (
  <div
  key={i}
  className={`flex items-center justify-between py-4 ${i < patchReleaseTimeline.length - 1 ? 'border-b border-border' : ''}`}
  >
- <p className={`font-semibold text-[15px] sm:text-[17px] ${item.color} font-sans`}>{item.severity}</p>
- <p className="text-foreground text-[17px] sm:text-[19px] font-bold font-mono">{item.time}</p>
+ <p className={`font-semibold text-[15px] sm:text-[16.9px] ${item.color} font-sans`}>{item.severity}</p>
+ <p className="text-foreground text-[16.9px] sm:text-[18.8px] font-bold font-mono">{item.time}</p>
  </div>
  ))}
  </div>
@@ -304,8 +304,8 @@ export default function SecurityPage() {
  <div className="max-w-[980px] mx-auto px-6">
  <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
  <motion.div {...fadeInUp}>
- <h4 className="font-sans text-[24px] sm:text-[28px] font-bold tracking-normal text-foreground mb-4">Responsible Disclosure</h4>
- <p className="text-muted-foreground text-[15px] sm:text-[17px] leading-[1.6] font-sans">
+ <h4 className="font-display text-[24.3px] sm:text-[30px] font-bold text-foreground mb-4">Responsible Disclosure</h4>
+ <p className="text-muted-foreground text-[15px] sm:text-[16.9px] leading-[1.6] font-sans">
  We follow a <span className="text-primary font-medium">90-day embargo policy</span>. 
  Vulnerabilities will not be publicly disclosed until a fix is available, or 90 days have 
  elapsed since the initial report — whichever comes first. Extensions may be granted upon request.
@@ -313,8 +313,8 @@ export default function SecurityPage() {
  </motion.div>
 
  <motion.div {...fadeInUp}>
- <h4 className="font-sans text-[24px] sm:text-[28px] font-bold tracking-normal text-foreground mb-4">Payment</h4>
- <p className="text-muted-foreground text-[15px] sm:text-[17px] leading-[1.6] font-sans">
+ <h4 className="font-display text-[24.3px] sm:text-[30px] font-bold text-foreground mb-4">Payment</h4>
+ <p className="text-muted-foreground text-[15px] sm:text-[16.9px] leading-[1.6] font-sans">
  Bounties are paid in <span className="text-primary font-medium">USDC or USDT on Ethereum mainnet</span>. 
  Payment is processed after the fix has been verified and deployed. Researchers may choose 
  to donate their bounty back to the protocol.
@@ -328,8 +328,8 @@ export default function SecurityPage() {
  <section className="section-white section-spacing">
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-normal leading-[1.1] text-foreground mb-4">Security Practices</h2>
- <p className="text-muted-foreground leading-[1.6] text-[17px] sm:text-[19px] max-w-4xl mb-12 font-sans">
+ <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[53px] font-bold leading-[1.1] text-foreground mb-4">Security Practices</h2>
+ <p className="text-muted-foreground leading-[1.6] text-[16.9px] sm:text-[18.8px] max-w-4xl mb-12 font-sans">
  Security is not an afterthought. It is embedded into every stage of development — from dependency 
  selection to deployment. Here is what we do, concretely.
  </p>
@@ -351,9 +351,9 @@ export default function SecurityPage() {
  <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
  <Icon className="w-4.5 h-4.5 text-primary" />
  </div>
- <h3 className="text-foreground font-semibold text-[15px] sm:text-[17px] font-sans">{practice.title}</h3>
+ <h3 className="text-foreground font-semibold text-[15px] sm:text-[16.9px] font-sans">{practice.title}</h3>
  </div>
- <p className="text-muted-foreground text-[14px] sm:text-[15px] leading-[1.6] font-sans">{practice.description}</p>
+ <p className="text-muted-foreground text-[15px] sm:text-[15px] leading-[1.6] font-sans">{practice.description}</p>
  </motion.div>
  )
  })}
@@ -365,8 +365,8 @@ export default function SecurityPage() {
  <section className="section-paper section-spacing">
  <div className="max-w-[980px] mx-auto px-6">
  <motion.div {...fadeInUp}>
- <h2 className="font-sans text-[40px] sm:text-[48px] md:text-[56px] font-bold tracking-normal leading-[1.1] text-foreground mb-4">Audit Status</h2>
- <p className="text-muted-foreground leading-[1.6] text-[17px] sm:text-[19px] max-w-4xl mb-12 font-sans">
+ <h2 className="font-display text-[37.5px] sm:text-[47.5px] md:text-[53px] font-bold leading-[1.1] text-foreground mb-4">Audit Status</h2>
+ <p className="text-muted-foreground leading-[1.6] text-[16.9px] sm:text-[18.8px] max-w-4xl mb-12 font-sans">
  Transparency means showing the work. Here is the current state of our security audit findings — 
  remediated and tracked.
  </p>
@@ -389,10 +389,10 @@ export default function SecurityPage() {
  <Icon className={`w-6 h-6 ${item.color}`} />
  </div>
  </div>
- <div className={`text-[28px] sm:text-[32px] font-bold font-mono ${item.color} mb-2`}>
+ <div className={`text-[30px] sm:text-[30px] font-bold font-mono ${item.color} mb-2`}>
  {item.value}
  </div>
- <p className="text-muted-foreground text-[14px] font-sans">{item.label}</p>
+ <p className="text-muted-foreground text-[15px] font-sans">{item.label}</p>
  </motion.div>
  )
  })}
@@ -401,7 +401,7 @@ export default function SecurityPage() {
  <motion.div {...fadeInUp}>
  <div className="flex items-start gap-3">
  <Shield className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
- <p className="text-muted-foreground text-[14px] sm:text-[15px] leading-[1.6] font-sans">
+ <p className="text-muted-foreground text-[15px] sm:text-[15px] leading-[1.6] font-sans">
  An <span className="text-primary font-medium">external security audit</span> is currently in preparation. 
  Results and findings will be published in full upon completion. We do not hide audit results.
  </p>
