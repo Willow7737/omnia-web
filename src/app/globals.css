@@ -548,3 +548,13 @@ html:not(.light):not(.dim):not(.dark) {
   }
   * { transition-duration: 0.01ms !important; }
 }
+
+/* Protocol theater: packet motion along each micro-stage connector. */
+@keyframes theater-travel {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(360%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theater-travel { animation: none !important; }
+}
