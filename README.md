@@ -19,7 +19,7 @@ All performance figures are copied from the protocol repository's **Honest Perfo
 
 ## Live Mode
 
-By default, the site runs in **static mode** — it shows benchmark data from the protocol's v0.1.68+ single-node baselines. A **5-node geo-distributed validator mesh** is live (Nuremberg / Ashburn / Singapore), with `https://78.47.43.136.sslip.io` as the public ingress — the other two are validators without public HTTP. Each has 2 peers and Lane 0 is finalizing events. Two things to keep accurate on the site: `/readyz` still reports `not_ready` (reason `no_finalization` — Lane 1 has committed nothing on a quiet network, not a fault), and all three nodes are run by the same operator, so it is geo-distributed but not yet trust-distributed. To connect the site to the node (or any node):
+By default, the site runs in **static mode** — it shows benchmark data from the protocol's v0.1.68+ single-node baselines. A **5-node geo-distributed validator mesh** is live (Nuremberg / Ashburn / Singapore / Helsinki / Falkenstein), with `https://78.47.43.136.sslip.io` as the public ingress — the other four are validators without public HTTP. Each has 4 peers, all on v0.1.95. Two things to keep accurate on the site: the mesh is fully peered but idle (nothing submitted since the v0.1.95 rollout, so the Lane 0 counters and `finalized_height` all read `0`, and `/readyz` reports `ready` — readiness requires peers, not traffic), and all five nodes are run by the same operator, so it is geo-distributed but not yet trust-distributed. To connect the site to the node (or any node):
 
 ```bash
 NEXT_PUBLIC_LIVE_MODE=true \
