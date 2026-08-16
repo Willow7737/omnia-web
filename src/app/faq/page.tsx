@@ -31,7 +31,7 @@ const faqs: FAQItem[] = [
  {
  question: 'Is Omnia ready for production?',
  answer:
- 'Not mainnet, but there is now a real network. A 3-node geo-distributed validator mesh (Nuremberg, Ashburn, Singapore) runs continuously, 2 peers each, with Lane 0 finalizing events and measured RTTs matching the benchmark baseline exactly. The wallet and dashboard ship against it. Two honest caveats: readiness still reports not_ready because Lane 1 canonical consensus has committed nothing on a quiet network, and all three nodes are operated by the same party — so the mesh is fault-tolerant against machine and region failure, but not yet against operator compromise. Independent validators and an external security audit are the remaining gates before mainnet.',
+ 'Not mainnet, but there is now a real network. A 5-node geo-distributed validator mesh (Nuremberg, Ashburn, Singapore, Helsinki, Falkenstein) runs continuously, 4 peers each, with measured RTTs matching the benchmark baseline exactly. Five equal-stake validators put Lane 0 finality at 4-of-5 acks, so the mesh now tolerates one node down. The wallet and dashboard ship against it. Two honest caveats: the mesh is currently idle — nothing has been submitted since the v0.1.95 rollout, so the Lane 0 counters and finalized height read zero (an absence of traffic, not of liveness) — and all five nodes are operated by the same party, so the mesh is fault-tolerant against machine and region failure, but not yet against operator compromise. Independent validators and an external security audit are the remaining gates before mainnet.',
  },
  {
  question: 'What is Universal Basic Compute (UBC)?',

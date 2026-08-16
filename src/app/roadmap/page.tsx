@@ -147,12 +147,12 @@ const phases: Phase[] = [
  status: 'in-progress',
  icon: Globe,
  items: [
- { text: 'Standing 3-node geo-distributed validator mesh LIVE (Nuremberg / Ashburn / Singapore) — 2 peers each, Lane 0 finalizing, RTTs matching the benchmark baseline' },
+ { text: 'Standing 5-node geo-distributed validator mesh LIVE (Nuremberg / Ashburn / Singapore / Helsinki / Falkenstein) — 4 peers each, 4-of-5 Lane 0 quorum so one node can be down, RTTs matching the benchmark baseline' },
  { text: 'Multi-node Lane 0 BFT finality proven — 10,000/10,000 events finalized across 5 validators in stress runs (July 2026)' },
  { text: 'Geo-distributed WAN campaign: 3 regions (EU / US-East / Asia, RTTs to ~218 ms) — 100% propagation + full quorum finality, zero loss' },
  { text: 'Self-healing anti-entropy repair with fast drain — burst overload recovers automatically' },
  { text: 'Mobile wallet v1 + web dashboard + website shipped against the live testnet' },
- { text: 'Remaining: external security audit, and independent third-party validators — the mesh is geo-distributed but all three nodes share one operator' },
+ { text: 'Remaining: external security audit, and independent third-party validators — the mesh is geo-distributed but all five nodes share one operator' },
  ],
  },
  {
